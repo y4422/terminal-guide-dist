@@ -67,24 +67,11 @@ export function Terminal() {
         ]);
       }
     }
-    // Step 5: First time entering Claude mode - show welcome, but keep history after
+    // Step 5: Claude mode - welcome message already shown by step 4 response
     else if (currentStep === 5) {
       setClaudeStarted(true);
       setCurrentPath('~/Desktop');
-      // Only show welcome message if first entering Claude mode
-      if (!claudeStarted || initializedStep === null || initializedStep < 5) {
-        setOutputs((prev) => [
-          ...prev,
-          { type: 'system', content: `╭─────────────────────────────────────╮
-│                                     │
-│   🤖 Claude Code へようこそ!        │
-│                                     │
-│   日本語で話しかけてください        │
-│   何でもお手伝いします!             │
-│                                     │
-╰─────────────────────────────────────╯` },
-        ]);
-      }
+      // Don't add welcome message here - it's already added by step 4's simulateResponse
     }
     // Step 6+: Claude mode continues - preserve all outputs
     else if (currentStep >= 6) {
@@ -94,7 +81,7 @@ export function Terminal() {
     }
 
     setInitializedStep(currentStep);
-  }, [currentStep, initializedStep, claudeStarted]);
+  }, [currentStep, initializedStep]);
 
   const getPrompt = useCallback(() => {
     if (claudeStarted) {
