@@ -22,7 +22,7 @@ export function StepContent({ guide, stepId }: StepContentProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const isActiveStep = stepId > 0 && stepId < 10;
+  const isActiveStep = stepId > 0 && stepId <= 10;
 
   return (
     <div className="space-y-6">
@@ -38,12 +38,12 @@ export function StepContent({ guide, stepId }: StepContentProps) {
           </div>
           <div className="flex flex-col">
             <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              ステップ {stepId} / 9
+              ステップ {stepId} / 10
             </span>
             <div className="mt-0.5 h-1 w-20 rounded-full bg-muted overflow-hidden">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-primary to-accent transition-all duration-500"
-                style={{ width: `${(stepId / 9) * 100}%` }}
+                style={{ width: `${(stepId / 10) * 100}%` }}
               />
             </div>
           </div>
