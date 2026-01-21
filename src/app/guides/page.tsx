@@ -1,11 +1,11 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { FeatureCard } from '@/components/landing/FeatureCard';
-import { ChevronRight, Home } from 'lucide-react';
+import { ChevronRight, Home, GitBranch, Rocket, Zap } from 'lucide-react';
 import Link from 'next/link';
 
 const guides = [
   {
-    icon: '📚',
+    icon: <GitBranch className="h-7 w-7 text-primary" />,
     title: 'Git の使い方',
     description: 'バージョン管理の基本から、Claude Code を使った効率的な Git 操作まで解説します。',
     href: '/guides/git',
@@ -13,7 +13,7 @@ const guides = [
     badgeColor: 'success' as const,
   },
   {
-    icon: '🚀',
+    icon: <Rocket className="h-7 w-7 text-primary" />,
     title: 'Next.js アプリを作ろう',
     description: 'Node.js のインストールから npm run dev まで、Claude Code で Web アプリ開発を始めましょう。',
     href: '/guides/nextjs-setup',
@@ -21,7 +21,7 @@ const guides = [
     badgeColor: 'success' as const,
   },
   {
-    icon: '⚡',
+    icon: <Zap className="h-7 w-7 text-primary" />,
     title: 'Claude Code スキル',
     description: 'スキル機能の活用方法と CLAUDE.md の書き方を学んで、開発効率をアップしましょう。',
     href: '/guides/claude-code-skills',

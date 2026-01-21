@@ -1,5 +1,5 @@
 import { GuideLayout } from '@/components/layout/GuideLayout';
-import { Terminal, GitBranch, Upload, Download, FolderPlus, Save, History, Users, Package } from 'lucide-react';
+import { Terminal, GitBranch, Upload, Download, FolderPlus, Save, History, Users, Package, BookOpen, Clock, Lightbulb, CheckCircle, AlertTriangle, Wrench, AlertCircle, MessageCircle } from 'lucide-react';
 import { FaApple, FaWindows } from 'react-icons/fa';
 
 const sections = [
@@ -51,7 +51,10 @@ function Section({ id, title, icon, children }: {
 function TermBox({ term, children }: { term: string; children: React.ReactNode }) {
   return (
     <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 my-4">
-      <p className="font-bold text-amber-600 dark:text-amber-400 mb-1">📖 用語: {term}</p>
+      <p className="font-bold text-amber-600 dark:text-amber-400 mb-1 flex items-center gap-2">
+        <BookOpen className="h-4 w-4" />
+        <span>用語: {term}</span>
+      </p>
       <p className="text-sm text-muted-foreground">{children}</p>
     </div>
   );
@@ -60,7 +63,10 @@ function TermBox({ term, children }: { term: string; children: React.ReactNode }
 function WhenToUse({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 my-4">
-      <p className="font-bold text-blue-600 dark:text-blue-400 mb-1">🕐 いつ使う?</p>
+      <p className="font-bold text-blue-600 dark:text-blue-400 mb-1 flex items-center gap-2">
+        <Clock className="h-4 w-4" />
+        <span>いつ使う?</span>
+      </p>
       <p className="text-sm text-muted-foreground">{children}</p>
     </div>
   );
@@ -83,7 +89,7 @@ export default function GitGuidePage() {
         </p>
 
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-5 mb-6">
-          <p className="font-medium mb-3">💡 わかりやすく言うと...</p>
+          <p className="font-medium mb-3 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> わかりやすく言うと...</p>
           <p className="text-muted-foreground mb-4">
             ゲームの<strong>「セーブポイント」</strong>のようなものです。
           </p>
@@ -137,7 +143,7 @@ export default function GitGuidePage() {
 
           <details className="group">
             <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 mb-2">
-              <span>📖</span>
+              <BookOpen className="h-4 w-4" />
               <span>他の方法（Homebrew を使う場合）</span>
               <span className="ml-auto text-xs opacity-50 group-open:rotate-90 transition-transform">▶</span>
             </summary>
@@ -179,7 +185,7 @@ export default function GitGuidePage() {
 
           <details className="group">
             <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 mb-2">
-              <span>📖</span>
+              <BookOpen className="h-4 w-4" />
               <span>他の方法（winget を使う場合）</span>
               <span className="ml-auto text-xs opacity-50 group-open:rotate-90 transition-transform">▶</span>
             </summary>
@@ -196,7 +202,7 @@ export default function GitGuidePage() {
 
         {/* Confirm installation */}
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mb-4">
-          <p className="font-medium mb-2">✅ インストールできたか確認</p>
+          <p className="font-medium mb-2 flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-500" /> インストールできたか確認</p>
           <p className="text-sm text-muted-foreground mb-2">
             ターミナル（Mac）または PowerShell（Windows）で以下を実行:
           </p>
@@ -211,7 +217,7 @@ export default function GitGuidePage() {
 
         {/* Initial setup */}
         <div className="border rounded-lg p-4">
-          <p className="font-medium mb-2">🔧 初期設定（名前とメールアドレス）</p>
+          <p className="font-medium mb-2 flex items-center gap-2"><Wrench className="h-4 w-4" /> 初期設定（名前とメールアドレス）</p>
           <p className="text-sm text-muted-foreground mb-3">
             Git を使う前に、あなたの名前とメールアドレスを設定します。
             これは「誰が変更したか」を記録するためです。
@@ -220,8 +226,8 @@ export default function GitGuidePage() {
 {`git config --global user.name "あなたの名前"
 git config --global user.email "your@email.com"`}
           </CodeBlock>
-          <p className="text-xs text-muted-foreground">
-            💡 GitHub アカウントを持っている場合は、同じメールアドレスを使うのがおすすめです
+          <p className="text-xs text-muted-foreground flex items-center gap-1">
+            <Lightbulb className="h-3 w-3" /> GitHub アカウントを持っている場合は、同じメールアドレスを使うのがおすすめです
           </p>
         </div>
       </Section>
@@ -233,7 +239,7 @@ git config --global user.email "your@email.com"`}
 
         <div className="space-y-4 mb-6">
           <div className="border rounded-lg p-4">
-            <p className="font-medium mb-2">😱 困りごと 1: 「さっきまで動いてたのに...」</p>
+            <p className="font-medium mb-2 flex items-center gap-2"><AlertCircle className="h-4 w-4 text-red-500" /> 困りごと 1: 「さっきまで動いてたのに...」</p>
             <p className="text-sm text-muted-foreground mb-2">
               コードを変更したら動かなくなった。でも何を変えたか覚えてない...
             </p>
@@ -243,7 +249,7 @@ git config --global user.email "your@email.com"`}
           </div>
 
           <div className="border rounded-lg p-4">
-            <p className="font-medium mb-2">😱 困りごと 2: 「最終版_本当の最終版_これが最終.docx」</p>
+            <p className="font-medium mb-2 flex items-center gap-2"><AlertCircle className="h-4 w-4 text-red-500" /> 困りごと 2: 「最終版_本当の最終版_これが最終.docx」</p>
             <p className="text-sm text-muted-foreground mb-2">
               バージョン管理のためにファイル名を変えまくって、どれが最新かわからない...
             </p>
@@ -253,7 +259,7 @@ git config --global user.email "your@email.com"`}
           </div>
 
           <div className="border rounded-lg p-4">
-            <p className="font-medium mb-2">😱 困りごと 3: 「誰かが上書きしちゃった」</p>
+            <p className="font-medium mb-2 flex items-center gap-2"><AlertCircle className="h-4 w-4 text-red-500" /> 困りごと 3: 「誰かが上書きしちゃった」</p>
             <p className="text-sm text-muted-foreground mb-2">
               チームで作業中、他の人の変更と自分の変更がぶつかった...
             </p>
@@ -273,7 +279,7 @@ git config --global user.email "your@email.com"`}
           {/* Flow diagram */}
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="flex-1 bg-muted/30 rounded-lg p-4 text-center">
-              <div className="text-3xl mb-2">1️⃣</div>
+              <div className="w-10 h-10 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center mx-auto mb-2">1</div>
               <p className="font-bold mb-1">変更を選ぶ</p>
               <code className="text-xs bg-terminal-bg text-terminal-text px-2 py-1 rounded">git add</code>
               <p className="text-xs text-muted-foreground mt-2">
@@ -282,7 +288,7 @@ git config --global user.email "your@email.com"`}
             </div>
             <div className="hidden md:flex items-center text-2xl text-muted-foreground">→</div>
             <div className="flex-1 bg-muted/30 rounded-lg p-4 text-center">
-              <div className="text-3xl mb-2">2️⃣</div>
+              <div className="w-10 h-10 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center mx-auto mb-2">2</div>
               <p className="font-bold mb-1">セーブする</p>
               <code className="text-xs bg-terminal-bg text-terminal-text px-2 py-1 rounded">git commit</code>
               <p className="text-xs text-muted-foreground mt-2">
@@ -291,7 +297,7 @@ git config --global user.email "your@email.com"`}
             </div>
             <div className="hidden md:flex items-center text-2xl text-muted-foreground">→</div>
             <div className="flex-1 bg-muted/30 rounded-lg p-4 text-center">
-              <div className="text-3xl mb-2">3️⃣</div>
+              <div className="w-10 h-10 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center mx-auto mb-2">3</div>
               <p className="font-bold mb-1">共有する</p>
               <code className="text-xs bg-terminal-bg text-terminal-text px-2 py-1 rounded">git push</code>
               <p className="text-xs text-muted-foreground mt-2">
@@ -330,7 +336,7 @@ git init`}
 
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
           <p className="text-sm">
-            <strong>💡 ヒント:</strong> GitHub からダウンロード（clone）した場合は、
+            <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>ヒント:</strong></span> GitHub からダウンロード（clone）した場合は、
             すでに Git が設定されているので <code className="px-1 py-0.5 bg-muted rounded">git init</code> は不要です。
           </p>
         </div>
@@ -361,7 +367,7 @@ git add .`}
 
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
           <p className="text-sm">
-            <strong>💡 よく使うパターン:</strong> とりあえず全部セーブしたいときは
+            <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>よく使うパターン:</strong></span> とりあえず全部セーブしたいときは
             <code className="px-1 py-0.5 bg-muted rounded mx-1">git add .</code>
             （ドット = 全部）を使えばOK!
           </p>
@@ -390,14 +396,14 @@ git commit -m "ログインボタンを追加"`}
             「何をしたか」が後から分かるように書きましょう。
           </p>
           <ul className="text-sm text-muted-foreground space-y-1">
-            <li>✅ 「ログイン機能を追加」「バグ修正: 画像が表示されない問題」</li>
+            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> 「ログイン機能を追加」「バグ修正: 画像が表示されない問題」</li>
             <li>❌ 「修正」「更新」「あああ」（後で何のことかわからない）</li>
           </ul>
         </div>
 
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
           <p className="text-sm">
-            <strong>💡 セーブのタイミング:</strong> 「1つの作業が終わったら」が目安。
+            <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>セーブのタイミング:</strong></span> 「1つの作業が終わったら」が目安。
             細かすぎても大きすぎても後で困るので、「ログイン機能を追加」「バグを修正」くらいの単位がおすすめです。
           </p>
         </div>
@@ -422,7 +428,7 @@ git push`}
 
         <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
           <p className="text-sm">
-            <strong>⚠️ 注意:</strong> 初めて push するときは、先に GitHub でリポジトリを作成し、
+            <span className="flex items-center gap-1"><AlertTriangle className="h-4 w-4" /><strong>注意:</strong></span> 初めて push するときは、先に GitHub でリポジトリを作成し、
             接続設定が必要です。Claude Code に「GitHub にプッシュしたい」と伝えれば、
             設定方法を教えてもらえます。
           </p>
@@ -448,7 +454,7 @@ git pull`}
 
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
           <p className="text-sm">
-            <strong>💡 習慣にしよう:</strong> チームで作業するときは、
+            <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>習慣にしよう:</strong></span> チームで作業するときは、
             作業を始める前に <code className="px-1 py-0.5 bg-muted rounded">git pull</code> して
             最新の状態にしておくと、トラブルを防げます。
           </p>
@@ -502,7 +508,7 @@ git pull`}
               '「Git って何のためにあるの?」',
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2 p-2 bg-background rounded">
-                <span className="text-primary">💬</span>
+                <MessageCircle className="h-4 w-4 text-primary" />
                 <span className="text-muted-foreground">{item}</span>
               </div>
             ))}

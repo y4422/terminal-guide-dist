@@ -1,6 +1,7 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { Hero } from '@/components/landing/Hero';
 import { FeatureCard } from '@/components/landing/FeatureCard';
+import { Gamepad2, GitBranch, Rocket, Zap, MessageCircle, Wrench, Globe, Package, Lightbulb, HelpCircle, BookOpen } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -30,7 +31,7 @@ export default function Home() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
               <FeatureCard
-                icon="🎮"
+                icon={<Gamepad2 className="h-7 w-7 text-primary" />}
                 title="インタラクティブチュートリアル"
                 description="実際に操作しながら Claude Code の基本を学びます。ターミナル操作からファイル作成まで体験できます。"
                 href="/tutorial"
@@ -38,7 +39,7 @@ export default function Home() {
                 badgeColor="primary"
               />
               <FeatureCard
-                icon="📚"
+                icon={<GitBranch className="h-7 w-7 text-primary" />}
                 title="Git の使い方"
                 description="バージョン管理の基本から、Claude Code を使った効率的な Git 操作まで解説します。"
                 href="/guides/git"
@@ -46,7 +47,7 @@ export default function Home() {
                 badgeColor="success"
               />
               <FeatureCard
-                icon="🚀"
+                icon={<Rocket className="h-7 w-7 text-primary" />}
                 title="Next.js アプリを作ろう"
                 description="Node.js のインストールから npm run dev まで、Claude Code で Web アプリ開発を始めましょう。"
                 href="/guides/nextjs-setup"
@@ -54,7 +55,7 @@ export default function Home() {
                 badgeColor="success"
               />
               <FeatureCard
-                icon="⚡"
+                icon={<Zap className="h-7 w-7 text-primary" />}
                 title="Claude Code スキル"
                 description="スキル機能の活用方法と CLAUDE.md の書き方を学んで、開発効率をアップしましょう。"
                 href="/guides/claude-code-skills"
@@ -76,19 +77,19 @@ export default function Home() {
               </p>
               <div className="flex flex-wrap justify-center gap-4 text-sm">
                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-muted">
-                  <span>💬</span>
+                  <MessageCircle className="h-4 w-4" />
                   <span>日本語で操作</span>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-muted">
-                  <span>🔧</span>
+                  <Wrench className="h-4 w-4" />
                   <span>ファイル編集</span>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-muted">
-                  <span>🌐</span>
+                  <Globe className="h-4 w-4" />
                   <span>Web 検索</span>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-muted">
-                  <span>📦</span>
+                  <Package className="h-4 w-4" />
                   <span>Git 連携</span>
                 </div>
               </div>
@@ -100,32 +101,32 @@ export default function Home() {
         <section className="py-16 border-t border-border/50 bg-primary/[0.02]">
           <div className="container px-6">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl font-bold mb-6 text-center">💡 困ったら Claude Code に聞こう</h2>
+              <h2 className="text-2xl font-bold mb-6 text-center flex items-center justify-center gap-2"><Lightbulb className="h-6 w-6" /> 困ったら Claude Code に聞こう</h2>
               <p className="text-muted-foreground text-center mb-8">
                 使い方がわからなくなったら、Claude Code に直接質問できます。
                 日本語で気軽に聞いてみましょう。
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-background border border-border/50">
-                  <p className="font-medium mb-2">🤔 操作方法を聞く</p>
+                  <p className="font-medium mb-2 flex items-center gap-2"><HelpCircle className="h-4 w-4" /> 操作方法を聞く</p>
                   <code className="text-sm text-primary bg-primary/10 px-2 py-1 rounded block">
                     「ファイルの作り方を教えて」
                   </code>
                 </div>
                 <div className="p-4 rounded-lg bg-background border border-border/50">
-                  <p className="font-medium mb-2">📚 コマンドを調べる</p>
+                  <p className="font-medium mb-2 flex items-center gap-2"><BookOpen className="h-4 w-4" /> コマンドを調べる</p>
                   <code className="text-sm text-primary bg-primary/10 px-2 py-1 rounded block">
                     「使えるコマンド一覧を見せて」
                   </code>
                 </div>
                 <div className="p-4 rounded-lg bg-background border border-border/50">
-                  <p className="font-medium mb-2">🔧 エラーを解決</p>
+                  <p className="font-medium mb-2 flex items-center gap-2"><Wrench className="h-4 w-4" /> エラーを解決</p>
                   <code className="text-sm text-primary bg-primary/10 px-2 py-1 rounded block">
                     「このエラーの意味を教えて」
                   </code>
                 </div>
                 <div className="p-4 rounded-lg bg-background border border-border/50">
-                  <p className="font-medium mb-2">⚡ ヘルプを表示</p>
+                  <p className="font-medium mb-2 flex items-center gap-2"><Zap className="h-4 w-4" /> ヘルプを表示</p>
                   <code className="text-sm text-primary bg-primary/10 px-2 py-1 rounded block">
                     /help
                   </code>

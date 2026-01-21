@@ -1,5 +1,5 @@
 import { GuideLayout } from '@/components/layout/GuideLayout';
-import { Terminal, FolderTree, Play, Rocket, Package, FileCode, ExternalLink } from 'lucide-react';
+import { Terminal, FolderTree, Play, Rocket, Package, FileCode, ExternalLink, BookOpen, Lightbulb, CheckCircle, FileText, Folder, File, Target, PartyPopper, StopCircle } from 'lucide-react';
 import { FaApple, FaWindows } from 'react-icons/fa';
 
 const sections = [
@@ -46,7 +46,10 @@ function Section({ id, title, icon, children }: {
 function TermBox({ term, children }: { term: string; children: React.ReactNode }) {
   return (
     <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 my-4">
-      <p className="font-bold text-amber-600 dark:text-amber-400 mb-1">📖 用語: {term}</p>
+      <p className="font-bold text-amber-600 dark:text-amber-400 mb-1 flex items-center gap-2">
+        <BookOpen className="h-4 w-4" />
+        <span>用語: {term}</span>
+      </p>
       <p className="text-sm text-muted-foreground">{children}</p>
     </div>
   );
@@ -77,7 +80,7 @@ export default function NextjsSetupGuidePage() {
         </p>
 
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-5 mb-6">
-          <p className="font-medium mb-3">💡 わかりやすく言うと...</p>
+          <p className="font-medium mb-3 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> わかりやすく言うと...</p>
           <p className="text-muted-foreground mb-4">
             料理に例えると、<strong>React が「食材」</strong>で、<strong>Next.js は「レシピ付きの料理キット」</strong>です。
           </p>
@@ -105,10 +108,10 @@ export default function NextjsSetupGuidePage() {
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
           <p className="font-medium mb-2">なぜ Next.js を選ぶの?</p>
           <ul className="text-sm text-muted-foreground space-y-1">
-            <li>✅ 設定不要ですぐ始められる</li>
-            <li>✅ ファイルを作るだけでページが増やせる</li>
-            <li>✅ 表示が高速（自動で最適化）</li>
-            <li>✅ 世界中で使われている人気フレームワーク</li>
+            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> 設定不要ですぐ始められる</li>
+            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> ファイルを作るだけでページが増やせる</li>
+            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> 表示が高速（自動で最適化）</li>
+            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> 世界中で使われている人気フレームワーク</li>
           </ul>
         </div>
       </Section>
@@ -151,7 +154,7 @@ export default function NextjsSetupGuidePage() {
 
           <details className="group">
             <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 mb-2">
-              <span>📖</span>
+              <BookOpen className="h-4 w-4" />
               <span>他の方法（Homebrew を使う場合）</span>
               <span className="ml-auto text-xs opacity-50 group-open:rotate-90 transition-transform">▶</span>
             </summary>
@@ -196,7 +199,7 @@ export default function NextjsSetupGuidePage() {
 
         {/* Confirm installation */}
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
-          <p className="font-medium mb-2">✅ インストールできたか確認</p>
+          <p className="font-medium mb-2 flex items-center gap-2"><CheckCircle className="h-4 w-4 text-green-500" /> インストールできたか確認</p>
           <p className="text-sm text-muted-foreground mb-2">
             ターミナル（Mac）または PowerShell（Windows）で以下を実行:
           </p>
@@ -241,7 +244,7 @@ npm --version`}
         </div>
 
         <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-4">
-          <p className="font-bold text-amber-600 dark:text-amber-400 mb-2">📝 質問への回答例</p>
+          <p className="font-bold text-amber-600 dark:text-amber-400 mb-2 flex items-center gap-2"><FileText className="h-4 w-4" /> 質問への回答例</p>
           <p className="text-sm text-muted-foreground mb-3">
             コマンド実行時にいくつか質問されます。初めての場合は以下のように答えるのがおすすめ:
           </p>
@@ -257,7 +260,7 @@ npm --version`}
         </div>
 
         <TipBox>
-          <strong>💡 ヒント:</strong> Claude Code に頼めば、これらの設定も自動で選んでくれます。
+          <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>ヒント:</strong></span> Claude Code に頼めば、これらの設定も自動で選んでくれます。
           「TypeScript と Tailwind CSS を使った Next.js プロジェクトを作って」のように具体的に伝えると、
           希望通りの設定で作成してくれます。
         </TipBox>
@@ -272,45 +275,45 @@ npm --version`}
         <div className="bg-muted/30 rounded-lg p-4 mb-6 font-mono text-sm">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-blue-500">📁</span>
+              <Folder className="h-4 w-4 text-blue-500" />
               <span>my-app/</span>
             </div>
             <div className="pl-6 space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-yellow-500">📄</span>
+                <File className="h-4 w-4 text-yellow-500" />
                 <span>package.json</span>
                 <span className="text-muted-foreground ml-2">← プロジェクトの設定ファイル</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-blue-500">📁</span>
+                <Folder className="h-4 w-4 text-blue-500" />
                 <span>src/</span>
               </div>
               <div className="pl-6 space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-blue-500">📁</span>
+                  <Folder className="h-4 w-4 text-blue-500" />
                   <span>app/</span>
                   <span className="text-muted-foreground ml-2">← ページを置く場所</span>
                 </div>
                 <div className="pl-6 space-y-1">
                   <div className="flex items-center gap-2 text-primary font-medium">
-                    <span>📄</span>
+                    <File className="h-4 w-4" />
                     <span>page.tsx</span>
                     <span className="text-muted-foreground ml-2 font-normal">← トップページ（ここから編集!）</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-gray-500">📄</span>
+                    <File className="h-4 w-4 text-gray-500" />
                     <span>layout.tsx</span>
                     <span className="text-muted-foreground ml-2">← 共通レイアウト</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-gray-500">📄</span>
+                    <File className="h-4 w-4 text-gray-500" />
                     <span>globals.css</span>
                     <span className="text-muted-foreground ml-2">← 全体のスタイル</span>
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-blue-500">📁</span>
+                <Folder className="h-4 w-4 text-blue-500" />
                 <span>public/</span>
                 <span className="text-muted-foreground ml-2">← 画像などを置く場所</span>
               </div>
@@ -319,7 +322,7 @@ npm --version`}
         </div>
 
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mb-4">
-          <p className="font-medium mb-2">🎯 最初は page.tsx だけでOK!</p>
+          <p className="font-medium mb-2 flex items-center gap-2"><Target className="h-4 w-4" /> 最初は page.tsx だけでOK!</p>
           <p className="text-sm text-muted-foreground">
             <code className="px-1 py-0.5 bg-muted rounded">src/app/page.tsx</code> がトップページです。
             ここを編集すれば、画面に表示される内容が変わります。他のファイルは必要になったら覚えましょう。
@@ -328,14 +331,14 @@ npm --version`}
 
         <div className="space-y-3">
           <div className="border rounded-lg p-4">
-            <p className="font-medium mb-1">📄 package.json</p>
+            <p className="font-medium mb-1 flex items-center gap-2"><File className="h-4 w-4" /> package.json</p>
             <p className="text-sm text-muted-foreground">
               プロジェクトの「説明書」のようなファイル。使用するライブラリや、
               実行できるコマンド（npm run dev など）が書いてあります。
             </p>
           </div>
           <div className="border rounded-lg p-4">
-            <p className="font-medium mb-1">📁 src/app/</p>
+            <p className="font-medium mb-1 flex items-center gap-2"><Folder className="h-4 w-4" /> src/app/</p>
             <p className="text-sm text-muted-foreground">
               ページを作る場所。フォルダを作ると、そのまま URL になります。
               例: <code className="px-1 py-0.5 bg-muted rounded">src/app/about/page.tsx</code> を作ると
@@ -343,7 +346,7 @@ npm --version`}
             </p>
           </div>
           <div className="border rounded-lg p-4">
-            <p className="font-medium mb-1">📁 public/</p>
+            <p className="font-medium mb-1 flex items-center gap-2"><Folder className="h-4 w-4" /> public/</p>
             <p className="text-sm text-muted-foreground">
               画像やアイコンなど、そのまま公開したいファイルを置く場所。
               ここに置いたファイルは URL から直接アクセスできます。
@@ -400,7 +403,7 @@ npm --version`}
         </div>
 
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mb-4">
-          <p className="font-medium mb-2">🎉 成功!</p>
+          <p className="font-medium mb-2 flex items-center gap-2"><PartyPopper className="h-4 w-4 text-green-500" /> 成功!</p>
           <p className="text-sm text-muted-foreground">
             Next.js のウェルカムページが表示されれば、セットアップ完了です!
           </p>
@@ -412,7 +415,7 @@ npm --version`}
         </TermBox>
 
         <div className="border rounded-lg p-4">
-          <p className="font-medium mb-2">🛑 サーバーを停止するには</p>
+          <p className="font-medium mb-2 flex items-center gap-2"><StopCircle className="h-4 w-4 text-red-500" /> サーバーを停止するには</p>
           <p className="text-sm text-muted-foreground mb-2">
             ターミナルで <kbd className="px-2 py-1 bg-muted rounded text-xs font-mono">Ctrl + C</kbd> を押すと、
             サーバーが停止します。
@@ -461,7 +464,7 @@ npm --version`}
         </div>
 
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-6">
-          <p className="font-medium mb-2">💡 Claude Code を活用しよう</p>
+          <p className="font-medium mb-2 flex items-center gap-2"><Lightbulb className="h-4 w-4" /> Claude Code を活用しよう</p>
           <p className="text-sm text-muted-foreground">
             やりたいことを日本語で Claude Code に伝えれば、コードを書いてくれます。
             「〇〇な機能を追加して」「△△のエラーを直して」など、気軽に相談してみましょう。
@@ -469,7 +472,7 @@ npm --version`}
         </div>
 
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
-          <p className="font-medium mb-3">📚 さらに学びたい方へ</p>
+          <p className="font-medium mb-3 flex items-center gap-2"><BookOpen className="h-4 w-4" /> さらに学びたい方へ</p>
           <ul className="text-sm text-muted-foreground space-y-2">
             <li className="flex items-center gap-2">
               <ExternalLink className="h-4 w-4 text-primary" />
