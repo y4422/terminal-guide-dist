@@ -20,6 +20,7 @@ export function Terminal() {
     content: string;
   }>>([]);
   const [initializedStep, setInitializedStep] = useState<StepId | null>(null);
+  const [showCompletionButton, setShowCompletionButton] = useState(false);
 
   const {
     currentStep,
@@ -432,10 +433,10 @@ render();`;
 └── requirements.md
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎓 チュートリアル完了!
-調査 → 要件定義 → 実装 の開発フローを体験しました
+🎓 開発フロー完了!
+調査 → 要件定義 → 実装 を一通り体験しました
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-          message: '🎉 完了画面に移動します...',
+          message: '🎉 お疲れ様でした!',
         };
 
       default:
@@ -487,9 +488,14 @@ render();`;
 
     if (response.type === 'success') {
       setOutputs((prev) => [...prev, { type: 'success', content: response.message }]);
-      setTimeout(() => {
-        completeStep(currentStep);
-      }, 1500);
+      // Step 10: Show button instead of auto-advancing
+      if (currentStep === 10) {
+        setShowCompletionButton(true);
+      } else {
+        setTimeout(() => {
+          completeStep(currentStep);
+        }, 1500);
+      }
     } else if (response.type === 'error') {
       setOutputs((prev) => [...prev, { type: 'error', content: response.message }]);
     } else if (response.type === 'clarification') {
@@ -587,8 +593,23 @@ render();`;
           </div>
         )}
 
+        {/* Completion button for step 10 */}
+        {showCompletionButton && (
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={() => {
+                setShowCompletionButton(false);
+                completeStep(10);
+              }}
+              className="px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors shadow-lg"
+            >
+              🎓 チュートリアル完了画面へ →
+            </button>
+          </div>
+        )}
+
         {/* Current input line - terminal style */}
-        {!isProcessing && (
+        {!isProcessing && !showCompletionButton && (
           <div className="flex items-center mt-2 text-terminal-text">
             {/* Prompt */}
             <span className={claudeStarted ? 'text-terminal-success mr-1' : 'text-terminal-text/70 mr-2'}>
@@ -622,7 +643,7 @@ render();`;
         )}
 
         {/* Subtle hint for beginners - only show when no input yet */}
-        {!isProcessing && outputs.length === 0 && inputValue === '' && (
+        {!isProcessing && !showCompletionButton && outputs.length === 0 && inputValue === '' && (
           <div className="text-terminal-text/30 text-xs mt-4">
             {claudeStarted
               ? '日本語で話しかけてください'
