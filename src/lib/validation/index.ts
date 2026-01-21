@@ -6,40 +6,41 @@ const STEP_KEYWORDS: Record<StepId, {
   target: string[];
 }> = {
   0: { action: [], target: [] },
-  1: { action: [], target: [] }, // Terminal opening - no validation needed
-  2: {
+  1: { action: [], target: [] }, // Install - no validation needed
+  2: { action: [], target: [] }, // Terminal opening - no validation needed
+  3: {
     action: ['cd'],
     target: ['desktop', 'documents', 'downloads', 'projects', '..', '~'],
   },
-  3: {
+  4: {
     action: ['claude'],
     target: [],
   },
-  4: {
+  5: {
     action: ['作', '作成', '作って', 'create', 'make', '作る'],
     target: ['フォルダ', 'ディレクトリ', 'folder', 'directory'],
   },
-  5: {
+  6: {
     action: ['調査', '調べ', 'リサーチ', 'research', 'まとめ', '分析'],
     target: ['todo', 'Todo', 'TODO', 'タスク', 'アプリ', '競合', '.md', 'research'],
   },
-  6: {
+  7: {
     action: ['確認', '追加', '足りない', 'check', 'review', 'add', '改善'],
     target: ['@', 'research', '.md'],
   },
-  7: {
+  8: {
     action: ['要件', 'まとめ', 'requirements', '作', '作成', '決め'],
     target: ['要件', 'requirements', '.md', '調査', 'todo', 'Todo', 'TODO', 'アプリ'],
   },
-  8: {
+  9: {
     action: ['レビュー', 'review', '視点', '確認', 'チェック'],
     target: ['@', 'requirements', '.md', '別の'],
   },
-  9: {
+  10: {
     action: ['作', '作成', '開発', 'develop', 'create', '作って', '始め'],
     target: ['todo', 'Todo', 'TODO', 'アプリ', '基本', '構造', '要件'],
   },
-  10: { action: [], target: [] }, // Completion - no validation
+  11: { action: [], target: [] }, // Completion - no validation
 };
 
 export function validateInput(input: string, stepId: StepId): ValidationResult {
@@ -59,7 +60,7 @@ export function validateInput(input: string, stepId: StepId): ValidationResult {
 
   // Step-specific validation
   switch (stepId) {
-    case 2: // cd command
+    case 3: // cd command
       if (lowerInput.startsWith('cd ') || lowerInput === 'cd') {
         return { type: 'success', isValid: true };
       }
@@ -71,7 +72,7 @@ export function validateInput(input: string, stepId: StepId): ValidationResult {
         suggestions: ['cd Desktop', 'cd Documents', 'cd ..'],
       };
 
-    case 3: // claude command
+    case 4: // claude command
       if (lowerInput === 'claude' || lowerInput.startsWith('claude ')) {
         return { type: 'success', isValid: true };
       }
@@ -83,7 +84,7 @@ export function validateInput(input: string, stepId: StepId): ValidationResult {
         suggestions: ['claude'],
       };
 
-    case 4: // Folder creation
+    case 5: // Folder creation
       if (!hasAction && input.length > 3) {
         return {
           type: 'hint',
@@ -105,7 +106,7 @@ export function validateInput(input: string, stepId: StepId): ValidationResult {
       }
       break;
 
-    case 5: // Competitive research (Plan Mode)
+    case 6: // Competitive research (Plan Mode)
       if (!hasAction && input.length > 3) {
         return {
           type: 'hint',
@@ -127,7 +128,7 @@ export function validateInput(input: string, stepId: StepId): ValidationResult {
       }
       break;
 
-    case 6: // Review research results
+    case 7: // Review research results
       if (!hasTarget) {
         return {
           type: 'hint',
@@ -141,7 +142,7 @@ export function validateInput(input: string, stepId: StepId): ValidationResult {
       }
       break;
 
-    case 7: // Create requirements
+    case 8: // Create requirements
       if (!hasAction && input.length > 3) {
         return {
           type: 'hint',
@@ -163,7 +164,7 @@ export function validateInput(input: string, stepId: StepId): ValidationResult {
       }
       break;
 
-    case 8: // Multi-model review
+    case 9: // Multi-model review
       if (!hasTarget) {
         return {
           type: 'hint',
@@ -185,7 +186,7 @@ export function validateInput(input: string, stepId: StepId): ValidationResult {
       }
       break;
 
-    case 9: // Start development
+    case 10: // Start development
       if (!hasAction && input.length > 3) {
         return {
           type: 'hint',
@@ -234,21 +235,21 @@ export function validateInput(input: string, stepId: StepId): ValidationResult {
 
 function getSuggestions(stepId: StepId): string[] {
   switch (stepId) {
-    case 2:
-      return ['cd Desktop', 'cd Documents', 'cd projects'];
     case 3:
-      return ['claude'];
+      return ['cd Desktop', 'cd Documents', 'cd projects'];
     case 4:
-      return ['my-projectフォルダを作って', 'projectという名前のフォルダを作って'];
+      return ['claude'];
     case 5:
-      return ['Todoアプリの競合サービスを調査して、research.mdにまとめて'];
+      return ['my-projectフォルダを作って', 'projectという名前のフォルダを作って'];
     case 6:
-      return ['@research.md の内容を確認して、足りない情報があれば追加して'];
+      return ['Todoアプリの競合サービスを調査して、research.mdにまとめて'];
     case 7:
-      return ['調査結果をもとに、Todoアプリの要件をrequirements.mdにまとめて'];
+      return ['@research.md の内容を確認して、足りない情報があれば追加して'];
     case 8:
-      return ['@requirements.md を別の視点からレビューして'];
+      return ['調査結果をもとに、Todoアプリの要件をrequirements.mdにまとめて'];
     case 9:
+      return ['@requirements.md を別の視点からレビューして'];
+    case 10:
       return ['要件に沿ってTodoアプリの基本構造を作って'];
     default:
       return [];

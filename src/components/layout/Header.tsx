@@ -6,10 +6,10 @@ import { useTutorialStore } from '@/store/tutorial';
 export function Header() {
   const { completedSteps, currentStep } = useTutorialStore();
 
-  // Calculate progress: only count steps 1-9 (actual tutorial steps)
-  // Step 0 is intro, step 10 is completion screen
-  const totalSteps = 9;
-  const actualCompletedSteps = completedSteps.filter(step => step >= 1 && step <= 9);
+  // Calculate progress: only count steps 1-10 (actual tutorial steps)
+  // Step 0 is intro, step 11 is completion screen
+  const totalSteps = 10;
+  const actualCompletedSteps = completedSteps.filter(step => step >= 1 && step <= 10);
   const progress = (actualCompletedSteps.length / totalSteps) * 100;
 
   return (
@@ -42,7 +42,7 @@ export function Header() {
           {/* Step indicators */}
           <div className="hidden sm:flex items-center gap-1.5">
             {Array.from({ length: totalSteps + 1 }, (_, i) => {
-              const isCompleted = completedSteps.includes(i as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9);
+              const isCompleted = completedSteps.includes(i as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10);
               const isCurrent = currentStep === i;
 
               return (

@@ -13,48 +13,49 @@ interface HintBoxProps {
 
 const HINT_MESSAGES: Record<StepId, string[]> = {
   0: [], // Intro
-  1: [], // Terminal opening - instructions only
-  2: [
+  1: [], // Install - instructions only
+  2: [], // Terminal opening - instructions only
+  3: [
     '「cd」の後にスペースを入れて、フォルダ名を指定します',
     '「cd Desktop」「cd Documents」のように入力してみて',
     '上の「cd Desktop」をコピーして入力してください',
   ],
-  3: [
+  4: [
     '小文字で「claude」と入力してEnterを押します',
     'クォート（"）は不要です、そのまま「claude」と入力',
     '「claude」をコピーして入力してください',
   ],
-  4: [
+  5: [
     '「〇〇して」という形で伝えてみましょう',
     '「my-projectフォルダを作って」のように具体的に',
     '「my-projectフォルダを作って」をコピーして入力してください',
   ],
-  5: [
+  6: [
     'まず Shift+Tab か /plan でPlan Modeに切り替えましょう',
     '調査対象のURL（例: https://todoist.com）があればより詳細に分析できます',
     '「Todoアプリの競合サービスを調査して、research.mdにまとめて」をコピーして入力',
   ],
-  6: [
+  7: [
     '@ファイル名 でファイルをClaudeに渡せます',
     '「確認して」「追加して」などで編集を依頼できます',
     '「@research.md の内容を確認して、足りない情報があれば追加して」をコピーして入力',
   ],
-  7: [
+  8: [
     '上のミッションをそのままコピーして入力すればOKです!',
     'Claudeが調査結果を読んで、自動で「作るものリスト」を作ってくれます',
     '「調査結果をもとに、Todoアプリの要件をrequirements.mdにまとめて」をコピーして入力',
   ],
-  8: [
+  9: [
     '@ファイル名 でファイルをClaudeに渡せます',
     '「レビューして」「別の視点から」などで多角的な確認を依頼できます',
     '「@requirements.md を別の視点からレビューして」をコピーして入力',
   ],
-  9: [
+  10: [
     '「作って」「開発して」などの言葉を使ってみましょう',
     '「Todoアプリ」「基本構造」などのキーワードを含めましょう',
     '「要件に沿ってTodoアプリの基本構造を作って」をコピーして入力',
   ],
-  10: [], // Completion
+  11: [], // Completion
 };
 
 export function HintBox({ stepId }: HintBoxProps) {

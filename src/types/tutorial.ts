@@ -1,5 +1,5 @@
 // Tutorial Step Types
-export type StepId = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10; // 0=intro, 1-9=steps, 10=completion
+export type StepId = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11; // 0=intro, 1-10=steps, 11=completion
 
 export type StepStatus = 'not-started' | 'in-progress' | 'completed' | 'skipped';
 
@@ -120,15 +120,31 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
     ],
   },
   1: {
-    title: 'ステップ1: ターミナルを知ろう',
+    title: 'ステップ1: Claude Code をインストールしよう',
+    introduction: 'まずはClaude Codeをインストールします。お使いのOSに合わせて、コマンドを実行してください。',
+    mission: {
+      description: 'Claude Code をインストールしましょう',
+      copyable: false,
+    },
+    tips: [
+      'インストールは1分程度で完了します',
+      'すでにインストール済みの方はスキップできます',
+    ],
+    knowledgeBox: {
+      title: '🤖 Claude Code とは?',
+      content: 'AIアシスタントClaudeをターミナルから使えるツール。日本語で話しかけるだけで、プログラミングやファイル操作を手伝ってくれます。',
+    },
+  },
+  2: {
+    title: 'ステップ2: ターミナルを知ろう',
     introduction: 'ターミナル（黒い画面）は、文字を打ってパソコンを操作するツールです。最初は怖く見えますが、実はとてもシンプル!',
     mission: {
-      description: 'ターミナルを開いてみましょう。Macなら「ターミナル」アプリ、Windowsなら「PowerShell」を起動します。',
+      description: 'ターミナルを開いてみましょう。Macなら「ターミナル」アプリ、Windowsなら「コマンドプロンプト」を起動します。',
       copyable: false,
     },
     tips: [
       'Mac: Spotlight (⌘+Space) で「ターミナル」と検索',
-      'Windows: スタートメニューで「PowerShell」と検索',
+      'Windows: スタートメニューで「cmd」と検索',
       'VS Codeを使っている場合は、表示メニューから「ターミナル」を選択',
     ],
     knowledgeBox: {
@@ -136,8 +152,8 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
       content: 'GUI（マウスでクリック）の代わりに、キーボードで文字を打ってパソコンを操作する方法です。慣れると実はとても効率的!',
     },
   },
-  2: {
-    title: 'ステップ2: フォルダを移動しよう',
+  3: {
+    title: 'ステップ3: フォルダを移動しよう',
     introduction: 'ターミナルでは「cd」コマンドでフォルダ間を移動します。これはターミナルの最も基本的な操作の1つです。',
     mission: {
       description: 'デスクトップフォルダに移動しましょう',
@@ -159,8 +175,8 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
       note: 'pwdで今どこにいるか確認できます',
     },
   },
-  3: {
-    title: 'ステップ3: ClaudeCodeを起動しよう',
+  4: {
+    title: 'ステップ4: ClaudeCodeを起動しよう',
     introduction: '準備ができました! いよいよClaudeCodeを起動します。「claude」と入力するだけです。',
     mission: {
       description: 'ClaudeCodeを起動しましょう',
@@ -177,8 +193,8 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
       content: 'AIアシスタントのClaudeをターミナルから使えるツール。日本語で話しかけるだけで、プログラミングやファイル操作を手伝ってくれます。',
     },
   },
-  4: {
-    title: 'ステップ4: プロジェクトフォルダを作ろう',
+  5: {
+    title: 'ステップ5: プロジェクトフォルダを作ろう',
     introduction: 'ClaudeCodeが起動しました! まずはプロジェクト用のフォルダを作りましょう。日本語で話しかけるだけでOKです。',
     mission: {
       description: 'プロジェクト用のフォルダを作成しましょう',
@@ -199,8 +215,8 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
       note: 'というコマンドですが、Claudeなら覚えなくてOK!',
     },
   },
-  5: {
-    title: 'ステップ5: 競合調査をしよう（Plan Mode）',
+  6: {
+    title: 'ステップ6: 競合調査をしよう（Plan Mode）',
     introduction: 'ClaudeCodeの「Plan Mode」を使って、競合サービスを調査しましょう。Plan Modeに切り替えるには、Shift+Tab を押すか、/plan と入力します。',
     mission: {
       description: 'Todoアプリの競合サービスを調査し、レポートを作成しましょう',
@@ -222,8 +238,8 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
       note: 'Plan Modeでは、実行前に計画を確認できます',
     },
   },
-  6: {
-    title: 'ステップ6: 調査結果を確認・追加しよう',
+  7: {
+    title: 'ステップ7: 調査結果を確認・追加しよう',
     introduction: '作成された調査レポートを確認し、足りない情報があれば追加してもらいましょう。',
     mission: {
       description: '調査レポートの内容を確認し、不足情報を追加しましょう',
@@ -240,8 +256,8 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
       content: '@ファイル名 でファイルをClaudeに渡せます。ファイルをドラッグ&ドロップしても同じことができます!',
     },
   },
-  7: {
-    title: 'ステップ7: 作るものを決めよう',
+  8: {
+    title: 'ステップ8: 作るものを決めよう',
     introduction: '調査結果をもとに、「どんなTodoアプリを作るか」をClaudeにまとめてもらいましょう。これが設計図になります!',
     mission: {
       description: '調査結果をもとに、アプリの要件定義（作るものリスト）を作成しましょう',
@@ -263,8 +279,8 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
       note: '難しく考えなくてOK、Claudeにお任せ!',
     },
   },
-  8: {
-    title: 'ステップ8: 別の視点からレビューしよう',
+  9: {
+    title: 'ステップ9: 別の視点からレビューしよう',
     introduction: '要件定義を別の視点からレビューしてもらい、見落としがないか確認しましょう。',
     mission: {
       description: 'セキュリティ・パフォーマンス・UXなど複数の視点から要件をチェックしましょう',
@@ -281,8 +297,8 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
       content: '一つの成果物を複数の観点（セキュリティ、パフォーマンス、UXなど）からチェックすること。見落としを防ぎ、品質を高められます。',
     },
   },
-  9: {
-    title: 'ステップ9: 開発を始めよう',
+  10: {
+    title: 'ステップ10: 開発を始めよう',
     introduction: '要件定義が完成しました! いよいよTodoアプリの開発を始めましょう。Claudeがコードを自動生成してくれます。',
     mission: {
       description: '要件に基づいて、実際に動くTodoアプリのコードを生成しましょう',
@@ -304,7 +320,7 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
       note: '全てブラウザで動作するシンプルな構成です',
     },
   },
-  10: {
+  11: {
     title: 'おめでとうございます!',
     introduction: 'ClaudeCode体験ツアーを完走しました! 調査から開発まで、一連の開発ワークフローを体験しました。',
     mission: {
@@ -315,6 +331,12 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
 
 // Default achievements
 export const DEFAULT_ACHIEVEMENTS: Achievement[] = [
+  {
+    id: 'installer',
+    name: 'インストーラー',
+    description: 'Claude Codeをインストール!',
+    icon: '📦',
+  },
   {
     id: 'terminal-opener',
     name: 'ターミナルデビュー',

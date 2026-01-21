@@ -48,22 +48,22 @@ export function Terminal() {
     // Skip if already initialized for this step
     if (initializedStep === currentStep) return;
 
-    // Step 2-3: Terminal mode (before Claude is started)
-    // Step 4+: Claude Code mode
-    if (currentStep === 2) {
-      // Step 2: Fresh terminal, user needs to cd
+    // Step 3-4: Terminal mode (before Claude is started)
+    // Step 5+: Claude Code mode
+    if (currentStep === 3) {
+      // Step 3: Fresh terminal, user needs to cd
       setClaudeStarted(false);
       setCurrentPath('~');
       setOutputs([]);
-    } else if (currentStep === 3) {
-      // Step 3: User already did cd, now needs to run claude
+    } else if (currentStep === 4) {
+      // Step 4: User already did cd, now needs to run claude
       setClaudeStarted(false);
       setCurrentPath('~/Desktop');
       setOutputs([
         { type: 'prompt', content: '~ $ cd Desktop' },
       ]);
-    } else if (currentStep >= 4) {
-      // Claude Code mode for step 4 and beyond
+    } else if (currentStep >= 5) {
+      // Claude Code mode for step 5 and beyond
       setClaudeStarted(true);
       setCurrentPath('~/Desktop');
       // Show Claude startup context
@@ -106,7 +106,7 @@ export function Terminal() {
     }
 
     switch (stepId) {
-      case 2: // cd command
+      case 3: // cd command
         const targetDir = input.replace('cd ', '').trim() || '~';
         let newPath = currentPath;
         if (targetDir === '..') {
@@ -128,7 +128,7 @@ export function Terminal() {
           message: '🎉 フォルダを移動できました!',
         };
 
-      case 3: // claude command
+      case 4: // claude command
         setClaudeStarted(true);
         unlockAchievement('claude-starter');
         return {
@@ -144,7 +144,7 @@ export function Terminal() {
           message: '🎉 ClaudeCodeが起動しました!',
         };
 
-      case 4: // Folder creation with Claude
+      case 5: // Folder creation with Claude
         createDirectory('~', 'my-project');
         unlockAchievement('first-command');
         return {
@@ -155,7 +155,7 @@ export function Terminal() {
           message: '🎉 素晴らしい! プロジェクトフォルダが作成されました!',
         };
 
-      case 5: // Competitive research (Plan Mode)
+      case 6: // Competitive research (Plan Mode)
         const researchContent = `# Todoアプリ 競合調査レポート
 
 ## 調査対象
@@ -209,7 +209,7 @@ ${researchContent}
           message: '🎉 競合調査が完了しました!',
         };
 
-      case 6: // Review research results
+      case 7: // Review research results
         const updatedResearchContent = `# Todoアプリ 競合調査レポート
 
 ## 調査対象
@@ -264,7 +264,7 @@ ${researchContent}
           message: '🎉 調査レポートが改善されました!',
         };
 
-      case 7: // Create requirements
+      case 8: // Create requirements
         const requirementsContent = `# Todoアプリ 要件定義書
 
 ## 概要
@@ -312,7 +312,7 @@ ${requirementsContent}
           message: '🎉 要件定義が作成されました!',
         };
 
-      case 8: // Multi-model review
+      case 9: // Multi-model review
         unlockAchievement('multi-perspective');
         return {
           type: 'success',
@@ -343,7 +343,7 @@ ${requirementsContent}
           message: '🎉 マルチ視点レビューが完了しました!',
         };
 
-      case 9: // Start development
+      case 10: // Start development
         const indexHtml = `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -517,12 +517,17 @@ render();`;
   }
 
   // Completion screen
-  if (currentStep === 10) {
+  if (currentStep === 11) {
     return <CompletionScreen />;
   }
 
-  // Step 1: Terminal opening instructions (no input needed)
+  // Step 1: Install Claude Code
   if (currentStep === 1) {
+    return <InstallScreen />;
+  }
+
+  // Step 2: Terminal opening instructions (no input needed)
+  if (currentStep === 2) {
     return <TerminalOpeningScreen />;
   }
 
@@ -547,7 +552,7 @@ render();`;
         {/* Initial terminal welcome message */}
         {outputs.length === 0 && !claudeStarted && (
           <div className="text-terminal-text/60 mb-2">
-            {currentStep === 2 && (
+            {currentStep === 3 && (
               <div className="mb-4">Last login: {new Date().toLocaleString('ja-JP')}</div>
             )}
           </div>
@@ -677,13 +682,118 @@ function IntroScreen() {
   );
 }
 
-// Terminal Opening Screen (Step 1)
+// Install Screen (Step 1)
+function InstallScreen() {
+  const [selectedOS, setSelectedOS] = useState<'mac' | 'windows'>('mac');
+  const [copied, setCopied] = useState(false);
+  const { completeStep, unlockAchievement } = useTutorialStore();
+
+  const installCommands = {
+    mac: 'curl -fsSL https://claude.ai/install.sh | sh',
+    windows: 'curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd'
+  };
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(installCommands[selectedOS]);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleNext = () => {
+    unlockAchievement('installer');
+    completeStep(1);
+  };
+
+  return (
+    <div className="flex h-full flex-col items-center justify-center p-8 text-terminal-text">
+      <div className="max-w-lg space-y-8">
+        <h2 className="text-2xl font-bold text-center">
+          🚀 Claude Code をインストールしよう
+        </h2>
+
+        {/* OS選択タブ */}
+        <div className="flex justify-center gap-2">
+          <button
+            onClick={() => setSelectedOS('mac')}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              selectedOS === 'mac'
+                ? 'bg-primary text-white'
+                : 'bg-terminal-text/10 hover:bg-terminal-text/20'
+            }`}
+          >
+            🍎 Mac
+          </button>
+          <button
+            onClick={() => setSelectedOS('windows')}
+            className={`px-4 py-2 rounded-lg transition-colors ${
+              selectedOS === 'windows'
+                ? 'bg-primary text-white'
+                : 'bg-terminal-text/10 hover:bg-terminal-text/20'
+            }`}
+          >
+            🪟 Windows
+          </button>
+        </div>
+
+        {/* コマンド表示 */}
+        <div className="bg-[#1a1a2e] border border-terminal-text/20 rounded-lg p-4">
+          <div className="flex items-center justify-between gap-3">
+            <code className="text-sm text-terminal-text break-all font-mono">
+              {installCommands[selectedOS]}
+            </code>
+            <button
+              onClick={handleCopy}
+              className="shrink-0 px-3 py-1.5 bg-terminal-text/10 rounded hover:bg-terminal-text/20 transition-colors"
+              title="コピー"
+            >
+              {copied ? '✅ コピー!' : '📋'}
+            </button>
+          </div>
+        </div>
+
+        {/* 手順説明 */}
+        <div className="space-y-3 text-terminal-text/80">
+          <p className="font-bold">📝 インストール手順:</p>
+          <ol className="list-decimal list-inside space-y-2 text-sm">
+            <li>
+              {selectedOS === 'mac' ? (
+                <>ターミナルを開く（⌘+Space で「ターミナル」と検索）</>
+              ) : (
+                <>コマンドプロンプトを開く（スタートメニューで「cmd」と検索）</>
+              )}
+            </li>
+            <li>上のコマンドをコピーして貼り付け</li>
+            <li>Enterキーで実行</li>
+          </ol>
+        </div>
+
+        {/* ボタン */}
+        <div className="flex flex-col gap-3 text-center">
+          <button
+            onClick={handleNext}
+            className="px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors"
+          >
+            インストールが完了しました →
+          </button>
+          <button
+            onClick={handleNext}
+            className="text-terminal-text/60 hover:text-terminal-text text-sm transition-colors"
+          >
+            すでにインストール済み →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Terminal Opening Screen (Step 2)
 function TerminalOpeningScreen() {
   const { completeStep, unlockAchievement } = useTutorialStore();
 
   const handleConfirm = () => {
     unlockAchievement('terminal-opener');
-    completeStep(1);
+    completeStep(2);
   };
 
   return (
@@ -712,7 +822,7 @@ function TerminalOpeningScreen() {
                 <span>🪟</span> Windows
               </h3>
               <p className="text-sm text-terminal-text/70 mt-2">
-                スタートメニューで「PowerShell」と検索してクリック
+                スタートメニューで「cmd」と検索してクリック
               </p>
             </div>
 

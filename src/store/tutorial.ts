@@ -59,7 +59,7 @@ const createInitialFileSystem = (): FileSystem => ({
 
 const createInitialStepStates = (): Record<StepId, StepState> => {
   const states: Record<StepId, StepState> = {} as Record<StepId, StepState>;
-  for (let i = 0; i <= 10; i++) {
+  for (let i = 0; i <= 11; i++) {
     states[i as StepId] = {
       stepId: i as StepId,
       status: 'not-started',
@@ -135,7 +135,7 @@ export const useTutorialStore = create<TutorialState>()(
         });
 
         // Auto-advance to next step
-        if (step < 10) {
+        if (step < 11) {
           const nextStep = (step + 1) as StepId;
           set({
             currentStep: nextStep,
@@ -166,7 +166,7 @@ export const useTutorialStore = create<TutorialState>()(
         });
 
         // Auto-advance to next step
-        if (step < 10) {
+        if (step < 11) {
           const nextStep = (step + 1) as StepId;
           set({
             currentStep: nextStep,
@@ -356,6 +356,7 @@ export const useTutorialStore = create<TutorialState>()(
         if (achievements.find((a) => a.id === achievementId)) return;
 
         const achievementTemplate = {
+          'installer': { name: 'インストーラー', description: 'Claude Codeをインストール!', icon: '📦' },
           'terminal-opener': { name: 'ターミナルデビュー', description: 'ターミナルを開くことができた!', icon: '🖥️' },
           'navigator': { name: 'ナビゲーター', description: 'cdコマンドでフォルダを移動できた!', icon: '🧭' },
           'claude-starter': { name: 'Claude起動', description: 'ClaudeCodeを起動できた!', icon: '🤖' },
