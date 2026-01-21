@@ -1,8 +1,9 @@
 import { GuideLayout } from '@/components/layout/GuideLayout';
-import { Terminal, GitBranch, Upload, Download, FolderPlus, Save, History, Users } from 'lucide-react';
+import { Terminal, GitBranch, Upload, Download, FolderPlus, Save, History, Users, Package } from 'lucide-react';
 
 const sections = [
   { id: 'what-is-git', title: 'Git とは' },
+  { id: 'install', title: 'インストール方法' },
   { id: 'why-git', title: 'なぜ Git を使うの?' },
   { id: 'basic-flow', title: '基本の流れ' },
   { id: 'git-init', title: 'git init' },
@@ -105,6 +106,123 @@ export default function GitGuidePage() {
           Git で管理されているフォルダのこと。「プロジェクトの保管庫」と思ってください。
           普通のフォルダに Git の機能を追加したものです。
         </TermBox>
+      </Section>
+
+      <Section id="install" title="Git のインストール方法" icon={<Package className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-4">
+          Git を使う前に、まずパソコンにインストールする必要があります。
+          お使いの OS に合わせて進めてください。
+        </p>
+
+        {/* Mac */}
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+            <span>🍎</span> Mac の場合
+          </h3>
+
+          <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
+            <p className="font-medium mb-2">方法 1: 一番カンタン（おすすめ）</p>
+            <p className="text-sm text-muted-foreground mb-3">
+              ターミナルを開いて、以下を入力するだけ。まだ Git が入っていなければ、
+              インストールするか聞かれるので「インストール」をクリック。
+            </p>
+            <CodeBlock title="ターミナルで実行">
+{`git --version`}
+            </CodeBlock>
+            <p className="text-xs text-muted-foreground">
+              または <code className="px-1 py-0.5 bg-muted rounded">xcode-select --install</code> でも OK
+            </p>
+          </div>
+
+          <details className="group">
+            <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 mb-2">
+              <span>📖</span>
+              <span>他の方法（Homebrew を使う場合）</span>
+              <span className="ml-auto text-xs opacity-50 group-open:rotate-90 transition-transform">▶</span>
+            </summary>
+            <div className="pl-6 text-sm text-muted-foreground">
+              <p className="mb-2">
+                Homebrew（Mac のパッケージ管理ツール）を使うと、より新しいバージョンの Git をインストールできます。
+              </p>
+              <CodeBlock title="Homebrew でインストール">
+{`brew install git`}
+              </CodeBlock>
+            </div>
+          </details>
+        </div>
+
+        {/* Windows */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+            <span>🪟</span> Windows の場合
+          </h3>
+
+          <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
+            <p className="font-medium mb-2">方法 1: 公式サイトからダウンロード（おすすめ）</p>
+            <ol className="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
+              <li>
+                <a
+                  href="https://git-scm.com/download/win"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  Git 公式サイト
+                </a>
+                {' '}にアクセス（自動でダウンロード開始）
+              </li>
+              <li>ダウンロードしたファイルを開く</li>
+              <li>「Next」を押していくだけでOK（設定はデフォルトで大丈夫）</li>
+            </ol>
+          </div>
+
+          <details className="group">
+            <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 mb-2">
+              <span>📖</span>
+              <span>他の方法（winget を使う場合）</span>
+              <span className="ml-auto text-xs opacity-50 group-open:rotate-90 transition-transform">▶</span>
+            </summary>
+            <div className="pl-6 text-sm text-muted-foreground">
+              <p className="mb-2">
+                PowerShell からコマンドでインストールすることもできます。
+              </p>
+              <CodeBlock title="PowerShell で実行">
+{`winget install --id Git.Git -e --source winget`}
+              </CodeBlock>
+            </div>
+          </details>
+        </div>
+
+        {/* Confirm installation */}
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mb-4">
+          <p className="font-medium mb-2">✅ インストールできたか確認</p>
+          <p className="text-sm text-muted-foreground mb-2">
+            ターミナル（Mac）または PowerShell（Windows）で以下を実行:
+          </p>
+          <CodeBlock title="確認コマンド">
+{`git --version`}
+          </CodeBlock>
+          <p className="text-sm text-muted-foreground">
+            <code className="px-1 py-0.5 bg-muted rounded">git version 2.xx.x</code> のように
+            バージョンが表示されれば成功です!
+          </p>
+        </div>
+
+        {/* Initial setup */}
+        <div className="border rounded-lg p-4">
+          <p className="font-medium mb-2">🔧 初期設定（名前とメールアドレス）</p>
+          <p className="text-sm text-muted-foreground mb-3">
+            Git を使う前に、あなたの名前とメールアドレスを設定します。
+            これは「誰が変更したか」を記録するためです。
+          </p>
+          <CodeBlock title="初期設定コマンド">
+{`git config --global user.name "あなたの名前"
+git config --global user.email "your@email.com"`}
+          </CodeBlock>
+          <p className="text-xs text-muted-foreground">
+            💡 GitHub アカウントを持っている場合は、同じメールアドレスを使うのがおすすめです
+          </p>
+        </div>
       </Section>
 
       <Section id="why-git" title="なぜ Git を使うの?" icon={<History className="h-6 w-6 text-primary" />}>
