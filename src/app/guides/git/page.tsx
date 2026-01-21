@@ -1,8 +1,10 @@
 import { GuideLayout } from '@/components/layout/GuideLayout';
-import { Terminal, GitBranch, Upload, Download, FolderPlus } from 'lucide-react';
+import { Terminal, GitBranch, Upload, Download, FolderPlus, Save, History, Users } from 'lucide-react';
 
 const sections = [
   { id: 'what-is-git', title: 'Git とは' },
+  { id: 'why-git', title: 'なぜ Git を使うの?' },
+  { id: 'basic-flow', title: '基本の流れ' },
   { id: 'git-init', title: 'git init' },
   { id: 'git-add', title: 'git add' },
   { id: 'git-commit', title: 'git commit' },
@@ -44,11 +46,29 @@ function Section({ id, title, icon, children }: {
   );
 }
 
+function TermBox({ term, children }: { term: string; children: React.ReactNode }) {
+  return (
+    <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 my-4">
+      <p className="font-bold text-amber-600 dark:text-amber-400 mb-1">📖 用語: {term}</p>
+      <p className="text-sm text-muted-foreground">{children}</p>
+    </div>
+  );
+}
+
+function WhenToUse({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 my-4">
+      <p className="font-bold text-blue-600 dark:text-blue-400 mb-1">🕐 いつ使う?</p>
+      <p className="text-sm text-muted-foreground">{children}</p>
+    </div>
+  );
+}
+
 export default function GitGuidePage() {
   return (
     <GuideLayout
       title="Git の使い方"
-      description="バージョン管理の基本を学びましょう"
+      description="はじめてでもわかるバージョン管理入門"
       sections={sections}
       breadcrumb={[
         { label: 'ガイド' },
@@ -56,170 +76,315 @@ export default function GitGuidePage() {
       ]}
     >
       <Section id="what-is-git" title="Git とは" icon={<GitBranch className="h-6 w-6 text-primary" />}>
-        <p className="text-muted-foreground mb-4">
-          Git は「バージョン管理システム」です。ファイルの変更履歴を記録し、いつでも過去の状態に戻したり、
-          複数人で同じプロジェクトを編集したりできます。
+        <p className="text-muted-foreground mb-4 text-lg">
+          Git（ギット）は、<strong>ファイルの変更履歴を記録するツール</strong>です。
         </p>
-        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
-          <p className="font-medium mb-2">Git でできること:</p>
-          <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-            <li>ファイルの変更履歴を保存</li>
-            <li>過去のバージョンに戻す</li>
-            <li>複数人での共同作業</li>
-            <li>変更内容の確認・比較</li>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-5 mb-6">
+          <p className="font-medium mb-3">💡 わかりやすく言うと...</p>
+          <p className="text-muted-foreground mb-4">
+            ゲームの<strong>「セーブポイント」</strong>のようなものです。
+          </p>
+          <ul className="space-y-2 text-muted-foreground">
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span>好きなタイミングで「セーブ」できる</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span>失敗したら過去のセーブに戻れる</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span>「いつ、何を変えたか」の記録が残る</span>
+            </li>
           </ul>
+        </div>
+
+        <TermBox term="リポジトリ（Repository）">
+          Git で管理されているフォルダのこと。「プロジェクトの保管庫」と思ってください。
+          普通のフォルダに Git の機能を追加したものです。
+        </TermBox>
+      </Section>
+
+      <Section id="why-git" title="なぜ Git を使うの?" icon={<History className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-4">
+          「ファイルを保存するだけじゃダメなの?」と思うかもしれません。Git を使うと、こんな困りごとを解決できます。
+        </p>
+
+        <div className="space-y-4 mb-6">
+          <div className="border rounded-lg p-4">
+            <p className="font-medium mb-2">😱 困りごと 1: 「さっきまで動いてたのに...」</p>
+            <p className="text-sm text-muted-foreground mb-2">
+              コードを変更したら動かなくなった。でも何を変えたか覚えてない...
+            </p>
+            <p className="text-sm text-primary">
+              → Git なら「動いてた時点」に一瞬で戻れます
+            </p>
+          </div>
+
+          <div className="border rounded-lg p-4">
+            <p className="font-medium mb-2">😱 困りごと 2: 「最終版_本当の最終版_これが最終.docx」</p>
+            <p className="text-sm text-muted-foreground mb-2">
+              バージョン管理のためにファイル名を変えまくって、どれが最新かわからない...
+            </p>
+            <p className="text-sm text-primary">
+              → Git なら1つのファイルで全履歴を管理できます
+            </p>
+          </div>
+
+          <div className="border rounded-lg p-4">
+            <p className="font-medium mb-2">😱 困りごと 3: 「誰かが上書きしちゃった」</p>
+            <p className="text-sm text-muted-foreground mb-2">
+              チームで作業中、他の人の変更と自分の変更がぶつかった...
+            </p>
+            <p className="text-sm text-primary">
+              → Git なら変更を安全に合体（マージ）できます
+            </p>
+          </div>
         </div>
       </Section>
 
-      <Section id="git-init" title="git init - リポジトリの初期化" icon={<FolderPlus className="h-6 w-6 text-primary" />}>
+      <Section id="basic-flow" title="基本の流れ" icon={<Save className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
-          新しいプロジェクトで Git を使い始めるときに実行します。
-          フォルダを「Git リポジトリ」として初期化します。
+          Git の基本的な使い方は、たった3ステップです。
         </p>
-        <CodeBlock title="コマンド">
-{`# プロジェクトフォルダに移動
-cd my-project
 
-# Git リポジトリとして初期化
-git init`}
-        </CodeBlock>
-        <p className="text-sm text-muted-foreground">
-          これで <code className="px-1 py-0.5 bg-muted rounded">.git</code> フォルダが作成され、
-          変更履歴を記録できるようになります。
-        </p>
-      </Section>
+        <div className="relative">
+          {/* Flow diagram */}
+          <div className="flex flex-col md:flex-row gap-4 mb-6">
+            <div className="flex-1 bg-muted/30 rounded-lg p-4 text-center">
+              <div className="text-3xl mb-2">1️⃣</div>
+              <p className="font-bold mb-1">変更を選ぶ</p>
+              <code className="text-xs bg-terminal-bg text-terminal-text px-2 py-1 rounded">git add</code>
+              <p className="text-xs text-muted-foreground mt-2">
+                「これをセーブに含める」と選択
+              </p>
+            </div>
+            <div className="hidden md:flex items-center text-2xl text-muted-foreground">→</div>
+            <div className="flex-1 bg-muted/30 rounded-lg p-4 text-center">
+              <div className="text-3xl mb-2">2️⃣</div>
+              <p className="font-bold mb-1">セーブする</p>
+              <code className="text-xs bg-terminal-bg text-terminal-text px-2 py-1 rounded">git commit</code>
+              <p className="text-xs text-muted-foreground mt-2">
+                メモ付きで履歴に保存
+              </p>
+            </div>
+            <div className="hidden md:flex items-center text-2xl text-muted-foreground">→</div>
+            <div className="flex-1 bg-muted/30 rounded-lg p-4 text-center">
+              <div className="text-3xl mb-2">3️⃣</div>
+              <p className="font-bold mb-1">共有する</p>
+              <code className="text-xs bg-terminal-bg text-terminal-text px-2 py-1 rounded">git push</code>
+              <p className="text-xs text-muted-foreground mt-2">
+                GitHub にアップロード
+              </p>
+            </div>
+          </div>
+        </div>
 
-      <Section id="git-add" title="git add - ステージング" icon={<Terminal className="h-6 w-6 text-primary" />}>
-        <p className="text-muted-foreground mb-4">
-          変更したファイルを「ステージングエリア」に追加します。
-          これは「次のコミットに含めるファイルを選ぶ」作業です。
-        </p>
-        <CodeBlock title="コマンド">
-{`# 特定のファイルを追加
-git add index.html
-
-# 複数ファイルを追加
-git add index.html styles.css
-
-# すべての変更を追加
-git add .`}
-        </CodeBlock>
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
           <p className="text-sm">
-            <strong>ポイント:</strong> <code className="px-1 py-0.5 bg-muted rounded">git add .</code> は
-            現在のフォルダ以下のすべての変更を追加します。よく使うコマンドです。
+            <strong>ポイント:</strong> 1人で作業するなら ①② だけでOK。
+            チームで共有したり、バックアップを取りたいときに ③ を使います。
           </p>
         </div>
       </Section>
 
-      <Section id="git-commit" title="git commit - コミット" icon={<Terminal className="h-6 w-6 text-primary" />}>
-        <p className="text-muted-foreground mb-4">
-          ステージングした変更を「コミット」として保存します。
-          コミットには必ずメッセージ（何を変更したか）を付けます。
-        </p>
+      <Section id="git-init" title="git init - Git を始める準備" icon={<FolderPlus className="h-6 w-6 text-primary" />}>
+        <WhenToUse>
+          新しいプロジェクトを作ったとき、最初に1回だけ実行します。
+          「このフォルダで Git を使うぞ!」という宣言です。
+        </WhenToUse>
+
         <CodeBlock title="コマンド">
-{`# メッセージ付きでコミット
-git commit -m "ログイン機能を追加"
+{`# プロジェクトフォルダに移動して...
+cd my-project
 
-# 複数行のメッセージ
-git commit -m "ログイン機能を追加
-
-- ログインフォームを作成
-- バリデーションを実装"`}
+# Git を開始!
+git init`}
         </CodeBlock>
+
+        <p className="text-sm text-muted-foreground mb-4">
+          実行すると、フォルダ内に <code className="px-1 py-0.5 bg-muted rounded">.git</code> という
+          隠しフォルダが作られます。ここに履歴が保存されていきます。
+        </p>
+
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
-          <p className="text-sm mb-2"><strong>良いコミットメッセージの例:</strong></p>
-          <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-            <li>「ヘッダーのデザインを修正」</li>
-            <li>「ユーザー登録機能を追加」</li>
-            <li>「バグ修正: ログイン時のエラー」</li>
-          </ul>
+          <p className="text-sm">
+            <strong>💡 ヒント:</strong> GitHub からダウンロード（clone）した場合は、
+            すでに Git が設定されているので <code className="px-1 py-0.5 bg-muted rounded">git init</code> は不要です。
+          </p>
         </div>
       </Section>
 
-      <Section id="git-push" title="git push - リモートにプッシュ" icon={<Upload className="h-6 w-6 text-primary" />}>
+      <Section id="git-add" title="git add - 変更をセーブ対象に選ぶ" icon={<Terminal className="h-6 w-6 text-primary" />}>
+        <WhenToUse>
+          ファイルを変更した後、「この変更をセーブしたい」と思ったときに使います。
+        </WhenToUse>
+
+        <TermBox term="ステージング（Staging）">
+          セーブ（コミット）する前の「準備エリア」のこと。
+          買い物でいうと「カゴに入れた状態」です。まだ購入（コミット）はしていません。
+        </TermBox>
+
         <p className="text-muted-foreground mb-4">
-          ローカルのコミットを GitHub などのリモートリポジトリに送信します。
+          なぜ「選ぶ」ステップがあるの? → 全部じゃなく、
+          <strong>関連する変更だけをまとめてセーブ</strong>できるからです。
         </p>
+
         <CodeBlock title="コマンド">
-{`# 初回: リモートリポジトリを追加
-git remote add origin https://github.com/username/repo.git
+{`# 特定のファイルだけ選ぶ
+git add index.html
 
-# プッシュ
-git push origin main
+# 全部まとめて選ぶ（よく使う!）
+git add .`}
+        </CodeBlock>
 
-# 以降は省略形で OK
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+          <p className="text-sm">
+            <strong>💡 よく使うパターン:</strong> とりあえず全部セーブしたいときは
+            <code className="px-1 py-0.5 bg-muted rounded mx-1">git add .</code>
+            （ドット = 全部）を使えばOK!
+          </p>
+        </div>
+      </Section>
+
+      <Section id="git-commit" title="git commit - セーブを確定する" icon={<Save className="h-6 w-6 text-primary" />}>
+        <WhenToUse>
+          git add で選んだ変更を、履歴として保存したいときに使います。
+          「ここでセーブ!」というタイミングです。
+        </WhenToUse>
+
+        <TermBox term="コミット（Commit）">
+          変更を履歴として記録すること。ゲームでいう「セーブ」です。
+          「いつ、誰が、何を変えたか」がメモと一緒に記録されます。
+        </TermBox>
+
+        <CodeBlock title="コマンド">
+{`# メッセージ付きでセーブ
+git commit -m "ログインボタンを追加"`}
+        </CodeBlock>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
+          <p className="text-sm mb-2"><strong>良いメッセージの書き方:</strong></p>
+          <p className="text-sm text-muted-foreground mb-2">
+            「何をしたか」が後から分かるように書きましょう。
+          </p>
+          <ul className="text-sm text-muted-foreground space-y-1">
+            <li>✅ 「ログイン機能を追加」「バグ修正: 画像が表示されない問題」</li>
+            <li>❌ 「修正」「更新」「あああ」（後で何のことかわからない）</li>
+          </ul>
+        </div>
+
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+          <p className="text-sm">
+            <strong>💡 セーブのタイミング:</strong> 「1つの作業が終わったら」が目安。
+            細かすぎても大きすぎても後で困るので、「ログイン機能を追加」「バグを修正」くらいの単位がおすすめです。
+          </p>
+        </div>
+      </Section>
+
+      <Section id="git-push" title="git push - GitHub にアップロード" icon={<Upload className="h-6 w-6 text-primary" />}>
+        <WhenToUse>
+          手元の変更を GitHub（インターネット上）にアップロードしたいときに使います。
+          バックアップや、チームとの共有に使います。
+        </WhenToUse>
+
+        <TermBox term="リモート / ローカル">
+          <strong>ローカル</strong> = あなたのパソコン内。
+          <strong>リモート</strong> = インターネット上（GitHub など）。
+          push は「ローカル → リモート」にアップロードすることです。
+        </TermBox>
+
+        <CodeBlock title="コマンド">
+{`# GitHub にアップロード
 git push`}
         </CodeBlock>
+
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+          <p className="text-sm">
+            <strong>⚠️ 注意:</strong> 初めて push するときは、先に GitHub でリポジトリを作成し、
+            接続設定が必要です。Claude Code に「GitHub にプッシュしたい」と伝えれば、
+            設定方法を教えてもらえます。
+          </p>
+        </div>
       </Section>
 
-      <Section id="git-pull" title="git pull - リモートから取得" icon={<Download className="h-6 w-6 text-primary" />}>
-        <p className="text-muted-foreground mb-4">
-          リモートリポジトリの最新の変更を取得してマージします。
-          チームで作業する際は、作業開始前に実行しましょう。
-        </p>
+      <Section id="git-pull" title="git pull - 最新版をダウンロード" icon={<Download className="h-6 w-6 text-primary" />}>
+        <WhenToUse>
+          GitHub にある最新の変更を、手元のパソコンに取り込みたいときに使います。
+          チームで作業しているとき、他の人の変更を取得するのに使います。
+        </WhenToUse>
+
+        <TermBox term="プル / マージ">
+          <strong>プル（Pull）</strong> = リモートから変更をダウンロードすること。
+          <strong>マージ（Merge）</strong> = 複数の変更を1つに合体させること。
+          git pull は「ダウンロード + 合体」を一度にやってくれます。
+        </TermBox>
+
         <CodeBlock title="コマンド">
-{`# リモートの変更を取得してマージ
-git pull
-
-# 特定のブランチから取得
-git pull origin main`}
+{`# 最新版を取得
+git pull`}
         </CodeBlock>
+
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+          <p className="text-sm">
+            <strong>💡 習慣にしよう:</strong> チームで作業するときは、
+            作業を始める前に <code className="px-1 py-0.5 bg-muted rounded">git pull</code> して
+            最新の状態にしておくと、トラブルを防げます。
+          </p>
+        </div>
       </Section>
 
-      <Section id="claude-code" title="Claude Code での Git 活用" icon={<Terminal className="h-6 w-6 text-primary" />}>
+      <Section id="claude-code" title="Claude Code での Git 活用" icon={<Users className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
-          Claude Code を使えば、Git コマンドを覚えなくても自然言語で操作できます。
+          <strong>朗報です!</strong> Claude Code を使えば、Git コマンドを覚えなくても大丈夫。
+          日本語で話しかけるだけで、Git の操作ができます。
         </p>
 
-        <h3 className="text-lg font-semibold mb-3">よく使う依頼例</h3>
+        <h3 className="text-lg font-semibold mb-3">こう言えば OK</h3>
         <div className="space-y-3">
           {[
-            { prompt: '変更をコミットして', description: 'git add . && git commit を実行' },
-            { prompt: 'GitHub にプッシュして', description: 'git push を実行' },
-            { prompt: '最新の変更を取得して', description: 'git pull を実行' },
-            { prompt: '変更履歴を見せて', description: 'git log を実行して表示' },
-            { prompt: '今の変更状況を教えて', description: 'git status を実行して説明' },
+            { prompt: '変更をセーブして', result: '→ add + commit を実行' },
+            { prompt: 'GitHub にアップして', result: '→ push を実行' },
+            { prompt: '最新版にして', result: '→ pull を実行' },
+            { prompt: '何を変更したか見せて', result: '→ 変更内容を表示' },
+            { prompt: '昨日の状態に戻して', result: '→ 履歴から復元' },
           ].map((item, i) => (
-            <div key={i} className="flex items-start gap-4 p-4 bg-muted/30 rounded-lg">
-              <code className="px-3 py-1 bg-primary/10 text-primary rounded-lg text-sm font-medium shrink-0">
+            <div key={i} className="flex items-center gap-4 p-4 bg-muted/30 rounded-lg">
+              <code className="px-3 py-1 bg-primary/10 text-primary rounded-lg text-sm font-medium">
                 {item.prompt}
               </code>
-              <span className="text-muted-foreground text-sm">{item.description}</span>
+              <span className="text-muted-foreground text-sm">{item.result}</span>
             </div>
           ))}
         </div>
 
-        <div className="mt-6 bg-accent/10 border border-accent/20 rounded-lg p-4">
-          <p className="font-medium mb-2">スキルを使う</p>
-          <p className="text-sm text-muted-foreground">
-            <code className="px-1 py-0.5 bg-muted rounded">/commit</code> スキルを使うと、
-            変更内容を自動で分析して適切なコミットメッセージを生成してくれます。
-          </p>
-          <p className="text-xs text-muted-foreground/70 mt-2">
-            ※ 使用前に <code className="px-1 py-0.5 bg-muted rounded">/plugin install commit-commands@claude-plugins-official</code> でインストールが必要です
+        <div className="mt-6 bg-primary/5 border border-primary/20 rounded-lg p-4">
+          <p className="text-sm">
+            <strong>要するに:</strong> Git のコマンドを覚える必要はありません。
+            やりたいことを日本語で伝えれば、Claude Code がやってくれます!
           </p>
         </div>
       </Section>
 
       <Section id="ask-claude" title="Git で困ったら Claude Code に聞こう" icon={<Terminal className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
-          Git の操作で困ったら、Claude Code に直接質問するのが一番です。
-          エラーメッセージをそのまま貼り付けて聞くこともできます。
+          Git でエラーが出たり、やり方がわからないときは、そのまま Claude Code に質問してください。
         </p>
 
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
-          <p className="font-medium mb-3">こんな質問ができます:</p>
+          <p className="font-medium mb-3">こんな風に聞けます:</p>
           <div className="space-y-2 text-sm">
             {[
-              '「コンフリクトが起きたけどどうすればいい?」',
-              '「間違えてコミットしたのを取り消したい」',
-              '「ブランチの切り方を教えて」',
-              '「このエラーの意味を教えて: (エラーメッセージ)」',
+              '「git push したらエラーが出た。これ何?」+ エラーメッセージを貼り付け',
+              '「さっきの変更を取り消したい」',
+              '「他の人の変更と自分の変更がぶつかった」',
+              '「Git って何のためにあるの?」',
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2 p-2 bg-background rounded">
                 <span className="text-primary">💬</span>
-                <code className="text-muted-foreground">{item}</code>
+                <span className="text-muted-foreground">{item}</span>
               </div>
             ))}
           </div>
@@ -227,8 +392,8 @@ git pull origin main`}
 
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
           <p className="text-sm">
-            <strong>ポイント:</strong> Git のコマンドを覚える必要はありません。
-            やりたいことを日本語で伝えれば、Claude Code が適切なコマンドを実行してくれます。
+            <strong>大事なこと:</strong> 「こんな初歩的なこと聞いていいのかな...」と思わなくて大丈夫。
+            Claude Code は何度でも丁寧に教えてくれます。わからないことは、どんどん聞きましょう!
           </p>
         </div>
       </Section>
