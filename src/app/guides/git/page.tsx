@@ -72,7 +72,7 @@ export default function GitGuidePage() {
       description="はじめてでもわかるバージョン管理入門"
       sections={sections}
       breadcrumb={[
-        { label: 'ガイド' },
+        { label: 'ガイド', href: '/guides' },
         { label: 'Git の使い方' },
       ]}
     >

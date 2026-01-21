@@ -66,7 +66,7 @@ export default function NextjsSetupGuidePage() {
       description="Claude Code で Web アプリを始める方法"
       sections={sections}
       breadcrumb={[
-        { label: 'ガイド' },
+        { label: 'ガイド', href: '/guides' },
         { label: 'Next.js アプリを作ろう' },
       ]}
     >

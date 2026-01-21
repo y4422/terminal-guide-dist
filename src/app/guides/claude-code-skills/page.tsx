@@ -50,7 +50,7 @@ export default function ClaudeCodeSkillsPage() {
       description="スキル機能と CLAUDE.md を活用して開発効率をアップ"
       sections={sections}
       breadcrumb={[
-        { label: 'ガイド' },
+        { label: 'ガイド', href: '/guides' },
         { label: 'Claude Code スキル' },
       ]}
     >
