@@ -138,12 +138,12 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
     title: 'ステップ2: ターミナルを知ろう',
     introduction: 'ターミナル（黒い画面）は、文字を打ってパソコンを操作するツールです。最初は怖く見えますが、実はとてもシンプル!',
     mission: {
-      description: 'ターミナルを開いてみましょう。Macなら「ターミナル」アプリ、Windowsなら「コマンドプロンプト」を起動します。',
+      description: 'ターミナルを開いてみましょう。Macなら「ターミナル」アプリ、Windowsなら「PowerShell」を起動します。',
       copyable: false,
     },
     tips: [
       'Mac: Spotlight (⌘+Space) で「ターミナル」と検索',
-      'Windows: スタートメニューで「cmd」と検索',
+      'Windows: スタートメニューで「PowerShell」と検索',
       'VS Codeを使っている場合は、表示メニューから「ターミナル」を選択',
     ],
     knowledgeBox: {

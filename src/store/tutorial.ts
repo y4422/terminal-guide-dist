@@ -118,9 +118,26 @@ export const useTutorialStore = create<TutorialState>()(
       completeStep: (step: StepId) => {
         const stepStates = get().stepStates;
         const completedSteps = get().completedSteps;
+        const currentStep = get().currentStep;
 
-        // Prevent duplicates
-        if (completedSteps.includes(step)) return;
+        // If already completed but still on this step, just advance
+        if (completedSteps.includes(step)) {
+          if (currentStep === step && step < 11) {
+            const nextStep = (step + 1) as StepId;
+            set({
+              currentStep: nextStep,
+              stepStates: {
+                ...stepStates,
+                [nextStep]: {
+                  ...stepStates[nextStep],
+                  status: 'in-progress',
+                  startTime: stepStates[nextStep].startTime || new Date(),
+                },
+              },
+            });
+          }
+          return;
+        }
 
         set({
           completedSteps: [...completedSteps, step],
@@ -257,32 +274,51 @@ export const useTutorialStore = create<TutorialState>()(
           modifiedAt: new Date(),
         };
 
-        const addFileToParent = (node: VirtualDirectory, targetPath: string): VirtualDirectory => {
-          const parts = targetPath.split('/').filter(Boolean);
-          if (parts[0] === '~') parts.shift();
+        // Parse path into parts (remove ~ and empty strings)
+        let pathParts = path.split('/').filter(Boolean);
+        if (pathParts[0] === '~') pathParts = pathParts.slice(1);
 
+        const addFileToPath = (node: VirtualDirectory, parts: string[]): VirtualDirectory => {
+          // If we've reached the target directory, add the file
           if (parts.length === 0) {
+            // Check if file already exists (avoid duplicates)
+            const existingIndex = node.children.findIndex(
+              (child) => child.type === 'file' && child.name === name
+            );
+            if (existingIndex >= 0) {
+              // Update existing file instead of adding duplicate
+              const newChildren = [...node.children];
+              newChildren[existingIndex] = newFile;
+              return { ...node, children: newChildren };
+            }
             return {
               ...node,
               children: [...node.children, newFile],
             };
           }
 
+          // Look for the next directory in the path
+          const targetDirName = parts[0];
+          const remainingPath = parts.slice(1);
+
+          // Find and traverse into the target directory
+          const newChildren = node.children.map((child) => {
+            if (child.type === 'directory' && child.name === targetDirName) {
+              return addFileToPath(child, remainingPath);
+            }
+            return child;
+          });
+
           return {
             ...node,
-            children: node.children.map((child) => {
-              if (child.type === 'directory' && child.name === parts[0]) {
-                return addFileToParent(child, parts.slice(1).join('/'));
-              }
-              return child;
-            }),
+            children: newChildren,
           };
         };
 
         set({
           fileSystem: {
             ...fileSystem,
-            root: addFileToParent(fileSystem.root, path),
+            root: addFileToPath(fileSystem.root, pathParts),
           },
         });
       },
@@ -290,10 +326,12 @@ export const useTutorialStore = create<TutorialState>()(
       updateFile: (path: string, name: string, content: string) => {
         const fileSystem = get().fileSystem;
 
-        const updateFileInParent = (node: VirtualDirectory, targetPath: string): VirtualDirectory => {
-          const parts = targetPath.split('/').filter(Boolean);
-          if (parts[0] === '~') parts.shift();
+        // Parse path into parts (remove ~ and empty strings)
+        let pathParts = path.split('/').filter(Boolean);
+        if (pathParts[0] === '~') pathParts = pathParts.slice(1);
 
+        const updateFileInPath = (node: VirtualDirectory, parts: string[]): VirtualDirectory => {
+          // If we've reached the target directory, update the file
           if (parts.length === 0) {
             return {
               ...node,
@@ -310,11 +348,15 @@ export const useTutorialStore = create<TutorialState>()(
             };
           }
 
+          // Look for the next directory in the path
+          const targetDirName = parts[0];
+          const remainingPath = parts.slice(1);
+
           return {
             ...node,
             children: node.children.map((child) => {
-              if (child.type === 'directory' && child.name === parts[0]) {
-                return updateFileInParent(child, parts.slice(1).join('/'));
+              if (child.type === 'directory' && child.name === targetDirName) {
+                return updateFileInPath(child, remainingPath);
               }
               return child;
             }),
@@ -324,7 +366,7 @@ export const useTutorialStore = create<TutorialState>()(
         set({
           fileSystem: {
             ...fileSystem,
-            root: updateFileInParent(fileSystem.root, path),
+            root: updateFileInPath(fileSystem.root, pathParts),
           },
         });
       },

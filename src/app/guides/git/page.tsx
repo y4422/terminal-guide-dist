@@ -9,6 +9,7 @@ const sections = [
   { id: 'git-push', title: 'git push' },
   { id: 'git-pull', title: 'git pull' },
   { id: 'claude-code', title: 'Claude Code での活用' },
+  { id: 'ask-claude', title: '困ったら聞こう' },
 ];
 
 function CodeBlock({ children, title }: { children: string; title?: string }) {
@@ -194,6 +195,40 @@ git pull origin main`}
           <p className="text-sm text-muted-foreground">
             <code className="px-1 py-0.5 bg-muted rounded">/commit</code> スキルを使うと、
             変更内容を自動で分析して適切なコミットメッセージを生成してくれます。
+          </p>
+          <p className="text-xs text-muted-foreground/70 mt-2">
+            ※ 使用前に <code className="px-1 py-0.5 bg-muted rounded">/plugin install commit-commands@claude-plugins-official</code> でインストールが必要です
+          </p>
+        </div>
+      </Section>
+
+      <Section id="ask-claude" title="Git で困ったら Claude Code に聞こう" icon={<Terminal className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-4">
+          Git の操作で困ったら、Claude Code に直接質問するのが一番です。
+          エラーメッセージをそのまま貼り付けて聞くこともできます。
+        </p>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
+          <p className="font-medium mb-3">こんな質問ができます:</p>
+          <div className="space-y-2 text-sm">
+            {[
+              '「コンフリクトが起きたけどどうすればいい?」',
+              '「間違えてコミットしたのを取り消したい」',
+              '「ブランチの切り方を教えて」',
+              '「このエラーの意味を教えて: (エラーメッセージ)」',
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-2 p-2 bg-background rounded">
+                <span className="text-primary">💬</span>
+                <code className="text-muted-foreground">{item}</code>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+          <p className="text-sm">
+            <strong>ポイント:</strong> Git のコマンドを覚える必要はありません。
+            やりたいことを日本語で伝えれば、Claude Code が適切なコマンドを実行してくれます。
           </p>
         </div>
       </Section>

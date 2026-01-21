@@ -1,14 +1,13 @@
 import { GuideLayout } from '@/components/layout/GuideLayout';
-import { Zap, FileText, Code, GitCommit, Search, Paintbrush, Table, Download, GitPullRequest, Trash2, AlertTriangle } from 'lucide-react';
+import { Zap, FileText, Code, GitCommit, Paintbrush, Table, Download, GitPullRequest, Trash2, AlertTriangle } from 'lucide-react';
 
 const sections = [
-  { id: 'what-is-skill', title: 'スキルとは' },
+  { id: 'what-is-skill', title: 'スキルとコマンド' },
+  { id: 'builtin-commands', title: 'ビルトインコマンド' },
+  { id: 'ask-claude', title: '困ったら聞こう' },
   { id: 'install-plugin', title: 'プラグインのインストール' },
   { id: 'commit-commands', title: 'commit-commands' },
-  { id: 'review-pr', title: '/review-pr' },
-  { id: 'pdf', title: '/pdf' },
-  { id: 'xlsx', title: '/xlsx' },
-  { id: 'frontend-design', title: '/frontend-design' },
+  { id: 'example-skills', title: 'example-skills' },
   { id: 'claude-md', title: 'CLAUDE.md の活用' },
 ];
 
@@ -55,29 +54,119 @@ export default function ClaudeCodeSkillsPage() {
         { label: 'Claude Code スキル' },
       ]}
     >
-      <Section id="what-is-skill" title="スキルとは" icon={<Zap className="h-6 w-6 text-primary" />}>
+      <Section id="what-is-skill" title="スキルとコマンド" icon={<Zap className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
-          スキルは Claude Code の機能を拡張する「ショートカット」です。
-          <code className="px-1 py-0.5 bg-muted rounded">/スキル名</code> と入力するだけで、
-          特定のタスクを効率的に実行できます。
+          Claude Code では <code className="px-1 py-0.5 bg-muted rounded">/</code> で始まる入力で様々な機能を呼び出せます。
+          これらは大きく2種類に分かれます。
         </p>
-        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
-          <p className="font-medium mb-2">スキルのメリット:</p>
-          <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-            <li>複雑なタスクをワンコマンドで実行</li>
-            <li>ベストプラクティスに基づいた処理</li>
-            <li>一貫した出力フォーマット</li>
-          </ul>
-        </div>
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 flex gap-3">
-          <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="font-medium text-amber-600 dark:text-amber-400">注意</p>
-            <p className="text-sm text-muted-foreground mt-1">
-              一部のスキル（<code className="px-1 py-0.5 bg-muted rounded">/commit</code> など）は
-              プラグインとして提供されており、使用前にインストールが必要です。
-            </p>
+
+        <div className="grid sm:grid-cols-2 gap-4 mb-4">
+          <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
+            <p className="font-medium mb-2">ビルトインコマンド</p>
+            <ul className="text-sm text-muted-foreground space-y-1">
+              <li>• 標準で使用可能</li>
+              <li>• /help, /init, /model など</li>
+              <li>• インストール不要</li>
+            </ul>
           </div>
+          <div className="p-4 bg-accent/5 border border-accent/20 rounded-lg">
+            <p className="font-medium mb-2">スキル（プラグイン）</p>
+            <ul className="text-sm text-muted-foreground space-y-1">
+              <li>• プラグインで追加</li>
+              <li>• /commit, /pdf, /xlsx など</li>
+              <li>• インストールが必要</li>
+            </ul>
+          </div>
+        </div>
+
+        <p className="text-sm text-muted-foreground">
+          <strong>ヒント:</strong> Claude Code で <code className="px-1 py-0.5 bg-muted rounded">/</code> と入力すると、
+          使用可能なコマンドとスキルの一覧が表示されます。
+        </p>
+      </Section>
+
+      <Section id="builtin-commands" title="ビルトインコマンド（標準搭載）" icon={<Code className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-4">
+          以下のコマンドはインストール不要で、すぐに使えます。
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+          {[
+            { cmd: '/help', desc: 'ヘルプを表示' },
+            { cmd: '/init', desc: 'CLAUDE.md を作成' },
+            { cmd: '/memory', desc: 'CLAUDE.md を編集' },
+            { cmd: '/model', desc: 'AI モデルを変更' },
+            { cmd: '/config', desc: '設定画面を開く' },
+            { cmd: '/clear', desc: '会話履歴をクリア' },
+            { cmd: '/compact', desc: '会話を圧縮' },
+            { cmd: '/context', desc: 'コンテキスト使用量を表示' },
+            { cmd: '/cost', desc: 'トークン使用量を表示' },
+            { cmd: '/export', desc: '会話をエクスポート' },
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
+              <code className="font-mono text-sm font-medium text-primary">{item.cmd}</code>
+              <span className="text-sm text-muted-foreground">{item.desc}</span>
+            </div>
+          ))}
+        </div>
+
+        <h3 className="text-lg font-semibold mb-3">よく使うコマンド</h3>
+
+        <div className="space-y-4">
+          <div className="p-4 bg-muted/30 rounded-lg">
+            <p className="font-medium mb-2">/init - プロジェクト初期化</p>
+            <p className="text-sm text-muted-foreground mb-2">
+              CLAUDE.md ファイルを作成し、プロジェクトの設定を Claude に伝えます。
+            </p>
+            <CodeBlock>{`/init`}</CodeBlock>
+          </div>
+
+          <div className="p-4 bg-muted/30 rounded-lg">
+            <p className="font-medium mb-2">/model - モデル変更</p>
+            <p className="text-sm text-muted-foreground mb-2">
+              使用する AI モデルを切り替えます（Sonnet, Opus など）。
+            </p>
+            <CodeBlock>{`/model`}</CodeBlock>
+          </div>
+
+          <div className="p-4 bg-muted/30 rounded-lg">
+            <p className="font-medium mb-2">/compact - 会話圧縮</p>
+            <p className="text-sm text-muted-foreground mb-2">
+              長い会話を要約して、コンテキストを節約します。
+            </p>
+            <CodeBlock>{`/compact`}</CodeBlock>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="ask-claude" title="困ったら Claude Code に聞こう" icon={<Zap className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-4">
+          使い方がわからなくなったら、Claude Code に直接質問するのが一番です。
+          日本語で気軽に聞いてみましょう。
+        </p>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-6">
+          <p className="font-medium mb-3">こんな時は Claude Code に聞こう:</p>
+          <div className="space-y-2">
+            {[
+              { q: '「このコマンドの使い方を教えて」', a: '詳しい説明と例を教えてくれます' },
+              { q: '「ファイルの作り方がわからない」', a: '手順を一から説明してくれます' },
+              { q: '「エラーが出たけど意味がわからない」', a: 'エラーの原因と解決策を提案してくれます' },
+              { q: '「もっと効率的な方法はある?」', a: 'より良いやり方を提案してくれます' },
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 p-2 bg-background rounded">
+                <code className="text-sm text-primary font-medium">{item.q}</code>
+                <span className="text-xs text-muted-foreground">→ {item.a}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+          <p className="text-sm">
+            <strong>ポイント:</strong> Claude Code は会話の文脈を覚えています。
+            「さっきのファイルを...」のように前の内容を参照した質問もできます。
+          </p>
         </div>
       </Section>
 
@@ -212,67 +301,25 @@ export default function ClaudeCodeSkillsPage() {
         </CodeBlock>
       </Section>
 
-      <Section id="review-pr" title="/review-pr - PRレビュー" icon={<Search className="h-6 w-6 text-primary" />}>
+      <Section id="example-skills" title="example-skills プラグイン" icon={<Zap className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
-          Pull Request の内容をレビューし、改善点やバグを指摘します。
+          Anthropic が提供する公式スキル集です。PDF、Excel、フロントエンドデザインなど、様々な実用的スキルが含まれています。
         </p>
 
-        <div className="bg-muted/30 rounded-lg p-4 mb-4">
-          <p className="font-medium mb-2">このスキルはビルトイン</p>
-          <p className="text-sm text-muted-foreground">
-            /review-pr は Claude Code に標準搭載されています。プラグインのインストールは不要です。
-          </p>
+        <div className="bg-muted/30 rounded-lg p-4 mb-6">
+          <p className="font-medium mb-2">インストール</p>
+          <CodeBlock>
+{`/plugin install example-skills@anthropic-agent-skills`}
+          </CodeBlock>
         </div>
 
-        <CodeBlock title="使い方">
-{`# PR番号を指定してレビュー
-/review-pr 123
-
-# または現在のブランチの PR をレビュー
-/review-pr
-
-# GitHub の URL を指定
-/review-pr https://github.com/owner/repo/pull/123`}
-        </CodeBlock>
-
-        <h3 className="text-lg font-semibold mb-3 mt-6">レビュー内容</h3>
-        <div className="space-y-2">
-          {[
-            'コードの問題点・バグの検出',
-            'セキュリティリスクの指摘',
-            'パフォーマンスの改善点',
-            'コーディング規約の違反',
-            '設計上の懸念点',
-          ].map((item, i) => (
-            <div key={i} className="flex items-center gap-2 text-muted-foreground">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-              <span>{item}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-4 bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 flex gap-3">
-          <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm text-muted-foreground">
-              <strong>前提条件:</strong> GitHub CLI（gh）がインストールされ、認証済みである必要があります。
-            </p>
-          </div>
-        </div>
-      </Section>
-
-      <Section id="pdf" title="/pdf - PDF操作" icon={<FileText className="h-6 w-6 text-primary" />}>
-        <p className="text-muted-foreground mb-4">
+        <h3 className="flex items-center gap-2 text-lg font-semibold mb-3">
+          <FileText className="h-5 w-5" />
+          /pdf - PDF操作
+        </h3>
+        <p className="text-muted-foreground mb-3">
           PDF ファイルの読み取り、作成、編集、フォーム入力ができます。
         </p>
-
-        <div className="bg-muted/30 rounded-lg p-4 mb-4">
-          <p className="font-medium mb-2">ビルトインスキル</p>
-          <p className="text-sm text-muted-foreground">
-            Claude Code に標準搭載。インストール不要ですぐに使えます。
-          </p>
-        </div>
-
         <CodeBlock title="使い方">
 {`# PDF を読み取り・要約
 /pdf report.pdf の内容を要約して
@@ -283,35 +330,21 @@ export default function ClaudeCodeSkillsPage() {
 # PDF フォームに入力
 /pdf application.pdf のフォームに記入して`}
         </CodeBlock>
-
-        <h3 className="text-lg font-semibold mb-3 mt-6">できること</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            { title: 'テキスト抽出', desc: 'PDF からテキストを抽出' },
-            { title: '新規作成', desc: 'テキストや表を含む PDF を生成' },
-            { title: '結合・分割', desc: '複数 PDF の結合や分割' },
-            { title: 'フォーム入力', desc: 'PDF フォームへの自動入力' },
-          ].map((item, i) => (
-            <div key={i} className="p-3 bg-muted/30 rounded-lg">
-              <p className="font-medium text-sm">{item.title}</p>
-              <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6 mt-4">
+          {['テキスト抽出', '新規作成', '結合・分割', 'フォーム入力'].map((item, i) => (
+            <div key={i} className="p-2 bg-muted/30 rounded text-center text-xs">
+              {item}
             </div>
           ))}
         </div>
-      </Section>
 
-      <Section id="xlsx" title="/xlsx - スプレッドシート操作" icon={<Table className="h-6 w-6 text-primary" />}>
-        <p className="text-muted-foreground mb-4">
+        <h3 className="flex items-center gap-2 text-lg font-semibold mb-3">
+          <Table className="h-5 w-5" />
+          /xlsx - スプレッドシート操作
+        </h3>
+        <p className="text-muted-foreground mb-3">
           Excel ファイル（.xlsx、.csv）の読み取り、作成、編集、分析ができます。
         </p>
-
-        <div className="bg-muted/30 rounded-lg p-4 mb-4">
-          <p className="font-medium mb-2">ビルトインスキル</p>
-          <p className="text-sm text-muted-foreground">
-            Claude Code に標準搭載。インストール不要ですぐに使えます。
-          </p>
-        </div>
-
         <CodeBlock title="使い方">
 {`# Excel を読み取り・分析
 /xlsx sales.xlsx のデータを分析して
@@ -322,36 +355,22 @@ export default function ClaudeCodeSkillsPage() {
 # 数式を含むシートを作成
 /xlsx 予算計算シートを作って（合計と平均の数式付き）`}
         </CodeBlock>
-
-        <h3 className="text-lg font-semibold mb-3 mt-6">できること</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            { title: 'データ読み取り', desc: 'Excel/CSV のデータ抽出' },
-            { title: '新規作成', desc: '書式付きスプレッドシート生成' },
-            { title: '数式サポート', desc: 'SUM, AVERAGE など数式対応' },
-            { title: 'データ分析', desc: 'グラフ・チャートの作成' },
-          ].map((item, i) => (
-            <div key={i} className="p-3 bg-muted/30 rounded-lg">
-              <p className="font-medium text-sm">{item.title}</p>
-              <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6 mt-4">
+          {['データ読み取り', '新規作成', '数式サポート', 'データ分析'].map((item, i) => (
+            <div key={i} className="p-2 bg-muted/30 rounded text-center text-xs">
+              {item}
             </div>
           ))}
         </div>
-      </Section>
 
-      <Section id="frontend-design" title="/frontend-design - フロントエンド設計" icon={<Paintbrush className="h-6 w-6 text-primary" />}>
-        <p className="text-muted-foreground mb-4">
+        <h3 className="flex items-center gap-2 text-lg font-semibold mb-3">
+          <Paintbrush className="h-5 w-5" />
+          /frontend-design - フロントエンド設計
+        </h3>
+        <p className="text-muted-foreground mb-3">
           モダンで美しいフロントエンドデザインを生成します。
           React、Tailwind CSS を使ったプロダクションレベルの UI を作成できます。
         </p>
-
-        <div className="bg-muted/30 rounded-lg p-4 mb-4">
-          <p className="font-medium mb-2">ビルトインスキル</p>
-          <p className="text-sm text-muted-foreground">
-            Claude Code に標準搭載。インストール不要ですぐに使えます。
-          </p>
-        </div>
-
         <CodeBlock title="使い方">
 {`# デザインを生成
 /frontend-design ダッシュボード画面を作って
@@ -362,19 +381,36 @@ export default function ClaudeCodeSkillsPage() {
 # 特定のスタイルを指定
 /frontend-design ダークモード対応のログインページを作って`}
         </CodeBlock>
-
-        <h3 className="text-lg font-semibold mb-3 mt-6">特徴</h3>
-        <div className="space-y-2">
+        <div className="space-y-2 mt-4 mb-6">
           {[
             'モダンで洗練されたデザイン',
-            'レスポンシブ対応（モバイル〜デスクトップ）',
+            'レスポンシブ対応',
             'アクセシビリティを考慮',
             'ダークモード対応',
-            'アニメーション・マイクロインタラクション',
           ].map((item, i) => (
-            <div key={i} className="flex items-center gap-2 text-muted-foreground">
+            <div key={i} className="flex items-center gap-2 text-muted-foreground text-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-primary" />
               <span>{item}</span>
+            </div>
+          ))}
+        </div>
+
+        <h3 className="text-lg font-semibold mb-3">その他のスキル</h3>
+        <p className="text-muted-foreground mb-3">
+          example-skills には他にも便利なスキルが含まれています:
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { name: '/docx', desc: 'Word ドキュメントの作成・編集' },
+            { name: '/pptx', desc: 'PowerPoint プレゼンテーション作成' },
+            { name: '/doc-coauthoring', desc: 'ドキュメント共同編集ワークフロー' },
+            { name: '/mcp-builder', desc: 'MCP サーバー作成ガイド' },
+            { name: '/skill-creator', desc: 'カスタムスキル作成ガイド' },
+            { name: '/webapp-testing', desc: 'Playwright を使った Web アプリテスト' },
+          ].map((item, i) => (
+            <div key={i} className="p-3 bg-muted/30 rounded-lg">
+              <p className="font-mono text-sm font-medium">{item.name}</p>
+              <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
             </div>
           ))}
         </div>

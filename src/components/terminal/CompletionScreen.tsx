@@ -171,6 +171,26 @@ export function CompletionScreen() {
           </div>
         </div>
 
+        {/* Ask Claude tip card */}
+        <div
+          className="relative overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent p-4 animate-fade-in-up"
+          style={{ animationDelay: '1.0s', animationFillMode: 'backwards' }}
+        >
+          <div className="relative space-y-2">
+            <div className="flex items-center gap-2">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/30">
+                <span className="text-lg">💡</span>
+              </div>
+              <h3 className="font-bold text-white">困ったら Claude Code に聞こう</h3>
+            </div>
+            <p className="text-sm text-white/80 leading-relaxed pl-9">
+              使い方がわからなくなったら、Claude Code に直接質問できます。
+              <code className="mx-1 px-1.5 py-0.5 rounded bg-white/10 text-primary-foreground text-xs">/help</code>
+              でコマンド一覧も確認できます。
+            </p>
+          </div>
+        </div>
+
         {/* Business tip card */}
         <div
           className="relative overflow-hidden rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/20 via-orange-500/10 to-transparent p-4 animate-fade-in-up"

@@ -87,6 +87,45 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Tips Section */}
+        <section className="py-16 border-t border-border/50 bg-primary/[0.02]">
+          <div className="container px-6">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-2xl font-bold mb-6 text-center">💡 困ったら Claude Code に聞こう</h2>
+              <p className="text-muted-foreground text-center mb-8">
+                使い方がわからなくなったら、Claude Code に直接質問できます。
+                日本語で気軽に聞いてみましょう。
+              </p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="p-4 rounded-lg bg-background border border-border/50">
+                  <p className="font-medium mb-2">🤔 操作方法を聞く</p>
+                  <code className="text-sm text-primary bg-primary/10 px-2 py-1 rounded block">
+                    「ファイルの作り方を教えて」
+                  </code>
+                </div>
+                <div className="p-4 rounded-lg bg-background border border-border/50">
+                  <p className="font-medium mb-2">📚 コマンドを調べる</p>
+                  <code className="text-sm text-primary bg-primary/10 px-2 py-1 rounded block">
+                    「使えるコマンド一覧を見せて」
+                  </code>
+                </div>
+                <div className="p-4 rounded-lg bg-background border border-border/50">
+                  <p className="font-medium mb-2">🔧 エラーを解決</p>
+                  <code className="text-sm text-primary bg-primary/10 px-2 py-1 rounded block">
+                    「このエラーの意味を教えて」
+                  </code>
+                </div>
+                <div className="p-4 rounded-lg bg-background border border-border/50">
+                  <p className="font-medium mb-2">⚡ ヘルプを表示</p>
+                  <code className="text-sm text-primary bg-primary/10 px-2 py-1 rounded block">
+                    /help
+                  </code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* Footer */}

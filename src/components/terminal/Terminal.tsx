@@ -27,6 +27,7 @@ export function Terminal() {
     completeStep,
     createDirectory,
     createFile,
+    updateFile,
     unlockAchievement,
     fileSystem,
   } = useTutorialStore();
@@ -44,31 +45,37 @@ export function Terminal() {
   }, [currentStep]);
 
   // Initialize terminal state based on current step
+  // Key principle: preserve output history within the same mode
   useEffect(() => {
     // Skip if already initialized for this step
     if (initializedStep === currentStep) return;
 
-    // Step 3-4: Terminal mode (before Claude is started)
-    // Step 5+: Claude Code mode
+    // Step 3: First time entering terminal mode - start fresh
     if (currentStep === 3) {
-      // Step 3: Fresh terminal, user needs to cd
       setClaudeStarted(false);
       setCurrentPath('~');
       setOutputs([]);
-    } else if (currentStep === 4) {
-      // Step 4: User already did cd, now needs to run claude
+    }
+    // Step 4: User completed cd, set context but preserve outputs
+    else if (currentStep === 4) {
       setClaudeStarted(false);
       setCurrentPath('~/Desktop');
-      setOutputs([
-        { type: 'prompt', content: '~ $ cd Desktop' },
-      ]);
-    } else if (currentStep >= 5) {
-      // Claude Code mode for step 5 and beyond
+      // Only initialize if coming from earlier step (not revisiting)
+      if (initializedStep === null || initializedStep < 3) {
+        setOutputs([
+          { type: 'prompt', content: '~ $ cd Desktop' },
+        ]);
+      }
+    }
+    // Step 5: First time entering Claude mode - show welcome, but keep history after
+    else if (currentStep === 5) {
       setClaudeStarted(true);
       setCurrentPath('~/Desktop');
-      // Show Claude startup context
-      setOutputs([
-        { type: 'system', content: `╭─────────────────────────────────────╮
+      // Only show welcome message if first entering Claude mode
+      if (!claudeStarted || initializedStep === null || initializedStep < 5) {
+        setOutputs((prev) => [
+          ...prev,
+          { type: 'system', content: `╭─────────────────────────────────────╮
 │                                     │
 │   🤖 Claude Code へようこそ!        │
 │                                     │
@@ -76,11 +83,18 @@ export function Terminal() {
 │   何でもお手伝いします!             │
 │                                     │
 ╰─────────────────────────────────────╯` },
-      ]);
+        ]);
+      }
+    }
+    // Step 6+: Claude mode continues - preserve all outputs
+    else if (currentStep >= 6) {
+      setClaudeStarted(true);
+      setCurrentPath('~/Desktop');
+      // Don't reset outputs - preserve the history
     }
 
     setInitializedStep(currentStep);
-  }, [currentStep, initializedStep]);
+  }, [currentStep, initializedStep, claudeStarted]);
 
   const getPrompt = useCallback(() => {
     if (claudeStarted) {
@@ -248,7 +262,7 @@ ${researchContent}
 - **Todoist**: REST API、Zapier、IFTTT対応
 - **TickTick**: API限定公開、カレンダー連携
 - **MS To Do**: Microsoft Graph API、Outlook連携`;
-        createFile('~/my-project', 'research.md', updatedResearchContent, 'markdown');
+        updateFile('~/my-project', 'research.md', updatedResearchContent);
         unlockAchievement('reviewer');
         return {
           type: 'success',
@@ -441,7 +455,7 @@ render();`;
           message: 'このステップでは入力は不要です',
         };
     }
-  }, [currentPath, createDirectory, createFile, unlockAchievement]);
+  }, [currentPath, createDirectory, createFile, updateFile, unlockAchievement]);
 
   const handleSubmit = useCallback(async () => {
     if (!inputValue.trim() || isProcessing) return;
@@ -692,7 +706,7 @@ function InstallScreen() {
 
   const installCommands = {
     mac: 'curl -fsSL https://claude.ai/install.sh | bash',
-    windows: 'curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd'
+    windows: 'irm https://claude.ai/install.ps1 | iex'
   };
 
   const handleCopy = async () => {
@@ -762,7 +776,7 @@ function InstallScreen() {
               {selectedOS === 'mac' ? (
                 <>ターミナルを開く（⌘+Space で「ターミナル」と検索）</>
               ) : (
-                <>コマンドプロンプトを開く（スタートメニューで「cmd」と検索）</>
+                <>PowerShell を開く（スタートメニューで「PowerShell」と検索）</>
               )}
             </li>
             <li>上のコマンドをコピーして貼り付け</li>
@@ -827,7 +841,7 @@ function TerminalOpeningScreen() {
                   <span>🪟</span> Windows
                 </h3>
                 <p className="text-sm text-terminal-text/70 mt-2">
-                  スタートメニューで「cmd」と検索してクリック
+                  スタートメニューで「PowerShell」と検索してクリック
                 </p>
               </div>
 
