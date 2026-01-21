@@ -9,6 +9,7 @@ const navItems = [
   { href: '/', label: 'ホーム' },
   { href: '/tutorial', label: 'チュートリアル' },
   { href: '/guides/git', label: 'Git入門' },
+  { href: '/guides/nextjs-setup', label: 'Next.js入門' },
   { href: '/guides/claude-code-skills', label: 'スキル' },
 ];
 

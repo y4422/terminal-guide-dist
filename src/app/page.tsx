@@ -46,6 +46,14 @@ export default function Home() {
                 badgeColor="success"
               />
               <FeatureCard
+                icon="🚀"
+                title="Next.js アプリを作ろう"
+                description="Node.js のインストールから npm run dev まで、Claude Code で Web アプリ開発を始めましょう。"
+                href="/guides/nextjs-setup"
+                badge="初心者向け"
+                badgeColor="success"
+              />
+              <FeatureCard
                 icon="⚡"
                 title="Claude Code スキル"
                 description="スキル機能の活用方法と CLAUDE.md の書き方を学んで、開発効率をアップしましょう。"
