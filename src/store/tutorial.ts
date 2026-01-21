@@ -399,13 +399,14 @@ export const useTutorialStore = create<TutorialState>()(
     }),
     {
       name: 'claudecode-tutorial',
+      // Note: fileSystem is intentionally NOT persisted
+      // It should start fresh each session to avoid stale file state
       partialize: (state) => ({
         sessionId: state.sessionId,
         currentStep: state.currentStep,
         completedSteps: state.completedSteps,
         stepStates: state.stepStates,
         startTime: state.startTime,
-        fileSystem: state.fileSystem,
         achievements: state.achievements,
       }),
     }

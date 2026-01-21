@@ -642,41 +642,43 @@ function IntroScreen() {
   };
 
   return (
-    <div className="flex h-full flex-col items-center justify-center p-8 text-terminal-text">
-      <div className="max-w-md text-center space-y-8">
-        <h1 className="text-3xl font-bold">👋 Claude Codeの世界へようこそ!</h1>
+    <div className="h-full overflow-y-auto">
+      <div className="flex min-h-full flex-col items-center justify-center p-6 sm:p-8 text-terminal-text">
+        <div className="max-w-md w-full text-center space-y-6">
+          <h1 className="text-2xl sm:text-3xl font-bold">👋 Claude Codeの世界へようこそ!</h1>
 
-        <div className="space-y-4 text-left">
-          <p className="text-terminal-text/80">
-            このチュートリアルでは、以下のことを体験できます:
-          </p>
-          <ul className="space-y-2">
-            {[
-              { icon: '🖥️', text: 'ターミナルの基本を知る' },
-              { icon: '🧭', text: 'cdコマンドでフォルダを移動' },
-              { icon: '🤖', text: 'Claude Codeを起動する' },
-              { icon: '💬', text: 'Claudeに日本語で話しかける' },
-              { icon: '📄', text: 'ファイルやプログラムを作る' },
-            ].map((item, i) => (
-              <li key={i} className="flex items-center gap-3">
-                <span className="text-xl">{item.icon}</span>
-                <span>{item.text}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="space-y-4 text-left">
+            <p className="text-terminal-text/80">
+              このチュートリアルでは、以下のことを体験できます:
+            </p>
+            <ul className="space-y-2">
+              {[
+                { icon: '🖥️', text: 'ターミナルの基本を知る' },
+                { icon: '🧭', text: 'cdコマンドでフォルダを移動' },
+                { icon: '🤖', text: 'Claude Codeを起動する' },
+                { icon: '💬', text: 'Claudeに日本語で話しかける' },
+                { icon: '📄', text: 'ファイルやプログラムを作る' },
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-3">
+                  <span className="text-xl">{item.icon}</span>
+                  <span>{item.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-terminal-text/60">⏱️ 所要時間: 約20分</p>
+            <p className="text-terminal-text/60">📊 難易度: ★☆☆☆☆ (初心者向け)</p>
+          </div>
+
+          <button
+            onClick={handleStart}
+            className="w-full px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors"
+          >
+            チュートリアルを始める →
+          </button>
         </div>
-
-        <div className="space-y-2">
-          <p className="text-terminal-text/60">⏱️ 所要時間: 約20分</p>
-          <p className="text-terminal-text/60">📊 難易度: ★☆☆☆☆ (初心者向け)</p>
-        </div>
-
-        <button
-          onClick={handleStart}
-          className="px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors"
-        >
-          チュートリアルを始める →
-        </button>
       </div>
     </div>
   );
@@ -705,8 +707,9 @@ function InstallScreen() {
   };
 
   return (
-    <div className="flex h-full flex-col items-center justify-center p-8 text-terminal-text">
-      <div className="max-w-lg space-y-8">
+    <div className="h-full overflow-y-auto">
+      <div className="flex min-h-full flex-col items-center justify-center p-6 sm:p-8 text-terminal-text">
+        <div className="max-w-lg w-full space-y-6">
         <h2 className="text-2xl font-bold text-center">
           🚀 Claude Code をインストールしよう
         </h2>
@@ -771,16 +774,17 @@ function InstallScreen() {
         <div className="flex flex-col gap-3 text-center">
           <button
             onClick={handleNext}
-            className="px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors"
+            className="w-full px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors"
           >
             インストールが完了しました →
           </button>
           <button
             onClick={handleNext}
-            className="text-terminal-text/60 hover:text-terminal-text text-sm transition-colors"
+            className="w-full py-2 text-terminal-text/60 hover:text-terminal-text text-sm transition-colors"
           >
             すでにインストール済み →
           </button>
+        </div>
         </div>
       </div>
     </div>
@@ -797,54 +801,56 @@ function TerminalOpeningScreen() {
   };
 
   return (
-    <div className="flex h-full flex-col items-center justify-center p-8 text-terminal-text">
-      <div className="max-w-lg space-y-8">
-        <h2 className="text-2xl font-bold text-center">🖥️ ターミナルを開こう</h2>
+    <div className="h-full overflow-y-auto">
+      <div className="flex min-h-full flex-col items-center justify-center p-6 sm:p-8 text-terminal-text">
+        <div className="max-w-lg w-full space-y-6">
+          <h2 className="text-2xl font-bold text-center">🖥️ ターミナルを開こう</h2>
 
-        <div className="bg-terminal-text/5 rounded-lg p-6 space-y-4">
-          <p className="text-terminal-text/80">
-            お使いのOSに合わせて、ターミナルを開いてください:
-          </p>
+          <div className="bg-terminal-text/5 rounded-lg p-4 sm:p-6 space-y-4">
+            <p className="text-terminal-text/80">
+              お使いのOSに合わせて、ターミナルを開いてください:
+            </p>
 
-          <div className="space-y-4">
-            <div className="border border-terminal-text/20 rounded p-4">
-              <h3 className="font-bold flex items-center gap-2">
-                <span>🍎</span> Mac
-              </h3>
-              <p className="text-sm text-terminal-text/70 mt-2">
-                <kbd className="bg-terminal-text/10 px-2 py-0.5 rounded">⌘</kbd> + <kbd className="bg-terminal-text/10 px-2 py-0.5 rounded">Space</kbd> で Spotlight を開き、<br />
-                「ターミナル」と入力して Enter
-              </p>
-            </div>
+            <div className="space-y-3">
+              <div className="border border-terminal-text/20 rounded p-3 sm:p-4">
+                <h3 className="font-bold flex items-center gap-2">
+                  <span>🍎</span> Mac
+                </h3>
+                <p className="text-sm text-terminal-text/70 mt-2">
+                  <kbd className="bg-terminal-text/10 px-2 py-0.5 rounded">⌘</kbd> + <kbd className="bg-terminal-text/10 px-2 py-0.5 rounded">Space</kbd> で Spotlight を開き、<br />
+                  「ターミナル」と入力して Enter
+                </p>
+              </div>
 
-            <div className="border border-terminal-text/20 rounded p-4">
-              <h3 className="font-bold flex items-center gap-2">
-                <span>🪟</span> Windows
-              </h3>
-              <p className="text-sm text-terminal-text/70 mt-2">
-                スタートメニューで「cmd」と検索してクリック
-              </p>
-            </div>
+              <div className="border border-terminal-text/20 rounded p-3 sm:p-4">
+                <h3 className="font-bold flex items-center gap-2">
+                  <span>🪟</span> Windows
+                </h3>
+                <p className="text-sm text-terminal-text/70 mt-2">
+                  スタートメニューで「cmd」と検索してクリック
+                </p>
+              </div>
 
-            <div className="border border-terminal-text/20 rounded p-4">
-              <h3 className="font-bold flex items-center gap-2">
-                <span>💻</span> VS Code
-              </h3>
-              <p className="text-sm text-terminal-text/70 mt-2">
-                メニューの「表示」→「ターミナル」<br />
-                または <kbd className="bg-terminal-text/10 px-2 py-0.5 rounded">Ctrl</kbd> + <kbd className="bg-terminal-text/10 px-2 py-0.5 rounded">`</kbd>
-              </p>
+              <div className="border border-terminal-text/20 rounded p-3 sm:p-4">
+                <h3 className="font-bold flex items-center gap-2">
+                  <span>💻</span> VS Code
+                </h3>
+                <p className="text-sm text-terminal-text/70 mt-2">
+                  メニューの「表示」→「ターミナル」<br />
+                  または <kbd className="bg-terminal-text/10 px-2 py-0.5 rounded">Ctrl</kbd> + <kbd className="bg-terminal-text/10 px-2 py-0.5 rounded">`</kbd>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="text-center">
-          <button
-            onClick={handleConfirm}
-            className="px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors"
-          >
-            ターミナルを開きました! →
-          </button>
+          <div className="text-center">
+            <button
+              onClick={handleConfirm}
+              className="w-full px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors"
+            >
+              ターミナルを開きました! →
+            </button>
+          </div>
         </div>
       </div>
     </div>

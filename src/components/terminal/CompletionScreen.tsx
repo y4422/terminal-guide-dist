@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useTutorialStore } from '@/store/tutorial';
-import { Trophy, Sparkles, ExternalLink, RotateCcw, Clock, Star, Zap, ChevronRight } from 'lucide-react';
+import { Trophy, Sparkles, ExternalLink, RotateCcw, Clock, Star, Zap, ChevronRight, Home } from 'lucide-react';
 
 // Confetti particle component
 function ConfettiParticle({ delay, left }: { delay: number; left: number }) {
@@ -230,6 +231,18 @@ export function CompletionScreen() {
               </span>
               <ChevronRight className="h-4 w-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
             </button>
+
+            {/* Back to top */}
+            <Link
+              href="/"
+              className="group flex items-center justify-between w-full px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-white/70 font-medium hover:bg-white/10 hover:border-white/20 hover:text-white/90 transition-all duration-200"
+            >
+              <span className="flex items-center gap-3">
+                <Home className="h-4 w-4 text-white/50 group-hover:text-white/80 transition-colors" />
+                トップページに戻る
+              </span>
+              <ChevronRight className="h-4 w-4 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
+            </Link>
           </div>
         </div>
 

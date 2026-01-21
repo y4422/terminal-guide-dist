@@ -9,8 +9,9 @@ export function NavigationButtons() {
   const { currentStep, completedSteps, goToStep, skipStep } = useTutorialStore();
 
   const canGoBack = currentStep > 0;
-  const canGoForward = completedSteps.includes(currentStep) && currentStep < 7;
-  const canSkip = currentStep > 0 && currentStep < 7 && !completedSteps.includes(currentStep);
+  // Step 11 is completion screen, so we can go forward until step 10
+  const canGoForward = completedSteps.includes(currentStep) && currentStep < 11;
+  const canSkip = currentStep > 0 && currentStep < 11 && !completedSteps.includes(currentStep);
 
   const handleBack = () => {
     if (canGoBack) {

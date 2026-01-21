@@ -8,6 +8,11 @@ interface FileTreeProps {
 }
 
 export function FileTree({ fileSystem }: FileTreeProps) {
+  // Don't show if there are no files/folders created yet
+  if (fileSystem.root.children.length === 0) {
+    return null;
+  }
+
   return (
     <div className="text-terminal-text text-xs">
       <div className="text-terminal-text/50 mb-1">📁 ファイル構造:</div>
