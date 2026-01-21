@@ -359,7 +359,7 @@ export const useTutorialStore = create<TutorialState>()(
           'installer': { name: 'インストーラー', description: 'Claude Codeをインストール!', icon: '📦' },
           'terminal-opener': { name: 'ターミナルデビュー', description: 'ターミナルを開くことができた!', icon: '🖥️' },
           'navigator': { name: 'ナビゲーター', description: 'cdコマンドでフォルダを移動できた!', icon: '🧭' },
-          'claude-starter': { name: 'Claude起動', description: 'ClaudeCodeを起動できた!', icon: '🤖' },
+          'claude-starter': { name: 'Claude起動', description: 'Claude Code を起動できた!', icon: '🤖' },
           'first-command': { name: '初めてのお願い', description: 'Claudeへの最初の依頼に成功!', icon: '🎯' },
           'researcher': { name: 'リサーチャー', description: '競合調査を完了!', icon: '🔍' },
           'reviewer': { name: 'レビュアー', description: 'ドキュメントをレビュー!', icon: '📋' },

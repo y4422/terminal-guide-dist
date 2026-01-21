@@ -13,9 +13,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'ClaudeCode Tutorial - インタラクティブチュートリアル',
-  description: 'ターミナル操作に不慣れな初心者が、ClaudeCodeの使い方を段階的に学べるインタラクティブチュートリアル',
-  keywords: ['ClaudeCode', 'Tutorial', 'Terminal', 'Programming', 'Beginner'],
+  title: 'Claude Code Tutorial - インタラクティブチュートリアル',
+  description: 'ターミナル操作に不慣れな初心者が、Claude Codeの使い方を段階的に学べるインタラクティブチュートリアル',
+  keywords: ['Claude Code', 'Tutorial', 'Terminal', 'Programming', 'Beginner'],
 };
 
 export default function RootLayout({

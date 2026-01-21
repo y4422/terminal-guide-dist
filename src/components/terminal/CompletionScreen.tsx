@@ -129,7 +129,7 @@ export function CompletionScreen() {
               おめでとうございます!
             </h1>
             <p className="text-white/70 text-lg">
-              ClaudeCode体験ツアーを完走しました
+              Claude Code体験ツアーを完走しました
             </p>
           </div>
 
@@ -214,7 +214,7 @@ export function CompletionScreen() {
             >
               <span className="flex items-center gap-3">
                 <span className="text-xl">💻</span>
-                <span className="text-lg">実際のClaudeCodeを使う</span>
+                <span className="text-lg">実際のClaude Codeを使う</span>
               </span>
               <ExternalLink className="h-5 w-5 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
             </a>
@@ -239,7 +239,7 @@ export function CompletionScreen() {
           style={{ animationDelay: '1.6s', animationFillMode: 'backwards' }}
         >
           <p className="text-xs text-white/40">
-            Made with ❤️ for ClaudeCode beginners
+            Made with ❤️ for Claude Code beginners
           </p>
         </div>
       </div>

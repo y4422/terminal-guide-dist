@@ -108,14 +108,13 @@ export interface StepGuide {
 
 export const STEP_GUIDES: Record<StepId, StepGuide> = {
   0: {
-    title: 'ClaudeCodeの世界へようこそ!',
-    introduction: 'このチュートリアルでは、ターミナルの基本操作からClaudeCodeの使い方まで、一歩ずつ学んでいきます。',
+    title: 'Claude Code の世界へようこそ!',
+    introduction: 'このチュートリアルでは、ターミナルの基本操作から Claude Code の使い方まで、一歩ずつ学んでいきます。',
     mission: {
       description: 'チュートリアルを始める',
     },
     tips: [
-      '約10分で完了します',
-      'プログラミング経験は不要です',
+      '約20分で完了します',
       'ターミナルを触ったことがなくても大丈夫!',
     ],
   },
@@ -162,12 +161,12 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
     },
     tips: [
       'cd = Change Directory（ディレクトリを変える）の略',
-      'cd .. で1つ上のフォルダに戻れます',
-      'cd ~ でホームフォルダに戻れます',
+      'エラーが出たら cd ~/Desktop を試してください',
+      'Windowsの場合は cd %USERPROFILE%\\Desktop',
     ],
     knowledgeBox: {
       title: '📂 パスとは?',
-      content: 'ファイルやフォルダの住所のようなもの。例: /Users/あなたの名前/Desktop',
+      content: 'ファイルやフォルダの住所のようなもの。~ はホームフォルダを意味します。',
     },
     technicalDetails: {
       title: 'よく使うcdコマンド',
@@ -176,26 +175,26 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
     },
   },
   4: {
-    title: 'ステップ4: ClaudeCodeを起動しよう',
-    introduction: '準備ができました! いよいよClaudeCodeを起動します。「claude」と入力するだけです。',
+    title: 'ステップ4: Claude Code を起動しよう',
+    introduction: '準備ができました! いよいよ Claude Code を起動します。「claude」と入力するだけです。',
     mission: {
-      description: 'ClaudeCodeを起動しましょう',
+      description: 'Claude Code を起動しましょう',
       command: 'claude',
       copyable: true,
     },
     tips: [
-      '小文字で「claude」と入力',
-      'Enterキーで実行',
-      '起動には数秒かかることがあります',
+      '小文字で「claude」と入力してEnter',
+      '初回はブラウザが開いて認証画面が表示されます',
+      'Anthropicアカウントでログインしてください',
     ],
     knowledgeBox: {
-      title: '🤖 ClaudeCodeとは?',
-      content: 'AIアシスタントのClaudeをターミナルから使えるツール。日本語で話しかけるだけで、プログラミングやファイル操作を手伝ってくれます。',
+      title: '🔐 初回認証について',
+      content: '初めて起動すると、ブラウザが開いてAnthropicアカウントへのログインを求められます。すでにClaude Proに契約済みの方は、そのアカウントでログインしてください。',
     },
   },
   5: {
     title: 'ステップ5: プロジェクトフォルダを作ろう',
-    introduction: 'ClaudeCodeが起動しました! まずはプロジェクト用のフォルダを作りましょう。日本語で話しかけるだけでOKです。',
+    introduction: 'Claude Code が起動しました! まずはプロジェクト用のフォルダを作りましょう。日本語で話しかけるだけでOKです。',
     mission: {
       description: 'プロジェクト用のフォルダを作成しましょう',
       command: 'my-projectフォルダを作って',
@@ -203,39 +202,34 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
     },
     tips: [
       '敬語じゃなくてもOK、日本語で自然に話しかけてください',
-      'シンプルな指示でOK、Claudeが理解してくれます',
+      'シンプルな指示でOK、Claude が理解してくれます',
     ],
     knowledgeBox: {
       title: '📂 なぜプロジェクトフォルダが重要?',
-      content: 'ClaudeCodeはフォルダ単位でプロジェクトを管理します。専用フォルダを作ることで、関連ファイルを整理しやすくなります。',
+      content: 'Claude Code はフォルダ単位でプロジェクトを管理します。専用フォルダを作ることで、関連ファイルを整理しやすくなります。',
     },
     technicalDetails: {
-      title: 'Claudeを使わない場合',
+      title: 'Claude を使わない場合',
       content: 'mkdir my-project',
-      note: 'というコマンドですが、Claudeなら覚えなくてOK!',
+      note: 'というコマンドですが、Claude なら覚えなくてOK!',
     },
   },
   6: {
-    title: 'ステップ6: 競合調査をしよう（Plan Mode）',
-    introduction: 'ClaudeCodeの「Plan Mode」を使って、競合サービスを調査しましょう。Plan Modeに切り替えるには、Shift+Tab を押すか、/plan と入力します。',
+    title: 'ステップ6: 競合調査をしよう',
+    introduction: 'Claude Code に競合サービスを調査してもらいましょう。第1回で作成した要件定義を補強するための情報収集です。',
     mission: {
       description: 'Todoアプリの競合サービスを調査し、レポートを作成しましょう',
       command: 'Todoアプリの競合サービスを調査して、research.mdにまとめて',
       copyable: true,
     },
     tips: [
-      'Plan Modeへの切り替え: Shift+Tab または /plan と入力',
-      '調査対象のサービスURLがあれば、より詳細な分析ができます',
+      'そのまま入力するだけでOK',
       '具体的なアプリ名（Todoist, TickTickなど）を指定してもOK',
+      'Claude が自動でWeb検索して分析してくれます',
     ],
     knowledgeBox: {
-      title: '🔍 Plan Modeとは?',
-      content: 'Claudeが「まず計画を立ててから実行する」モード。複雑なタスクを自動で分解し、ステップごとに進めてくれます。調査・分析系のタスクに最適!',
-    },
-    technicalDetails: {
-      title: 'Plan Modeの切り替え方法',
-      content: '・Shift+Tab: Plan Modeに切り替え\n・/plan: コマンドで切り替え\n・通常モードに戻る: もう一度 Shift+Tab',
-      note: 'Plan Modeでは、実行前に計画を確認できます',
+      title: '🔍 Claude Code の調査機能',
+      content: 'Claude Code はWeb検索機能を持っており、競合サービスの情報を自動で収集・分析してくれます。結果はMarkdownファイルにまとめられます。',
     },
   },
   7: {
@@ -247,36 +241,36 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
       copyable: true,
     },
     tips: [
-      '@ファイル名 でファイルをClaudeに渡せます',
+      '@ファイル名 でファイルを Claude に渡せます',
       '「もっと詳しく」「〇〇を追加して」など細かい調整も可能',
-      'Claudeが自動で不足情報を判断して追加してくれます',
+      'Claude が自動で不足情報を判断して追加してくれます',
     ],
     knowledgeBox: {
       title: '💡 @メンションの使い方',
-      content: '@ファイル名 でファイルをClaudeに渡せます。ファイルをドラッグ&ドロップしても同じことができます!',
+      content: '@ファイル名 でファイルを Claude に渡せます。Tab キーでファイル名を補完することもできます。',
     },
   },
   8: {
-    title: 'ステップ8: 作るものを決めよう',
-    introduction: '調査結果をもとに、「どんなTodoアプリを作るか」をClaudeにまとめてもらいましょう。これが設計図になります!',
+    title: 'ステップ8: 要件定義を作成しよう',
+    introduction: '調査結果をもとに、「どんなTodoアプリを作るか」を Claude にまとめてもらいましょう。第1回で学んだ要件定義を実践します!',
     mission: {
-      description: '調査結果をもとに、アプリの要件定義（作るものリスト）を作成しましょう',
+      description: '調査結果をもとに、アプリの要件定義を作成しましょう',
       command: '調査結果をもとに、Todoアプリの要件をrequirements.mdにまとめて',
       copyable: true,
     },
     tips: [
-      'Claudeが調査結果を自動で参照して、要件を整理してくれます',
-      '「要件」= 作るものリスト、と考えればOK!',
+      'Claude が調査結果を自動で参照して、要件を整理してくれます',
+      '第1回で学んだ要件定義のフォーマットを思い出してください',
       'この一文をそのままコピペすれば大丈夫です',
     ],
     knowledgeBox: {
-      title: '📋 要件定義とは?',
-      content: '「何を作るか」のチェックリストのようなもの。例: タスクを追加できる、完了にできる、保存される...など。Claudeが自動で整理してくれます!',
+      title: '📋 AIによる要件定義',
+      content: 'Claude は競合調査の結果を踏まえて、機能要件・非機能要件を自動で整理してくれます。人間が見落としがちな観点も補ってくれます。',
     },
     technicalDetails: {
-      title: 'Claudeが作ってくれる内容',
-      content: '・必須機能（最低限必要なもの）\n・あったら嬉しい機能\n・性能の目標',
-      note: '難しく考えなくてOK、Claudeにお任せ!',
+      title: 'Claude が作ってくれる内容',
+      content: '・必須機能（MVP）\n・あったら嬉しい機能\n・非機能要件（性能・セキュリティなど）',
+      note: '生成された内容は自由に編集できます',
     },
   },
   9: {
@@ -299,20 +293,20 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
   },
   10: {
     title: 'ステップ10: 開発を始めよう',
-    introduction: '要件定義が完成しました! いよいよTodoアプリの開発を始めましょう。Claudeがコードを自動生成してくれます。',
+    introduction: '要件定義が完成しました! いよいよTodoアプリの開発を始めましょう。Claude がコードを自動生成してくれます。',
     mission: {
       description: '要件に基づいて、実際に動くTodoアプリのコードを生成しましょう',
       command: '要件に沿ってTodoアプリの基本構造を作って',
       copyable: true,
     },
     tips: [
-      'Claudeが要件定義を参照して適切なコードを生成します',
+      'Claude が要件定義を参照して適切なコードを生成します',
       '一度に全部作らなくても、段階的に機能を追加できます',
       '生成されたコードは自由に編集・カスタマイズできます',
     ],
     knowledgeBox: {
       title: '🛠️ AIによるコード生成',
-      content: 'ClaudeCodeは要件を理解し、適切なファイル構造とコードを自動生成します。HTML、CSS、JavaScriptなど複数ファイルも一度に作成できます。',
+      content: 'Claude Code は要件を理解し、適切なファイル構造とコードを自動生成します。HTML、CSS、JavaScriptなど複数ファイルも一度に作成できます。',
     },
     technicalDetails: {
       title: '生成されるファイル',
@@ -322,7 +316,7 @@ export const STEP_GUIDES: Record<StepId, StepGuide> = {
   },
   11: {
     title: 'おめでとうございます!',
-    introduction: 'ClaudeCode体験ツアーを完走しました! 調査から開発まで、一連の開発ワークフローを体験しました。',
+    introduction: 'Claude Code 体験ツアーを完走しました! 調査から開発まで、一連の開発ワークフローを体験しました。',
     mission: {
       description: 'チュートリアル完了',
     },
@@ -352,7 +346,7 @@ export const DEFAULT_ACHIEVEMENTS: Achievement[] = [
   {
     id: 'claude-starter',
     name: 'Claude起動',
-    description: 'ClaudeCodeを起動できた!',
+    description: 'Claude Code を起動できた!',
     icon: '🤖',
   },
   {

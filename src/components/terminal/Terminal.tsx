@@ -70,7 +70,7 @@ export function Terminal() {
       setOutputs([
         { type: 'system', content: `╭─────────────────────────────────────╮
 │                                     │
-│   🤖 ClaudeCode へようこそ!        │
+│   🤖 Claude Code へようこそ!        │
 │                                     │
 │   日本語で話しかけてください        │
 │   何でもお手伝いします!             │
@@ -135,13 +135,13 @@ export function Terminal() {
           type: 'success',
           output: `╭─────────────────────────────────────╮
 │                                     │
-│   🤖 ClaudeCode へようこそ!        │
+│   🤖 Claude Code へようこそ!        │
 │                                     │
 │   日本語で話しかけてください        │
 │   何でもお手伝いします!             │
 │                                     │
 ╰─────────────────────────────────────╯`,
-          message: '🎉 ClaudeCodeが起動しました!',
+          message: '🎉 Claude Codeが起動しました!',
         };
 
       case 5: // Folder creation with Claude
@@ -644,7 +644,7 @@ function IntroScreen() {
   return (
     <div className="flex h-full flex-col items-center justify-center p-8 text-terminal-text">
       <div className="max-w-md text-center space-y-8">
-        <h1 className="text-3xl font-bold">👋 ClaudeCodeの世界へようこそ!</h1>
+        <h1 className="text-3xl font-bold">👋 Claude Codeの世界へようこそ!</h1>
 
         <div className="space-y-4 text-left">
           <p className="text-terminal-text/80">
@@ -654,7 +654,7 @@ function IntroScreen() {
             {[
               { icon: '🖥️', text: 'ターミナルの基本を知る' },
               { icon: '🧭', text: 'cdコマンドでフォルダを移動' },
-              { icon: '🤖', text: 'ClaudeCodeを起動する' },
+              { icon: '🤖', text: 'Claude Codeを起動する' },
               { icon: '💬', text: 'Claudeに日本語で話しかける' },
               { icon: '📄', text: 'ファイルやプログラムを作る' },
             ].map((item, i) => (
@@ -667,7 +667,7 @@ function IntroScreen() {
         </div>
 
         <div className="space-y-2">
-          <p className="text-terminal-text/60">⏱️ 所要時間: 約10分</p>
+          <p className="text-terminal-text/60">⏱️ 所要時間: 約20分</p>
           <p className="text-terminal-text/60">📊 難易度: ★☆☆☆☆ (初心者向け)</p>
         </div>
 
@@ -689,7 +689,7 @@ function InstallScreen() {
   const { completeStep, unlockAchievement } = useTutorialStore();
 
   const installCommands = {
-    mac: 'curl -fsSL https://claude.ai/install.sh | sh',
+    mac: 'curl -fsSL https://claude.ai/install.sh | bash',
     windows: 'curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd'
   };
 

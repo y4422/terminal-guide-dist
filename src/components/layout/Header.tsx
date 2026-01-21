@@ -29,7 +29,7 @@ export function Header() {
 
           <div className="flex flex-col">
             <span className="text-lg font-bold tracking-tight">
-              <span className="text-gradient">ClaudeCode</span>
+              <span className="text-gradient">Claude Code</span>
             </span>
             <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
               Tutorial
