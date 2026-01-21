@@ -1,5 +1,6 @@
 import { GuideLayout } from '@/components/layout/GuideLayout';
 import { Terminal, FolderTree, Play, Rocket, Package, FileCode, ExternalLink } from 'lucide-react';
+import { FaApple, FaWindows } from 'react-icons/fa';
 
 const sections = [
   { id: 'what-is-nextjs', title: 'Next.js とは' },
@@ -125,7 +126,7 @@ export default function NextjsSetupGuidePage() {
         {/* Mac */}
         <div className="mb-8">
           <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-            <span>🍎</span> Mac の場合
+            <FaApple className="h-5 w-5" /> Mac の場合
           </h3>
 
           <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
@@ -168,7 +169,7 @@ export default function NextjsSetupGuidePage() {
         {/* Windows */}
         <div className="mb-6">
           <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-            <span>🪟</span> Windows の場合
+            <FaWindows className="h-5 w-5" /> Windows の場合
           </h3>
 
           <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
