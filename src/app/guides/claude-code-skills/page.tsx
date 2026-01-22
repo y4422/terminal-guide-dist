@@ -1,10 +1,11 @@
 import { GuideLayout } from '@/components/layout/GuideLayout';
-import { Zap, FileText, Code, GitCommit, Paintbrush, Table, Download, GitPullRequest, Trash2, AlertTriangle } from 'lucide-react';
+import { Zap, FileText, Code, GitCommit, Paintbrush, Table, Download, GitPullRequest, Trash2, AlertTriangle, ListTodo, RotateCcw } from 'lucide-react';
 
 const sections = [
   { id: 'what-is-skill', title: 'スキルとコマンド' },
   { id: 'builtin-commands', title: 'ビルトインコマンド' },
   { id: 'ask-claude', title: '困ったら聞こう' },
+  { id: 'workflow-tips', title: '効率的な作業テクニック' },
   { id: 'install-plugin', title: 'プラグインのインストール' },
   { id: 'commit-commands', title: 'commit-commands' },
   { id: 'example-skills', title: 'example-skills' },
@@ -166,6 +167,88 @@ export default function ClaudeCodeSkillsPage() {
           <p className="text-sm">
             <strong>ポイント:</strong> Claude Code は会話の文脈を覚えています。
             「さっきのファイルを...」のように前の内容を参照した質問もできます。
+          </p>
+        </div>
+      </Section>
+
+      <Section id="workflow-tips" title="効率的な作業テクニック" icon={<ListTodo className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-4">
+          Claude Code を使いこなすための便利な機能を紹介します。
+          大きなタスクの計画や、作業の継続に役立ちます。
+        </p>
+
+        <h3 className="flex items-center gap-2 text-lg font-semibold mb-3">
+          <ListTodo className="h-5 w-5" />
+          Plan モード - 計画してから実行
+        </h3>
+        <p className="text-muted-foreground mb-3">
+          大きなタスクを実行する前に、Claude に計画を立てさせることができます。
+          いきなりコードを書き始めるのではなく、まず全体の設計を確認できます。
+        </p>
+        <CodeBlock title="Plan モードの使い方">
+{`# 方法1: /plan コマンド（v2.1.0+）
+/plan
+
+# 方法2: Shift+Tab で切り替え
+# 入力欄で Shift+Tab を押すと Plan/Auto が切り替わる
+
+# 方法3: 起動時にフラグを指定
+claude --permission-mode plan
+
+# Claude が計画を提示 → 確認後に実行
+# 計画に問題があれば修正を依頼できる`}
+        </CodeBlock>
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-6">
+          <p className="font-medium mb-2">Plan モードが有効な場面</p>
+          <ul className="text-sm text-muted-foreground space-y-1">
+            <li>• 複数ファイルにまたがる大きな変更</li>
+            <li>• アーキテクチャの変更</li>
+            <li>• 新機能の追加</li>
+            <li>• 影響範囲が不明な修正</li>
+          </ul>
+        </div>
+
+        <h3 className="flex items-center gap-2 text-lg font-semibold mb-3">
+          <RotateCcw className="h-5 w-5" />
+          Resume - 前回の作業を再開
+        </h3>
+        <p className="text-muted-foreground mb-3">
+          Claude Code を終了しても、前回の会話から作業を再開できます。
+          「あれ、昨日どこまでやったっけ?」という時に便利です。
+        </p>
+        <CodeBlock title="Resume の使い方">
+{`# 方法1: --resume フラグで起動
+claude --resume
+
+# 方法2: --continue フラグ（最新の会話を自動再開）
+claude --continue
+# または短縮形
+claude -c
+
+# 方法3: 起動後に /resume コマンド
+/resume`}
+        </CodeBlock>
+        <div className="grid sm:grid-cols-2 gap-4 mb-6">
+          <div className="p-4 bg-muted/30 rounded-lg">
+            <p className="font-medium mb-2">--resume</p>
+            <p className="text-sm text-muted-foreground">
+              過去の会話一覧から選んで再開。
+              複数のプロジェクトを行き来する時に便利。
+            </p>
+          </div>
+          <div className="p-4 bg-muted/30 rounded-lg">
+            <p className="font-medium mb-2">--continue (-c)</p>
+            <p className="text-sm text-muted-foreground">
+              直前の会話を自動で再開。
+              「さっきの続き」をすぐ始めたい時に。
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+          <p className="text-sm">
+            <strong>ヒント:</strong> Resume で再開すると、前回の会話の文脈（作成したファイル、議論した内容など）を
+            Claude が覚えているので、「さっきのファイルを修正して」のような指示がそのまま通じます。
           </p>
         </div>
       </Section>
