@@ -1,5 +1,5 @@
 import { GuideLayout } from '@/components/layout/GuideLayout';
-import { Terminal, FolderTree, Play, Rocket, Package, FileCode, ExternalLink, BookOpen, Lightbulb, CheckCircle, FileText, Folder, File, Target, PartyPopper, StopCircle } from 'lucide-react';
+import { Terminal, FolderTree, Play, Rocket, Package, FileCode, ExternalLink, BookOpen, Lightbulb, CheckCircle, FileText, Folder, File, Target, PartyPopper, StopCircle, Puzzle, Wrench, Brain } from 'lucide-react';
 import { FaApple, FaWindows } from 'react-icons/fa';
 
 const sections = [
@@ -9,6 +9,7 @@ const sections = [
   { id: 'file-structure', title: 'ファイル構成を理解しよう' },
   { id: 'run-app', title: 'アプリを動かそう' },
   { id: 'next-steps', title: '次のステップ' },
+  { id: 'bonus-component', title: 'おまけ: Component とは' },
 ];
 
 function CodeBlock({ children, title }: { children: string; title?: string }) {
@@ -500,6 +501,152 @@ npm --version`}
             </li>
           </ul>
         </div>
+      </Section>
+
+      <Section id="bonus-component" title="おまけ: Component という考え方" icon={<Lightbulb className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-6">
+          Next.js（React）を理解する上で大切な「<strong>Component</strong>」という考え方を紹介します。
+        </p>
+
+        {/* 従来 vs React の比較 */}
+        <h3 className="text-lg font-semibold mb-3">「分離」から「統合」へ</h3>
+        <div className="grid sm:grid-cols-2 gap-4 mb-6">
+          <div className="p-4 bg-muted/30 rounded-lg">
+            <p className="font-medium mb-3 flex items-center gap-2">
+              <Folder className="h-4 w-4" /> 従来の Web 開発
+            </p>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center gap-2">
+                <File className="h-3.5 w-3.5 text-orange-500" />
+                <span>index.html</span>
+                <span className="text-muted-foreground text-xs">（構造）</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <File className="h-3.5 w-3.5 text-blue-500" />
+                <span>style.css</span>
+                <span className="text-muted-foreground text-xs">（見た目）</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <File className="h-3.5 w-3.5 text-yellow-500" />
+                <span>script.js</span>
+                <span className="text-muted-foreground text-xs">（動き）</span>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3 pt-3 border-t border-border/50">
+              役割ごとにファイルを分ける
+            </p>
+          </div>
+
+          <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
+            <p className="font-medium mb-3 flex items-center gap-2 text-primary">
+              <FileCode className="h-4 w-4" /> Next.js / React
+            </p>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center gap-2">
+                <FileCode className="h-3.5 w-3.5 text-primary" />
+                <span>Button.tsx</span>
+                <span className="text-muted-foreground text-xs">（Component）</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <FileCode className="h-3.5 w-3.5 text-primary" />
+                <span>Card.tsx</span>
+                <span className="text-muted-foreground text-xs">（Component）</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <FileCode className="h-3.5 w-3.5 text-primary" />
+                <span>Header.tsx</span>
+                <span className="text-muted-foreground text-xs">（Component）</span>
+              </div>
+            </div>
+            <p className="text-xs text-primary mt-3 pt-3 border-t border-primary/20 font-medium">
+              UI部品ごとに3要素をまとめる
+            </p>
+          </div>
+        </div>
+
+        {/* Component の中身 */}
+        <h3 className="text-lg font-semibold mb-3">1つの Component の中身</h3>
+        <p className="text-sm text-muted-foreground mb-3">
+          HTML・CSS・JavaScript が1つのファイルにまとまっています。
+        </p>
+        <div className="my-4 rounded-lg overflow-hidden border border-border/50">
+          <div className="px-4 py-2 bg-muted/50 border-b border-border/50 text-sm font-medium">
+            Button.tsx（例）
+          </div>
+          <pre className="p-4 bg-terminal-bg text-terminal-text overflow-x-auto text-sm font-mono leading-relaxed">
+            <code>
+              <span className="text-green-400">{'// ⚡ JavaScript: 状態管理'}</span>{'\n'}
+              <span className="text-blue-400">const</span> <span className="text-white">[count, setCount] = </span><span className="text-yellow-300">useState</span><span className="text-white">(0);</span>{'\n'}
+              {'\n'}
+              <span className="text-blue-400">return</span> <span className="text-white">(</span>{'\n'}
+              <span className="text-green-400">{'  // 🦴 JSX: HTML のような構造'}</span>{'\n'}
+              <span className="text-white">  {'<'}</span><span className="text-cyan-400">button</span>{'\n'}
+              <span className="text-green-400">{'    // 🎨 className: スタイル（CSS）'}</span>{'\n'}
+              <span className="text-purple-400">    className</span><span className="text-white">=</span><span className="text-orange-300">&quot;bg-blue-500 text-white px-4 py-2&quot;</span>{'\n'}
+              <span className="text-green-400">{'    // ⚡ onClick: クリック時の動作'}</span>{'\n'}
+              <span className="text-purple-400">    onClick</span><span className="text-white">={'{'}() {'=> '}</span><span className="text-yellow-300">setCount</span><span className="text-white">(count + 1){'}'}</span>{'\n'}
+              <span className="text-white">  {'>'}</span>{'\n'}
+              <span className="text-white">    クリック数: {'{'}count{'}'}</span>{'\n'}
+              <span className="text-white">  {'</'}</span><span className="text-cyan-400">button</span><span className="text-white">{'>'}</span>{'\n'}
+              <span className="text-white">);</span>
+            </code>
+          </pre>
+        </div>
+
+        {/* キーメッセージ */}
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mb-6">
+          <p className="font-medium flex items-center gap-2">
+            <Target className="h-4 w-4 text-accent" />
+            Component = HTML + CSS + JS を1つにまとめた「UI部品」
+          </p>
+        </div>
+
+        {/* なぜ統合するの？ */}
+        <h3 className="text-lg font-semibold mb-3">なぜ「統合」するの?</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          「技術」ではなく「機能」でファイルを分けることで、開発が楽になります。
+        </p>
+
+        <div className="space-y-3 mb-6">
+          <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+            <Puzzle className="h-5 w-5 text-primary mt-0.5" />
+            <div>
+              <p className="font-medium">再利用しやすい</p>
+              <p className="text-sm text-muted-foreground">Button を作れば、どこでも同じボタンが使える</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+            <Wrench className="h-5 w-5 text-primary mt-0.5" />
+            <div>
+              <p className="font-medium">修正が楽</p>
+              <p className="text-sm text-muted-foreground">ボタンを直すとき、1ファイルだけ見ればOK</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+            <Brain className="h-5 w-5 text-primary mt-0.5" />
+            <div>
+              <p className="font-medium">理解しやすい</p>
+              <p className="text-sm text-muted-foreground">「このボタンは何をする?」が1箇所にまとまっている</p>
+            </div>
+          </div>
+        </div>
+
+        {/* 考え方の違い */}
+        <div className="grid sm:grid-cols-2 gap-3 mb-6">
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm font-medium mb-1 text-muted-foreground">従来: 技術で分類</p>
+            <p className="text-xs text-muted-foreground">
+              ボタン1つ直すのに HTML・CSS・JS の3ファイルを開く
+            </p>
+          </div>
+          <div className="p-3 bg-primary/5 border border-primary/20 rounded-lg">
+            <p className="text-sm font-medium mb-1 text-primary">React: 機能で分類</p>
+            <p className="text-xs text-muted-foreground">
+              ボタンを直すなら Button.tsx だけ見ればOK
+            </p>
+          </div>
+        </div>
+
       </Section>
     </GuideLayout>
   );
