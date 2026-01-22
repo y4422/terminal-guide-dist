@@ -5,7 +5,7 @@ import { useTutorialStore } from '@/store/tutorial';
 import { validateInput } from '@/lib/validation';
 import { FileTree } from './FileTree';
 import { CompletionScreen } from './CompletionScreen';
-import { Monitor, Compass, Bot, MessageSquare, FileText, Clock, BarChart2, Rocket, ClipboardList, Copy, Check, GraduationCap, Code2 } from 'lucide-react';
+import { Monitor, Compass, Bot, MessageSquare, FileText, Clock, BarChart2, Rocket, ClipboardList, Copy, Check, Code2 } from 'lucide-react';
 import { FaApple, FaWindows } from 'react-icons/fa';
 import type { StepId, CommandResponse } from '@/types/tutorial';
 
@@ -53,31 +53,31 @@ export function Terminal() {
     // Skip if already initialized for this step
     if (initializedStep === currentStep) return;
 
-    // Step 3: First time entering terminal mode - start fresh
-    if (currentStep === 3) {
+    // Step 2: First time entering terminal mode - start fresh (cd command)
+    if (currentStep === 2) {
       setClaudeStarted(false);
       setCurrentPath('~');
       setOutputs([]);
     }
-    // Step 4: User completed cd, set context but preserve outputs
-    else if (currentStep === 4) {
+    // Step 3: User completed cd, set context but preserve outputs (claude command)
+    else if (currentStep === 3) {
       setClaudeStarted(false);
       setCurrentPath('~/Desktop');
       // Only initialize if coming from earlier step (not revisiting)
-      if (initializedStep === null || initializedStep < 3) {
+      if (initializedStep === null || initializedStep < 2) {
         setOutputs([
           { type: 'prompt', content: '~ $ cd Desktop' },
         ]);
       }
     }
-    // Step 5: Claude mode - welcome message already shown by step 4 response
-    else if (currentStep === 5) {
+    // Step 4: Claude mode - welcome message already shown by step 3 response
+    else if (currentStep === 4) {
       setClaudeStarted(true);
       setCurrentPath('~/Desktop');
-      // Don't add welcome message here - it's already added by step 4's simulateResponse
+      // Don't add welcome message here - it's already added by step 3's simulateResponse
     }
-    // Step 6+: Claude mode continues - preserve all outputs
-    else if (currentStep >= 6) {
+    // Step 5-9: Claude mode continues - preserve all outputs
+    else if (currentStep >= 5 && currentStep <= 9) {
       setClaudeStarted(true);
       setCurrentPath('~/Desktop');
       // Don't reset outputs - preserve the history
@@ -110,7 +110,7 @@ export function Terminal() {
     }
 
     switch (stepId) {
-      case 3: // cd command
+      case 2: // cd command
         const targetDir = input.replace('cd ', '').trim() || '~';
         let newPath = currentPath;
         if (targetDir === '..') {
@@ -132,7 +132,7 @@ export function Terminal() {
           message: '🎉 フォルダを移動できました!',
         };
 
-      case 4: // claude command
+      case 3: // claude command
         setClaudeStarted(true);
         unlockAchievement('claude-starter');
         return {
@@ -148,7 +148,7 @@ export function Terminal() {
           message: '🎉 Claude Codeが起動しました!',
         };
 
-      case 5: // Folder creation with Claude
+      case 4: // Folder creation with Claude
         createDirectory('~', 'my-project');
         unlockAchievement('first-command');
         return {
@@ -159,7 +159,7 @@ export function Terminal() {
           message: '🎉 素晴らしい! プロジェクトフォルダが作成されました!',
         };
 
-      case 6: // Competitive research (Plan Mode)
+      case 5: // Competitive research (Plan Mode)
         const researchContent = `# Todoアプリ 競合調査レポート
 
 ## 調査対象
@@ -213,7 +213,7 @@ ${researchContent}
           message: '🎉 競合調査が完了しました!',
         };
 
-      case 7: // Review research results
+      case 6: // Review research results
         const updatedResearchContent = `# Todoアプリ 競合調査レポート
 
 ## 調査対象
@@ -268,7 +268,7 @@ ${researchContent}
           message: '🎉 調査レポートが改善されました!',
         };
 
-      case 8: // Create requirements
+      case 7: // Create requirements
         const requirementsContent = `# Todoアプリ 要件定義書
 
 ## 概要
@@ -316,7 +316,7 @@ ${requirementsContent}
           message: '🎉 要件定義が作成されました!',
         };
 
-      case 9: // Multi-model review
+      case 8: // Multi-model review
         unlockAchievement('multi-perspective');
         return {
           type: 'success',
@@ -347,7 +347,7 @@ ${requirementsContent}
           message: '🎉 マルチ視点レビューが完了しました!',
         };
 
-      case 10: // Start development
+      case 9: // Start development
         const indexHtml = `<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -490,8 +490,8 @@ render();`;
 
     if (response.type === 'success') {
       setOutputs((prev) => [...prev, { type: 'success', content: response.message }]);
-      // Step 10: Show button instead of auto-advancing
-      if (currentStep === 10) {
+      // Step 9: Show button instead of auto-advancing (development complete, go to install)
+      if (currentStep === 9) {
         setShowCompletionButton(true);
       } else {
         setTimeout(() => {
@@ -532,14 +532,14 @@ render();`;
     return <CompletionScreen />;
   }
 
-  // Step 1: Install Claude Code
+  // Step 1: Terminal opening instructions (no input needed)
   if (currentStep === 1) {
-    return <InstallScreen />;
+    return <TerminalOpeningScreen />;
   }
 
-  // Step 2: Terminal opening instructions (no input needed)
-  if (currentStep === 2) {
-    return <TerminalOpeningScreen />;
+  // Step 10: Install Claude Code (本番インストール!)
+  if (currentStep === 10) {
+    return <InstallScreen />;
   }
 
   return (
@@ -563,7 +563,7 @@ render();`;
         {/* Initial terminal welcome message */}
         {outputs.length === 0 && !claudeStarted && (
           <div className="text-terminal-text/60 mb-2">
-            {currentStep === 3 && (
+            {currentStep === 2 && (
               <div className="mb-4">Last login: {new Date().toLocaleString('ja-JP')}</div>
             )}
           </div>
@@ -595,17 +595,17 @@ render();`;
           </div>
         )}
 
-        {/* Completion button for step 10 */}
+        {/* Completion button for step 9 - go to install screen */}
         {showCompletionButton && (
           <div className="mt-6 flex justify-center">
             <button
               onClick={() => {
                 setShowCompletionButton(false);
-                completeStep(10);
+                completeStep(9);
               }}
               className="px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors shadow-lg flex items-center gap-2"
             >
-              <GraduationCap className="h-5 w-5" /> チュートリアル完了画面へ →
+              <Rocket className="h-5 w-5" /> いよいよ本番インストール! →
             </button>
           </div>
         )}
@@ -716,7 +716,7 @@ function IntroScreen() {
   );
 }
 
-// Install Screen (Step 1)
+// Install Screen (Step 10 - 本番インストール!)
 function InstallScreen() {
   const [selectedOS, setSelectedOS] = useState<'mac' | 'windows'>('mac');
   const [copied, setCopied] = useState(false);
@@ -746,15 +746,22 @@ $currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
 
   const handleNext = () => {
     unlockAchievement('installer');
-    completeStep(1);
+    completeStep(10);
   };
 
   return (
     <div className="h-full overflow-y-auto">
       <div className="flex min-h-full flex-col items-center justify-center p-6 sm:p-8 text-terminal-text">
         <div className="max-w-lg w-full space-y-6">
+
+        {/* 達成感を演出 */}
+        <div className="text-center mb-4">
+          <p className="text-terminal-success font-bold">🎉 シミュレーターでの練習完了!</p>
+          <p className="text-terminal-text/70 text-sm">ターミナルも Claude Code ももう怖くないですね!</p>
+        </div>
+
         <h2 className="text-2xl font-bold text-center flex items-center justify-center gap-2">
-          <Rocket className="h-6 w-6 text-primary" /> Claude Code をインストールしよう
+          <Rocket className="h-6 w-6 text-primary" /> 本番環境にインストールしよう!
         </h2>
 
         {/* OS選択タブ */}
@@ -863,13 +870,13 @@ $currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
   );
 }
 
-// Terminal Opening Screen (Step 2)
+// Terminal Opening Screen (Step 1)
 function TerminalOpeningScreen() {
   const { completeStep, unlockAchievement } = useTutorialStore();
 
   const handleConfirm = () => {
     unlockAchievement('terminal-opener');
-    completeStep(2);
+    completeStep(1);
   };
 
   return (
@@ -877,12 +884,12 @@ function TerminalOpeningScreen() {
       <div className="flex min-h-full flex-col items-center justify-center p-6 sm:p-8 text-terminal-text">
         <div className="max-w-lg w-full space-y-6">
           <h2 className="text-2xl font-bold text-center flex items-center justify-center gap-2">
-            <Monitor className="h-6 w-6 text-primary" /> ターミナルを開こう
+            <Monitor className="h-6 w-6 text-primary" /> ターミナルの開き方
           </h2>
 
           <div className="bg-terminal-text/5 rounded-lg p-4 sm:p-6 space-y-4">
             <p className="text-terminal-text/80">
-              お使いのOSに合わせて、ターミナルを開いてください:
+              本番でターミナルを開くときは、以下の方法を使います:
             </p>
 
             <div className="space-y-3">
@@ -915,6 +922,10 @@ function TerminalOpeningScreen() {
                 </p>
               </div>
             </div>
+
+            <p className="text-sm text-primary/80 text-center pt-2">
+              今回はシミュレーターで練習するので、まだ開かなくて大丈夫です!
+            </p>
           </div>
 
           <div className="text-center">
@@ -922,7 +933,7 @@ function TerminalOpeningScreen() {
               onClick={handleConfirm}
               className="w-full px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors"
             >
-              ターミナルを開きました! →
+              シミュレーターで体験する →
             </button>
           </div>
         </div>
