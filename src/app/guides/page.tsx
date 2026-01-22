@@ -1,6 +1,6 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { FeatureCard } from '@/components/landing/FeatureCard';
-import { ChevronRight, Home, GitBranch, Rocket, Zap, Code2, FileText } from 'lucide-react';
+import { ChevronRight, Home, GitBranch, Rocket, Zap, Code2, FileText, Database } from 'lucide-react';
 import Link from 'next/link';
 
 const guides = [
@@ -41,6 +41,14 @@ const guides = [
     title: '要件定義書から始める開発',
     description: '要件定義書をベースに Claude Code でアプリを構築する実践的なワークフローを学びます。',
     href: '/guides/requirements-driven',
+    badge: '実践',
+    badgeColor: 'accent' as const,
+  },
+  {
+    icon: <Database className="h-7 w-7 text-primary" />,
+    title: 'Neon DB + Prisma 接続ガイド',
+    description: 'サーバーレス Postgres と Prisma ORM でデータベース開発を始めましょう。無料枠で始められます。',
+    href: '/guides/neon-prisma',
     badge: '実践',
     badgeColor: 'accent' as const,
   },

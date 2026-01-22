@@ -1,7 +1,7 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { Hero } from '@/components/landing/Hero';
 import { FeatureCard } from '@/components/landing/FeatureCard';
-import { Gamepad2, GitBranch, Rocket, Zap, Code2, MessageCircle, Wrench, Globe, Package, Lightbulb, HelpCircle, BookOpen, FileText } from 'lucide-react';
+import { Gamepad2, GitBranch, Rocket, Zap, Code2, MessageCircle, Wrench, Globe, Package, Lightbulb, HelpCircle, BookOpen, FileText, Database } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -75,6 +75,14 @@ export default function Home() {
                 title="要件定義書から始める開発"
                 description="要件定義書をベースに Claude Code でアプリを構築する実践的なワークフローを学びます。"
                 href="/guides/requirements-driven"
+                badge="実践"
+                badgeColor="accent"
+              />
+              <FeatureCard
+                icon={<Database className="h-7 w-7 text-primary" />}
+                title="Neon DB + Prisma 接続ガイド"
+                description="サーバーレス Postgres と Prisma ORM でデータベース開発を始めましょう。無料枠で始められます。"
+                href="/guides/neon-prisma"
                 badge="実践"
                 badgeColor="accent"
               />
