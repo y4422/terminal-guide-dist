@@ -720,6 +720,7 @@ function IntroScreen() {
 function InstallScreen() {
   const [selectedOS, setSelectedOS] = useState<'mac' | 'windows'>('mac');
   const [copied, setCopied] = useState(false);
+  const [pathCopied, setPathCopied] = useState(false);
   const { completeStep, unlockAchievement } = useTutorialStore();
 
   const installCommands = {
@@ -727,10 +728,20 @@ function InstallScreen() {
     windows: 'irm https://claude.ai/install.ps1 | iex'
   };
 
+  const windowsPathCommand = `$newPath = "$env:USERPROFILE\\.local\\bin"
+$currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
+[Environment]::SetEnvironmentVariable("Path", "$currentPath;$newPath", "User")`;
+
   const handleCopy = async () => {
     await navigator.clipboard.writeText(installCommands[selectedOS]);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handlePathCopy = async () => {
+    await navigator.clipboard.writeText(windowsPathCommand);
+    setPathCopied(true);
+    setTimeout(() => setPathCopied(false), 2000);
   };
 
   const handleNext = () => {
@@ -801,6 +812,35 @@ function InstallScreen() {
             <li>Enterキーで実行</li>
           </ol>
         </div>
+
+        {/* Windows PATH設定 */}
+        {selectedOS === 'windows' && (
+          <div className="space-y-3 p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+            <p className="font-bold flex items-center gap-2 text-amber-400">
+              <ClipboardList className="h-4 w-4" /> Windowsの追加設定（PATH設定）
+            </p>
+            <p className="text-sm text-terminal-text/80">
+              インストール後、環境変数が設定されていない場合は以下を実行してください:
+            </p>
+            <div className="bg-[#1a1a2e] border border-terminal-text/20 rounded-lg p-3">
+              <div className="flex items-start justify-between gap-3">
+                <code className="text-xs text-terminal-text font-mono whitespace-pre-wrap break-all flex-1">
+                  {windowsPathCommand}
+                </code>
+                <button
+                  onClick={handlePathCopy}
+                  className="shrink-0 px-3 py-1.5 bg-terminal-text/10 rounded hover:bg-terminal-text/20 transition-colors flex items-center gap-1"
+                  title="コピー"
+                >
+                  {pathCopied ? <><Check className="h-4 w-4 text-green-500" /> コピー!</> : <Copy className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+            <p className="text-sm text-amber-400/80">
+              ⚠️ 実行後、PowerShellを再起動してください
+            </p>
+          </div>
+        )}
 
         {/* ボタン */}
         <div className="flex flex-col gap-3 text-center">
