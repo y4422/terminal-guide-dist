@@ -1,6 +1,6 @@
 'use client';
 
-import { Folder } from 'lucide-react';
+import { Folder, FileCode, FileText, File } from 'lucide-react';
 import type { FileSystem, VirtualDirectory, VirtualFile } from '@/types/tutorial';
 
 interface FileTreeProps {
@@ -62,11 +62,13 @@ function FileNode({ node, depth }: FileNodeProps) {
   const indent = '  '.repeat(depth);
 
   const getFileIcon = (name: string) => {
-    if (name.endsWith('.py')) return '🐍';
-    if (name.endsWith('.js') || name.endsWith('.ts')) return '📜';
-    if (name.endsWith('.txt')) return '📄';
-    if (name.endsWith('.md')) return '📝';
-    return '📄';
+    if (name.endsWith('.py') || name.endsWith('.js') || name.endsWith('.ts')) {
+      return <FileCode className="h-4 w-4 inline" />;
+    }
+    if (name.endsWith('.md')) {
+      return <FileText className="h-4 w-4 inline" />;
+    }
+    return <File className="h-4 w-4 inline" />;
   };
 
   return (

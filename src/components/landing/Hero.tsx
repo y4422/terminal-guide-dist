@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Monitor, Bot, BookOpen } from 'lucide-react';
 
 interface HeroProps {
   title: string;
@@ -49,12 +49,12 @@ export function Hero({ title, subtitle, ctaText, ctaHref }: HeroProps) {
           {/* Features list */}
           <div className="mt-16 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground animate-fade-in-up stagger-4">
             {[
-              { icon: '🖥️', text: 'ターミナル基本操作' },
-              { icon: '🤖', text: 'Claude Code 活用' },
-              { icon: '📚', text: 'Git & スキル解説' },
+              { icon: <Monitor className="h-5 w-5" />, text: 'ターミナル基本操作' },
+              { icon: <Bot className="h-5 w-5" />, text: 'Claude Code 活用' },
+              { icon: <BookOpen className="h-5 w-5" />, text: 'Git & スキル解説' },
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2">
-                <span className="text-lg">{item.icon}</span>
+                {item.icon}
                 <span>{item.text}</span>
               </div>
             ))}

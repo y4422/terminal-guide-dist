@@ -1,6 +1,6 @@
 'use client';
 
-import { Copy, Check, Sparkles } from 'lucide-react';
+import { Copy, Check, Sparkles, Lightbulb, BookOpen } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -119,7 +119,7 @@ export function StepContent({ guide, stepId }: StepContentProps) {
       {guide.tips && guide.tips.length > 0 && (
         <div className="space-y-3">
           <h3 className="text-sm font-semibold flex items-center gap-2">
-            <span className="text-lg">💡</span>
+            <Lightbulb className="h-5 w-5 text-yellow-500" />
             ヒント
           </h3>
           <ul className="space-y-2">
@@ -156,7 +156,7 @@ export function StepContent({ guide, stepId }: StepContentProps) {
       {guide.technicalDetails && (
         <details className="group">
           <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2">
-            <span className="text-base">📖</span>
+            <BookOpen className="h-4 w-4" />
             <span>{guide.technicalDetails.title}</span>
             <span className="ml-auto text-xs opacity-50 group-open:rotate-90 transition-transform">
               ▶

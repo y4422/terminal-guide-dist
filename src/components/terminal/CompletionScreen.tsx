@@ -1,9 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ReactNode } from 'react';
 import Link from 'next/link';
 import { useTutorialStore } from '@/store/tutorial';
-import { Trophy, Sparkles, ExternalLink, RotateCcw, Clock, Star, Zap, ChevronRight, Home } from 'lucide-react';
+import { Trophy, Sparkles, ExternalLink, RotateCcw, Clock, Star, Zap, ChevronRight, Home, Lightbulb, Package, Monitor, Compass, Bot, Target, Search, ClipboardList, Ruler, Eye, Wrench, GraduationCap, Laptop } from 'lucide-react';
+
+// Map achievement IDs to Lucide icons
+const achievementIconMap: Record<string, ReactNode> = {
+  'installer': <Package className="h-6 w-6" />,
+  'terminal-opener': <Monitor className="h-6 w-6" />,
+  'navigator': <Compass className="h-6 w-6" />,
+  'claude-starter': <Bot className="h-6 w-6" />,
+  'first-command': <Target className="h-6 w-6" />,
+  'researcher': <Search className="h-6 w-6" />,
+  'reviewer': <ClipboardList className="h-6 w-6" />,
+  'architect': <Ruler className="h-6 w-6" />,
+  'multi-perspective': <Eye className="h-6 w-6" />,
+  'developer': <Wrench className="h-6 w-6" />,
+  'graduate': <GraduationCap className="h-6 w-6" />,
+};
 
 // Confetti particle component
 function ConfettiParticle({ delay, left }: { delay: number; left: number }) {
@@ -36,24 +51,26 @@ function ConfettiParticle({ delay, left }: { delay: number; left: number }) {
 
 // Achievement badge component with staggered animation
 function AchievementBadge({
-  icon,
+  id,
   name,
   description,
   index,
 }: {
-  icon: string;
+  id: string;
   name: string;
   description: string;
   index: number;
 }) {
+  const iconElement = achievementIconMap[id] || <Star className="h-6 w-6" />;
+
   return (
     <div
       className="group relative flex items-center gap-3 p-3 rounded-xl bg-white/[0.08] border border-white/[0.12] backdrop-blur-sm hover:bg-white/[0.12] hover:border-primary/40 transition-all duration-300 animate-fade-in-up"
       style={{ animationDelay: `${0.8 + index * 0.1}s`, animationFillMode: 'backwards' }}
     >
       {/* Icon container */}
-      <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/30 to-accent/20 border border-white/10">
-        <span className="text-2xl">{icon}</span>
+      <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/30 to-accent/20 border border-white/10 text-white">
+        {iconElement}
       </div>
 
       {/* Text */}
@@ -162,7 +179,7 @@ export function CompletionScreen() {
             {achievements.map((achievement, index) => (
               <AchievementBadge
                 key={achievement.id}
-                icon={achievement.icon}
+                id={achievement.id}
                 name={achievement.name}
                 description={achievement.description}
                 index={index}
@@ -179,7 +196,7 @@ export function CompletionScreen() {
           <div className="relative space-y-2">
             <div className="flex items-center gap-2">
               <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/30">
-                <span className="text-lg">💡</span>
+                <Lightbulb className="h-4 w-4 text-yellow-300" />
               </div>
               <h3 className="font-bold text-white">困ったら Claude Code に聞こう</h3>
             </div>
@@ -234,7 +251,7 @@ export function CompletionScreen() {
               className="group flex items-center justify-between w-full px-5 py-4 rounded-xl bg-gradient-to-r from-primary to-orange-500 text-white font-bold shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
             >
               <span className="flex items-center gap-3">
-                <span className="text-xl">💻</span>
+                <Laptop className="h-6 w-6" />
                 <span className="text-lg">実際のClaude Codeを使う</span>
               </span>
               <ExternalLink className="h-5 w-5 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />

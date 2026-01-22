@@ -5,6 +5,8 @@ import { useTutorialStore } from '@/store/tutorial';
 import { validateInput } from '@/lib/validation';
 import { FileTree } from './FileTree';
 import { CompletionScreen } from './CompletionScreen';
+import { Monitor, Compass, Bot, MessageSquare, FileText, Clock, BarChart2, Rocket, ClipboardList, Copy, Check, GraduationCap, Code2 } from 'lucide-react';
+import { FaApple, FaWindows } from 'react-icons/fa';
 import type { StepId, CommandResponse } from '@/types/tutorial';
 
 export function Terminal() {
@@ -601,9 +603,9 @@ render();`;
                 setShowCompletionButton(false);
                 completeStep(10);
               }}
-              className="px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors shadow-lg"
+              className="px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-colors shadow-lg flex items-center gap-2"
             >
-              🎓 チュートリアル完了画面へ →
+              <GraduationCap className="h-5 w-5" /> チュートリアル完了画面へ →
             </button>
           </div>
         )}
@@ -669,7 +671,9 @@ function IntroScreen() {
     <div className="h-full overflow-y-auto">
       <div className="flex min-h-full flex-col items-center justify-center p-6 sm:p-8 text-terminal-text">
         <div className="max-w-md w-full text-center space-y-6">
-          <h1 className="text-2xl sm:text-3xl font-bold">👋 Claude Codeの世界へようこそ!</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold flex items-center justify-center gap-2">
+            <span className="wave-emoji">👋</span> Claude Codeの世界へようこそ!
+          </h1>
 
           <div className="space-y-4 text-left">
             <p className="text-terminal-text/80">
@@ -677,14 +681,14 @@ function IntroScreen() {
             </p>
             <ul className="space-y-2">
               {[
-                { icon: '🖥️', text: 'ターミナルの基本を知る' },
-                { icon: '🧭', text: 'cdコマンドでフォルダを移動' },
-                { icon: '🤖', text: 'Claude Codeを起動する' },
-                { icon: '💬', text: 'Claudeに日本語で話しかける' },
-                { icon: '📄', text: 'ファイルやプログラムを作る' },
+                { icon: <Monitor className="h-5 w-5" />, text: 'ターミナルの基本を知る' },
+                { icon: <Compass className="h-5 w-5" />, text: 'cdコマンドでフォルダを移動' },
+                { icon: <Bot className="h-5 w-5" />, text: 'Claude Codeを起動する' },
+                { icon: <MessageSquare className="h-5 w-5" />, text: 'Claudeに日本語で話しかける' },
+                { icon: <FileText className="h-5 w-5" />, text: 'ファイルやプログラムを作る' },
               ].map((item, i) => (
                 <li key={i} className="flex items-center gap-3">
-                  <span className="text-xl">{item.icon}</span>
+                  <span className="text-primary">{item.icon}</span>
                   <span>{item.text}</span>
                 </li>
               ))}
@@ -692,8 +696,12 @@ function IntroScreen() {
           </div>
 
           <div className="space-y-2">
-            <p className="text-terminal-text/60">⏱️ 所要時間: 約20分</p>
-            <p className="text-terminal-text/60">📊 難易度: ★☆☆☆☆ (初心者向け)</p>
+            <p className="text-terminal-text/60 flex items-center justify-center gap-2">
+              <Clock className="h-4 w-4" /> 所要時間: 約20分
+            </p>
+            <p className="text-terminal-text/60 flex items-center justify-center gap-2">
+              <BarChart2 className="h-4 w-4" /> 難易度: ★☆☆☆☆ (初心者向け)
+            </p>
           </div>
 
           <button
@@ -734,31 +742,31 @@ function InstallScreen() {
     <div className="h-full overflow-y-auto">
       <div className="flex min-h-full flex-col items-center justify-center p-6 sm:p-8 text-terminal-text">
         <div className="max-w-lg w-full space-y-6">
-        <h2 className="text-2xl font-bold text-center">
-          🚀 Claude Code をインストールしよう
+        <h2 className="text-2xl font-bold text-center flex items-center justify-center gap-2">
+          <Rocket className="h-6 w-6 text-primary" /> Claude Code をインストールしよう
         </h2>
 
         {/* OS選択タブ */}
         <div className="flex justify-center gap-2">
           <button
             onClick={() => setSelectedOS('mac')}
-            className={`px-4 py-2 rounded-lg transition-colors ${
+            className={`px-4 py-2 rounded-lg transition-colors flex items-center gap-2 ${
               selectedOS === 'mac'
                 ? 'bg-primary text-white'
                 : 'bg-terminal-text/10 hover:bg-terminal-text/20'
             }`}
           >
-            🍎 Mac
+            <FaApple className="h-4 w-4" /> Mac
           </button>
           <button
             onClick={() => setSelectedOS('windows')}
-            className={`px-4 py-2 rounded-lg transition-colors ${
+            className={`px-4 py-2 rounded-lg transition-colors flex items-center gap-2 ${
               selectedOS === 'windows'
                 ? 'bg-primary text-white'
                 : 'bg-terminal-text/10 hover:bg-terminal-text/20'
             }`}
           >
-            🪟 Windows
+            <FaWindows className="h-4 w-4" /> Windows
           </button>
         </div>
 
@@ -770,17 +778,17 @@ function InstallScreen() {
             </code>
             <button
               onClick={handleCopy}
-              className="shrink-0 px-3 py-1.5 bg-terminal-text/10 rounded hover:bg-terminal-text/20 transition-colors"
+              className="shrink-0 px-3 py-1.5 bg-terminal-text/10 rounded hover:bg-terminal-text/20 transition-colors flex items-center gap-1"
               title="コピー"
             >
-              {copied ? '✅ コピー!' : '📋'}
+              {copied ? <><Check className="h-4 w-4 text-green-500" /> コピー!</> : <Copy className="h-4 w-4" />}
             </button>
           </div>
         </div>
 
         {/* 手順説明 */}
         <div className="space-y-3 text-terminal-text/80">
-          <p className="font-bold">📝 インストール手順:</p>
+          <p className="font-bold flex items-center gap-2"><ClipboardList className="h-4 w-4" /> インストール手順:</p>
           <ol className="list-decimal list-inside space-y-2 text-sm">
             <li>
               {selectedOS === 'mac' ? (
@@ -828,7 +836,9 @@ function TerminalOpeningScreen() {
     <div className="h-full overflow-y-auto">
       <div className="flex min-h-full flex-col items-center justify-center p-6 sm:p-8 text-terminal-text">
         <div className="max-w-lg w-full space-y-6">
-          <h2 className="text-2xl font-bold text-center">🖥️ ターミナルを開こう</h2>
+          <h2 className="text-2xl font-bold text-center flex items-center justify-center gap-2">
+            <Monitor className="h-6 w-6 text-primary" /> ターミナルを開こう
+          </h2>
 
           <div className="bg-terminal-text/5 rounded-lg p-4 sm:p-6 space-y-4">
             <p className="text-terminal-text/80">
@@ -838,7 +848,7 @@ function TerminalOpeningScreen() {
             <div className="space-y-3">
               <div className="border border-terminal-text/20 rounded p-3 sm:p-4">
                 <h3 className="font-bold flex items-center gap-2">
-                  <span>🍎</span> Mac
+                  <FaApple className="h-5 w-5" /> Mac
                 </h3>
                 <p className="text-sm text-terminal-text/70 mt-2">
                   <kbd className="bg-terminal-text/10 px-2 py-0.5 rounded">⌘</kbd> + <kbd className="bg-terminal-text/10 px-2 py-0.5 rounded">Space</kbd> で Spotlight を開き、<br />
@@ -848,7 +858,7 @@ function TerminalOpeningScreen() {
 
               <div className="border border-terminal-text/20 rounded p-3 sm:p-4">
                 <h3 className="font-bold flex items-center gap-2">
-                  <span>🪟</span> Windows
+                  <FaWindows className="h-5 w-5" /> Windows
                 </h3>
                 <p className="text-sm text-terminal-text/70 mt-2">
                   スタートメニューで「PowerShell」と検索してクリック
@@ -857,7 +867,7 @@ function TerminalOpeningScreen() {
 
               <div className="border border-terminal-text/20 rounded p-3 sm:p-4">
                 <h3 className="font-bold flex items-center gap-2">
-                  <span>💻</span> VS Code
+                  <Code2 className="h-5 w-5" /> VS Code
                 </h3>
                 <p className="text-sm text-terminal-text/70 mt-2">
                   メニューの「表示」→「ターミナル」<br />

@@ -397,7 +397,7 @@ git commit -m "ログインボタンを追加"`}
           </p>
           <ul className="text-sm text-muted-foreground space-y-1">
             <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> 「ログイン機能を追加」「バグ修正: 画像が表示されない問題」</li>
-            <li>❌ 「修正」「更新」「あああ」（後で何のことかわからない）</li>
+            <li className="flex items-center gap-1"><AlertCircle className="h-3 w-3 text-red-500 shrink-0" /> 「修正」「更新」「あああ」（後で何のことかわからない）</li>
           </ul>
         </div>
 
