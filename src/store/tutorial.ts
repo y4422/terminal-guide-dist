@@ -303,18 +303,35 @@ export const useTutorialStore = create<TutorialState>()(
           const targetDirName = parts[0];
           const remainingPath = parts.slice(1);
 
-          // Find and traverse into the target directory
-          const newChildren = node.children.map((child) => {
-            if (child.type === 'directory' && child.name === targetDirName) {
-              return addFileToPath(child, remainingPath);
-            }
-            return child;
-          });
+          // Check if target directory exists
+          const targetDirIndex = node.children.findIndex(
+            (child) => child.type === 'directory' && child.name === targetDirName
+          );
 
-          return {
-            ...node,
-            children: newChildren,
-          };
+          if (targetDirIndex >= 0) {
+            // Directory exists, traverse into it
+            const newChildren = node.children.map((child, index) => {
+              if (index === targetDirIndex && child.type === 'directory') {
+                return addFileToPath(child, remainingPath);
+              }
+              return child;
+            });
+            return { ...node, children: newChildren };
+          } else {
+            // Directory doesn't exist, create it first (like mkdir -p)
+            const newDir: VirtualDirectory = {
+              name: targetDirName,
+              type: 'directory',
+              children: [],
+              createdAt: new Date(),
+              createdAtStep: stepId,
+            };
+            const updatedDir = addFileToPath(newDir, remainingPath);
+            return {
+              ...node,
+              children: [...node.children, updatedDir],
+            };
+          }
         };
 
         set({

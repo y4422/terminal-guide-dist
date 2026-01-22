@@ -27,7 +27,7 @@ export function FileTree({ fileSystem, currentStep }: FileTreeProps) {
   }
 
   return (
-    <div className="text-terminal-text text-xs">
+    <div className="text-terminal-text text-xs font-mono">
       <div className="text-terminal-text/50 mb-1">📁 ファイル構造:</div>
       <DirectoryNode node={{ ...fileSystem.root, children: visibleChildren }} depth={0} currentPath={fileSystem.currentPath} currentStep={currentStep} />
     </div>
@@ -42,7 +42,6 @@ interface DirectoryNodeProps {
 }
 
 function DirectoryNode({ node, depth, currentPath, currentStep }: DirectoryNodeProps) {
-  const indent = '  '.repeat(depth);
   const isCurrentDir = currentPath.endsWith(node.name) || (node.name === '~' && currentPath === '~');
 
   // Filter children based on currentStep
@@ -50,8 +49,10 @@ function DirectoryNode({ node, depth, currentPath, currentStep }: DirectoryNodeP
 
   return (
     <div>
-      <div className={`flex items-center gap-1 ${isCurrentDir ? 'text-terminal-success' : ''}`}>
-        <span className="text-terminal-text/30">{indent}</span>
+      <div
+        className={`flex items-center gap-1 ${isCurrentDir ? 'text-terminal-success' : ''}`}
+        style={{ paddingLeft: `${depth * 16}px` }}
+      >
         {depth > 0 && <span className="text-terminal-text/30">└─</span>}
         <Folder className="h-3 w-3" />
         <span>{node.name}</span>
@@ -76,8 +77,6 @@ interface FileNodeProps {
 }
 
 function FileNode({ node, depth }: FileNodeProps) {
-  const indent = '  '.repeat(depth);
-
   const getFileIcon = (name: string) => {
     if (name.endsWith('.py') || name.endsWith('.js') || name.endsWith('.ts')) {
       return <FileCode className="h-4 w-4 inline" />;
@@ -89,8 +88,10 @@ function FileNode({ node, depth }: FileNodeProps) {
   };
 
   return (
-    <div className="flex items-center gap-1 text-terminal-text/80">
-      <span className="text-terminal-text/30">{indent}</span>
+    <div
+      className="flex items-center gap-1 text-terminal-text/80"
+      style={{ paddingLeft: `${depth * 16}px` }}
+    >
       <span className="text-terminal-text/30">└─</span>
       <span>{getFileIcon(node.name)}</span>
       <span>{node.name}</span>
