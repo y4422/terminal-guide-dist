@@ -104,8 +104,12 @@ export function GuideLayout({
 
       {/* Footer */}
       <footer className="border-t border-border/50 py-6">
-        <div className="container px-6 text-center text-sm text-muted-foreground">
-          Made with TIMEWELL <a href="https://timewell.jp/company/members" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors underline">Yoshiki Ando</a>
+        <div className="container px-6 flex items-center justify-center gap-3 text-sm text-muted-foreground">
+          <span>Made by</span>
+          <a href="https://timewell.jp/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+            <img src="/timewell-logo.avif" alt="TIMEWELL" className="h-5 object-contain" />
+          </a>
+          <a href="https://timewell.jp/company/members" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors underline">Yoshiki Ando</a>
         </div>
       </footer>
     </div>
