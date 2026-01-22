@@ -1,7 +1,7 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { Hero } from '@/components/landing/Hero';
 import { FeatureCard } from '@/components/landing/FeatureCard';
-import { Gamepad2, GitBranch, Rocket, Zap, Code2, MessageCircle, Wrench, Globe, Package, Lightbulb, HelpCircle, BookOpen } from 'lucide-react';
+import { Gamepad2, GitBranch, Rocket, Zap, Code2, MessageCircle, Wrench, Globe, Package, Lightbulb, HelpCircle, BookOpen, FileText } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -67,6 +67,14 @@ export default function Home() {
                 title="Claude Code スキル"
                 description="スキル機能の活用方法と CLAUDE.md の書き方を学んで、開発効率をアップしましょう。"
                 href="/guides/claude-code-skills"
+                badge="実践"
+                badgeColor="accent"
+              />
+              <FeatureCard
+                icon={<FileText className="h-7 w-7 text-primary" />}
+                title="要件定義書から始める開発"
+                description="要件定義書をベースに Claude Code でアプリを構築する実践的なワークフローを学びます。"
+                href="/guides/requirements-driven"
                 badge="実践"
                 badgeColor="accent"
               />

@@ -1,6 +1,6 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { FeatureCard } from '@/components/landing/FeatureCard';
-import { ChevronRight, Home, GitBranch, Rocket, Zap, Code2 } from 'lucide-react';
+import { ChevronRight, Home, GitBranch, Rocket, Zap, Code2, FileText } from 'lucide-react';
 import Link from 'next/link';
 
 const guides = [
@@ -33,6 +33,14 @@ const guides = [
     title: 'Claude Code スキル',
     description: 'スキル機能の活用方法と CLAUDE.md の書き方を学んで、開発効率をアップしましょう。',
     href: '/guides/claude-code-skills',
+    badge: '実践',
+    badgeColor: 'accent' as const,
+  },
+  {
+    icon: <FileText className="h-7 w-7 text-primary" />,
+    title: '要件定義書から始める開発',
+    description: '要件定義書をベースに Claude Code でアプリを構築する実践的なワークフローを学びます。',
+    href: '/guides/requirements-driven',
     badge: '実践',
     badgeColor: 'accent' as const,
   },
