@@ -1,7 +1,7 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { Hero } from '@/components/landing/Hero';
 import { FeatureCard } from '@/components/landing/FeatureCard';
-import { Gamepad2, GitBranch, Rocket, Zap, MessageCircle, Wrench, Globe, Package, Lightbulb, HelpCircle, BookOpen } from 'lucide-react';
+import { Gamepad2, GitBranch, Rocket, Zap, Code2, MessageCircle, Wrench, Globe, Package, Lightbulb, HelpCircle, BookOpen } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -37,6 +37,14 @@ export default function Home() {
                 href="/tutorial"
                 badge="約20分"
                 badgeColor="primary"
+              />
+              <FeatureCard
+                icon={<Code2 className="h-7 w-7 text-primary" />}
+                title="VS Code の使い方"
+                description="エディタのインストールから基本操作、ターミナルの使い方まで。Claude Code との相性抜群です。"
+                href="/guides/vscode-setup"
+                badge="初心者向け"
+                badgeColor="success"
               />
               <FeatureCard
                 icon={<GitBranch className="h-7 w-7 text-primary" />}

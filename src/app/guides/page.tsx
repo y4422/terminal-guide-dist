@@ -1,9 +1,17 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { FeatureCard } from '@/components/landing/FeatureCard';
-import { ChevronRight, Home, GitBranch, Rocket, Zap } from 'lucide-react';
+import { ChevronRight, Home, GitBranch, Rocket, Zap, Code2 } from 'lucide-react';
 import Link from 'next/link';
 
 const guides = [
+  {
+    icon: <Code2 className="h-7 w-7 text-primary" />,
+    title: 'VS Code の使い方',
+    description: 'エディタのインストールから基本操作、ターミナルの使い方まで。Claude Code との相性抜群です。',
+    href: '/guides/vscode-setup',
+    badge: '初心者向け',
+    badgeColor: 'success' as const,
+  },
   {
     icon: <GitBranch className="h-7 w-7 text-primary" />,
     title: 'Git の使い方',
