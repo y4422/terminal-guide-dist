@@ -100,7 +100,7 @@ export default function ClaudeCodeSkillsPage() {
             { cmd: '/clear', desc: '会話履歴をクリア' },
             { cmd: '/compact', desc: '会話を圧縮' },
             { cmd: '/context', desc: 'コンテキスト使用量を表示' },
-            { cmd: '/cost', desc: 'トークン使用量を表示' },
+            { cmd: '/cost', desc: '課金情報を表示' },
             { cmd: '/export', desc: '会話をエクスポート' },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
@@ -185,11 +185,20 @@ export default function ClaudeCodeSkillsPage() {
 
         <h3 className="text-lg font-semibold mb-3">直接インストール</h3>
         <CodeBlock title="コマンド">
-{`# プラグインを直接インストール
-/plugin install <プラグイン名>@claude-plugins-official
-
-# 例: commit-commands をインストール
+{`# 公式マーケットプレイスからインストール
 /plugin install commit-commands@claude-plugins-official`}
+        </CodeBlock>
+
+        <h3 className="text-lg font-semibold mb-3 mt-6">マーケットプレイスの追加</h3>
+        <p className="text-muted-foreground mb-3">
+          一部のプラグインは別のマーケットプレイスにあります。インストール前にマーケットプレイスを追加する必要があります。
+        </p>
+        <CodeBlock title="コマンド">
+{`# マーケットプレイスを追加
+/plugin marketplace add anthropics/skills
+
+# 追加したマーケットプレイスからインストール
+/plugin install example-skills@anthropic-agent-skills`}
         </CodeBlock>
 
         <h3 className="text-lg font-semibold mb-3 mt-6">インストールスコープ</h3>
@@ -307,8 +316,14 @@ export default function ClaudeCodeSkillsPage() {
         </p>
 
         <div className="bg-muted/30 rounded-lg p-4 mb-6">
-          <p className="font-medium mb-2">インストール</p>
-          <CodeBlock>
+          <p className="font-medium mb-2">インストール（2ステップ）</p>
+          <p className="text-sm text-muted-foreground mb-3">
+            example-skills は別マーケットプレイスにあるため、まずマーケットプレイスを追加します。
+          </p>
+          <CodeBlock title="Step 1: マーケットプレイスを追加">
+{`/plugin marketplace add anthropics/skills`}
+          </CodeBlock>
+          <CodeBlock title="Step 2: プラグインをインストール">
 {`/plugin install example-skills@anthropic-agent-skills`}
           </CodeBlock>
         </div>
