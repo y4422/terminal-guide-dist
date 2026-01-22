@@ -148,7 +148,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-border/50 py-6">
         <div className="container px-6 text-center text-sm text-muted-foreground">
-          Made with Claude Code
+          Made with TIMEWELL <a href="https://timewell.jp/company/members" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors underline">Yoshiki Ando</a>
         </div>
       </footer>
     </div>
