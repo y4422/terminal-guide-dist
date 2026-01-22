@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
@@ -24,15 +25,19 @@ export function SiteHeader() {
       <div className="container relative flex h-16 items-center justify-between px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-warm group-hover:shadow-warm-lg transition-shadow">
-            <span className="text-lg font-bold text-primary-foreground">C</span>
-            <div className="absolute inset-0 rounded-xl bg-primary/20 blur-md -z-10" />
-          </div>
+          <Image
+            src="/logo.avif"
+            alt="WARP Logo"
+            width={72}
+            height={28}
+            className="object-contain"
+          />
+          <div className="h-8 w-px bg-border/60" />
           <div className="flex flex-col">
-            <span className="text-lg font-bold tracking-tight">
+            <span className="text-lg font-bold tracking-tight leading-tight">
               <span className="text-gradient">Claude Code</span>
             </span>
-            <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
+            <span className="text-[10px] font-medium uppercase text-muted-foreground ml-0.5">
               Learning Hub
             </span>
           </div>
