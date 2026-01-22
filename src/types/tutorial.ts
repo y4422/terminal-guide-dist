@@ -20,6 +20,7 @@ export interface VirtualFile {
   language?: string;
   createdAt: Date;
   modifiedAt: Date;
+  createdAtStep?: StepId;
 }
 
 export interface VirtualDirectory {
@@ -27,6 +28,7 @@ export interface VirtualDirectory {
   type: 'directory';
   children: (VirtualFile | VirtualDirectory)[];
   createdAt: Date;
+  createdAtStep?: StepId;
 }
 
 export type FileSystemNode = VirtualFile | VirtualDirectory;

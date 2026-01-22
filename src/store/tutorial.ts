@@ -35,8 +35,8 @@ interface TutorialState {
   completeStep: (step: StepId) => void;
   skipStep: (step: StepId) => void;
   addCommand: (command: Command) => void;
-  createDirectory: (path: string, name: string) => void;
-  createFile: (path: string, name: string, content: string, language?: string) => void;
+  createDirectory: (path: string, name: string, stepId?: StepId) => void;
+  createFile: (path: string, name: string, content: string, language?: string, stepId?: StepId) => void;
   updateFile: (path: string, name: string, content: string) => void;
   showHint: (step: StepId, level: number) => void;
   unlockAchievement: (achievementId: string) => void;
@@ -215,13 +215,14 @@ export const useTutorialStore = create<TutorialState>()(
         });
       },
 
-      createDirectory: (path: string, name: string) => {
+      createDirectory: (path: string, name: string, stepId?: StepId) => {
         const fileSystem = get().fileSystem;
         const newDir: VirtualDirectory = {
           name,
           type: 'directory',
           children: [],
           createdAt: new Date(),
+          createdAtStep: stepId,
         };
 
         // Find parent directory and add new directory
@@ -263,7 +264,7 @@ export const useTutorialStore = create<TutorialState>()(
         });
       },
 
-      createFile: (path: string, name: string, content: string, language?: string) => {
+      createFile: (path: string, name: string, content: string, language?: string, stepId?: StepId) => {
         const fileSystem = get().fileSystem;
         const newFile = {
           name,
@@ -272,6 +273,7 @@ export const useTutorialStore = create<TutorialState>()(
           language,
           createdAt: new Date(),
           modifiedAt: new Date(),
+          createdAtStep: stepId,
         };
 
         // Parse path into parts (remove ~ and empty strings)

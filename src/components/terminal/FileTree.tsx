@@ -1,22 +1,35 @@
 'use client';
 
 import { Folder, FileCode, FileText, File } from 'lucide-react';
-import type { FileSystem, VirtualDirectory, VirtualFile } from '@/types/tutorial';
+import type { FileSystem, VirtualDirectory, VirtualFile, StepId } from '@/types/tutorial';
 
 interface FileTreeProps {
   fileSystem: FileSystem;
+  currentStep: StepId;
 }
 
-export function FileTree({ fileSystem }: FileTreeProps) {
-  // Don't show if there are no files/folders created yet
-  if (fileSystem.root.children.length === 0) {
+// Filter children to only show files/directories created at or before currentStep
+function filterChildren(children: (VirtualFile | VirtualDirectory)[], currentStep: StepId): (VirtualFile | VirtualDirectory)[] {
+  return children.filter(child => {
+    // If no createdAtStep, assume it should be visible (backwards compatibility)
+    if (child.createdAtStep === undefined) return true;
+    return child.createdAtStep <= currentStep;
+  });
+}
+
+export function FileTree({ fileSystem, currentStep }: FileTreeProps) {
+  // Filter children based on currentStep
+  const visibleChildren = filterChildren(fileSystem.root.children, currentStep);
+
+  // Don't show if there are no visible files/folders
+  if (visibleChildren.length === 0) {
     return null;
   }
 
   return (
     <div className="text-terminal-text text-xs">
       <div className="text-terminal-text/50 mb-1">📁 ファイル構造:</div>
-      <DirectoryNode node={fileSystem.root} depth={0} currentPath={fileSystem.currentPath} />
+      <DirectoryNode node={{ ...fileSystem.root, children: visibleChildren }} depth={0} currentPath={fileSystem.currentPath} currentStep={currentStep} />
     </div>
   );
 }
@@ -25,11 +38,15 @@ interface DirectoryNodeProps {
   node: VirtualDirectory;
   depth: number;
   currentPath: string;
+  currentStep: StepId;
 }
 
-function DirectoryNode({ node, depth, currentPath }: DirectoryNodeProps) {
+function DirectoryNode({ node, depth, currentPath, currentStep }: DirectoryNodeProps) {
   const indent = '  '.repeat(depth);
   const isCurrentDir = currentPath.endsWith(node.name) || (node.name === '~' && currentPath === '~');
+
+  // Filter children based on currentStep
+  const visibleChildren = filterChildren(node.children, currentStep);
 
   return (
     <div>
@@ -40,10 +57,10 @@ function DirectoryNode({ node, depth, currentPath }: DirectoryNodeProps) {
         <span>{node.name}</span>
         {isCurrentDir && <span className="text-terminal-success text-[10px]">(現在)</span>}
       </div>
-      {node.children.map((child, index) => (
+      {visibleChildren.map((child, index) => (
         <div key={`${child.name}-${index}`}>
           {child.type === 'directory' ? (
-            <DirectoryNode node={child} depth={depth + 1} currentPath={currentPath} />
+            <DirectoryNode node={child} depth={depth + 1} currentPath={currentPath} currentStep={currentStep} />
           ) : (
             <FileNode node={child} depth={depth + 1} />
           )}

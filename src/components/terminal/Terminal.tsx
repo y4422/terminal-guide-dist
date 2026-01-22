@@ -149,7 +149,7 @@ export function Terminal() {
         };
 
       case 4: // Folder creation with Claude
-        createDirectory('~', 'my-project');
+        createDirectory('~', 'my-project', 4);
         unlockAchievement('first-command');
         return {
           type: 'success',
@@ -186,7 +186,7 @@ export function Terminal() {
 | Todoist | 5プロジェクト | $4/月〜 |
 | TickTick | 基本機能 | $2.79/月〜 |
 | MS To Do | 全機能無料 | - |`;
-        createFile('~/my-project', 'research.md', researchContent, 'markdown');
+        createFile('~/my-project', 'research.md', researchContent, 'markdown', 5);
         unlockAchievement('researcher');
         return {
           type: 'success',
@@ -294,7 +294,7 @@ ${researchContent}
 - フロントエンド: HTML/CSS/JavaScript
 - ストレージ: LocalStorage
 - 将来的な拡張: IndexedDB, Service Worker`;
-        createFile('~/my-project', 'requirements.md', requirementsContent, 'markdown');
+        createFile('~/my-project', 'requirements.md', requirementsContent, 'markdown', 7);
         unlockAchievement('architect');
         return {
           type: 'success',
@@ -408,9 +408,9 @@ function save() { localStorage.setItem('tasks', JSON.stringify(tasks)); render()
 addBtn.onclick = add;
 taskInput.onkeypress = e => e.key === 'Enter' && add();
 render();`;
-        createFile('~/my-project', 'index.html', indexHtml, 'html');
-        createFile('~/my-project', 'styles.css', stylesCss, 'css');
-        createFile('~/my-project', 'app.js', appJs, 'javascript');
+        createFile('~/my-project', 'index.html', indexHtml, 'html', 9);
+        createFile('~/my-project', 'styles.css', stylesCss, 'css', 9);
+        createFile('~/my-project', 'app.js', appJs, 'javascript', 9);
         unlockAchievement('developer');
         return {
           type: 'success',
@@ -551,7 +551,7 @@ render();`;
       {/* File Tree - only show when Claude is running */}
       {claudeStarted && (
         <div className="border-b border-terminal-text/10 p-3">
-          <FileTree fileSystem={fileSystem} />
+          <FileTree fileSystem={fileSystem} currentStep={currentStep} />
         </div>
       )}
 
