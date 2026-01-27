@@ -1,6 +1,6 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { FeatureCard } from '@/components/landing/FeatureCard';
-import { ChevronRight, Home, GitBranch, Rocket, Zap, Code2, FileText, Database } from 'lucide-react';
+import { ChevronRight, Home, GitBranch, Rocket, Zap, Code2, FileText, Database, Key, Plug } from 'lucide-react';
 import Link from 'next/link';
 
 const guides = [
@@ -27,6 +27,22 @@ const guides = [
     href: '/guides/nextjs-setup',
     badge: '初心者向け',
     badgeColor: 'success' as const,
+  },
+  {
+    icon: <Key className="h-7 w-7 text-primary" />,
+    title: '環境変数を理解しよう',
+    description: 'API キーやパスワードを安全に管理する方法。.env ファイルの使い方を学びます。',
+    href: '/guides/env-variables',
+    badge: '初心者向け',
+    badgeColor: 'success' as const,
+  },
+  {
+    icon: <Plug className="h-7 w-7 text-primary" />,
+    title: '外部サービスと連携しよう',
+    description: 'API を使って他のサービスと連携する方法。認証から実装まで解説します。',
+    href: '/guides/external-services',
+    badge: '実践',
+    badgeColor: 'accent' as const,
   },
   {
     icon: <Zap className="h-7 w-7 text-primary" />,
