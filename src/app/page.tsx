@@ -1,7 +1,7 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { Hero } from '@/components/landing/Hero';
 import { FeatureCard } from '@/components/landing/FeatureCard';
-import { Gamepad2, GitBranch, Rocket, Zap, Code2, MessageCircle, Wrench, Globe, Package, Lightbulb, HelpCircle, BookOpen, FileText, Database } from 'lucide-react';
+import { Gamepad2, GitBranch, Rocket, Zap, Code2, MessageCircle, Wrench, Globe, Package, Lightbulb, HelpCircle, BookOpen, FileText, Database, Key, Plug } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -61,6 +61,22 @@ export default function Home() {
                 href="/guides/nextjs-setup"
                 badge="初心者向け"
                 badgeColor="success"
+              />
+              <FeatureCard
+                icon={<Key className="h-7 w-7 text-primary" />}
+                title="環境変数を理解しよう"
+                description="API キーやパスワードを安全に管理する方法。.env ファイルの使い方を学びます。"
+                href="/guides/env-variables"
+                badge="初心者向け"
+                badgeColor="success"
+              />
+              <FeatureCard
+                icon={<Plug className="h-7 w-7 text-primary" />}
+                title="外部サービスと連携しよう"
+                description="API を使って他のサービスと連携する方法。認証から実装まで解説します。"
+                href="/guides/external-services"
+                badge="実践"
+                badgeColor="accent"
               />
               <FeatureCard
                 icon={<Zap className="h-7 w-7 text-primary" />}
