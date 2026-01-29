@@ -165,6 +165,22 @@ export default function RequirementsDrivenGuidePage() {
             開発を進めながら詳細化していくこともできます。
           </p>
         </div>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mt-4">
+          <p className="font-medium mb-2">要件に応じて参照したいガイド</p>
+          <ul className="text-sm text-muted-foreground space-y-2">
+            <li>
+              <strong>データベースが必要な場合</strong> → localStorage では不十分なら{' '}
+              <a href="/guides/neon-prisma" className="text-primary hover:underline">Neon DB + Prisma ガイド</a>
+              {' '}でセットアップ方法を確認
+            </li>
+            <li>
+              <strong>認証や外部 API を使う場合</strong> → API キーの管理や OAuth は{' '}
+              <a href="/guides/external-services" className="text-primary hover:underline">外部サービス連携ガイド</a>
+              {' '}を参照
+            </li>
+          </ul>
+        </div>
       </Section>
 
       <Section id="project-setup" title="プロジェクトのセットアップ" icon={<FolderOpen className="h-6 w-6 text-primary" />}>
@@ -650,6 +666,27 @@ claude -c`}
             <li>6. 要件定義書を更新</li>
             <li>7. 繰り返し</li>
           </ol>
+        </div>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mt-6">
+          <p className="font-medium mb-2 flex items-center gap-2">
+            <BookOpen className="h-4 w-4" />
+            関連ガイド
+          </p>
+          <ul className="text-sm text-muted-foreground space-y-1">
+            <li className="flex items-center gap-2">
+              <span className="text-primary">•</span>
+              <a href="/guides/neon-prisma" className="hover:underline">
+                <strong>Neon DB + Prisma</strong> - データベースが必要な場合のセットアップ
+              </a>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-primary">•</span>
+              <a href="/guides/external-services" className="hover:underline">
+                <strong>外部サービス連携</strong> - 認証や API 連携を追加する場合
+              </a>
+            </li>
+          </ul>
         </div>
       </Section>
     </GuideLayout>
