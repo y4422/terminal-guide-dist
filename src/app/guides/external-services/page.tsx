@@ -1098,11 +1098,11 @@ fetch(url, {
           <ul className="text-sm text-muted-foreground space-y-1">
             <li className="flex items-center gap-2">
               <span className="text-primary">•</span>
-              <span><strong>環境変数を理解しよう</strong> - API キーの安全な管理方法</span>
+              <a href="/guides/env-variables" className="hover:underline"><strong>環境変数を理解しよう</strong> - API キーの安全な管理方法</a>
             </li>
             <li className="flex items-center gap-2">
               <span className="text-primary">•</span>
-              <span><strong>Neon DB + Prisma</strong> - データベース連携</span>
+              <a href="/guides/neon-prisma" className="hover:underline"><strong>Neon DB + Prisma</strong> - データベース連携</a>
             </li>
           </ul>
         </div>
