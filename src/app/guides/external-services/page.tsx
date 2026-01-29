@@ -337,6 +337,13 @@ export default function ExternalServicesGuidePage() {
           ChatGPT の機能を自分のアプリに組み込む方法を解説します。
         </p>
 
+        <TipBox>
+          <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>近道:</strong></span>
+          手順を理解したら、
+          <a href="#claude-code-workflow" className="text-primary hover:underline mx-1">Claude Code での開発</a>
+          セクションで Claude に実装を依頼する方法も参照してください。
+        </TipBox>
+
         <h3 className="text-lg font-semibold mb-3">Step 1: API キーの取得</h3>
         <div className="space-y-3 mb-6">
           <div className="p-3 bg-muted/30 rounded-lg">
@@ -473,7 +480,14 @@ export default function ChatPage() {
           ログイン、サインアップ、ユーザー管理が簡単に実装できます。
         </p>
 
-        <h3 className="text-lg font-semibold mb-3">Step 1: Clerk アカウントの作成と API キー取得</h3>
+        <TipBox>
+          <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>近道:</strong></span>
+          手順を理解したら、
+          <a href="#claude-code-workflow" className="text-primary hover:underline mx-1">Claude Code での開発</a>
+          セクションで Claude に実装を依頼する方法も参照してください。
+        </TipBox>
+
+        <h3 className="text-lg font-semibold mb-3">Step 1: Clerk アカウントの作成とアプリ設定</h3>
         <div className="space-y-3 mb-4">
           <div className="p-3 bg-muted/30 rounded-lg">
             <p className="text-sm">
@@ -482,32 +496,37 @@ export default function ChatPage() {
                 clerk.com
                 <ExternalLink className="h-3 w-3" />
               </a>
-              {' '}でアカウント作成し、アプリを作成
+              {' '}でアカウント作成
             </p>
           </div>
           <div className="p-3 bg-muted/30 rounded-lg">
-            <p className="text-sm"><strong>2.</strong> API Keys ページの「Quick Copy」から以下をコピー</p>
+            <p className="text-sm"><strong>2.</strong> アプリケーションを作成</p>
             <ul className="text-xs text-muted-foreground mt-1 space-y-0.5">
-              <li>• Publishable key（<code className="px-1 py-0.5 bg-muted rounded">pk_test_...</code>）</li>
-              <li>• Secret key（<code className="px-1 py-0.5 bg-muted rounded">sk_test_...</code>）</li>
+              <li>• Application name を入力</li>
+              <li>• Sign in options で認証方法を選択（Email、Google など）</li>
             </ul>
           </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>3.</strong> ダッシュボードでフレームワークを選択（Next.js）</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              API キー（<code className="px-1 py-0.5 bg-muted rounded">NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY</code> と <code className="px-1 py-0.5 bg-muted rounded">CLERK_SECRET_KEY</code>）が表示されます
+            </p>
+          </div>
           <TipBox>
-            <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>ヒント:</strong></span>
-            テスト用キー（<code className="px-1 py-0.5 bg-muted rounded">_test_</code>）は開発環境用、
-            本番用キー（<code className="px-1 py-0.5 bg-muted rounded">_live_</code>）は本番デプロイ時に使用します。
+            <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>Claude Code ユーザー向け:</strong></span>
+            ダッシュボードの「<strong>Copy prompt</strong>」ボタンをクリックすると、
+            LLM 向けのセットアップ手順がコピーされます。
+            これを Claude Code に貼り付けるだけで実装できます。
           </TipBox>
         </div>
 
         <h3 className="text-lg font-semibold mb-3">Step 2: 環境変数の設定</h3>
+        <p className="text-sm text-muted-foreground mb-2">
+          ダッシュボードに表示される値を <code className="px-1 py-0.5 bg-muted rounded">.env.local</code> にコピー
+        </p>
         <CodeBlock title=".env.local">
-{`# Clerk API キー
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
-CLERK_SECRET_KEY=sk_test_...
-
-# 認証ページのURL
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up`}
+{`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...`}
         </CodeBlock>
 
         <h3 className="text-lg font-semibold mb-3">Step 3: SDK のインストール</h3>
@@ -884,6 +903,7 @@ fetch(url, {
         <h3 className="text-lg font-semibold mb-3">Claude に伝えるべき情報</h3>
         <p className="text-sm text-muted-foreground mb-4">
           外部サービス連携を依頼するときは、以下の情報を含めると精度が上がります。
+          ただし<strong>すべて必須ではありません</strong>。Claude は不明点があれば質問してくれます。
         </p>
         <div className="bg-muted/30 rounded-lg p-4 mb-6">
           <ul className="text-sm text-muted-foreground space-y-2">
@@ -906,7 +926,55 @@ fetch(url, {
           </ul>
         </div>
 
-        <h3 className="text-lg font-semibold mb-3">具体的な指示例</h3>
+        <TipBox>
+          <span className="flex items-center gap-1 mb-2"><Lightbulb className="h-4 w-4" /><strong>CLAUDE.md でプロジェクト情報を共有</strong></span>
+          プロジェクトのルートに <code className="bg-muted px-1.5 py-0.5 rounded text-xs">CLAUDE.md</code> を作成すると、
+          Claude が毎回自動で読み込んでくれます。技術スタックや環境変数の命名規則などを書いておけば、
+          毎回説明する必要がなくなります。
+          <code className="bg-muted px-1.5 py-0.5 rounded text-xs block mt-2">CLAUDE.md を作成して</code>
+          と依頼すれば、Claude がプロジェクトを分析して適切な内容を生成してくれます。
+        </TipBox>
+
+        <h3 className="text-lg font-semibold mb-3">シンプルな指示から始める</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          実は、シンプルな一言から始めても Claude は対応できます。
+        </p>
+        <div className="grid md:grid-cols-2 gap-4 mb-4">
+          <div className="bg-muted/30 rounded-lg p-4">
+            <p className="font-medium mb-2 flex items-center gap-2 text-sm">
+              <Zap className="h-4 w-4 text-green-500" />
+              OpenAI
+            </p>
+            <CodeBlock>
+{`OpenAI でチャット機能作って`}
+            </CodeBlock>
+          </div>
+          <div className="bg-muted/30 rounded-lg p-4">
+            <p className="font-medium mb-2 flex items-center gap-2 text-sm">
+              <Shield className="h-4 w-4 text-purple-500" />
+              Clerk
+            </p>
+            <CodeBlock>
+{`Clerk でログイン機能作って`}
+            </CodeBlock>
+          </div>
+        </div>
+        <p className="text-sm text-muted-foreground mb-4">
+          これだけでも Claude はプロジェクト構成を読み取り、適切な実装を提案してくれます。
+          詳細が必要な場合は Claude から質問されます。
+        </p>
+
+        <TipBox>
+          <span className="flex items-center gap-1 mb-2"><Lightbulb className="h-4 w-4" /><strong>plan モードで相談しながら進める</strong></span>
+          <code className="bg-muted px-1.5 py-0.5 rounded text-xs">/plan Clerk でログイン機能を実装したい</code> と入力すると、
+          Claude が実装方針を提案し、あなたの確認を得てから作業を始めます。
+          要件が曖昧なときや、どう実装すべきか相談したいときに便利です。
+        </TipBox>
+
+        <h3 className="text-lg font-semibold mb-3 mt-6">詳細な指示の例</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          要件が明確な場合は、詳細を伝えることで一発で期待通りの実装が得られます。
+        </p>
 
         <div className="bg-muted/30 rounded-lg p-4 mb-4">
           <p className="font-medium mb-2 flex items-center gap-2">
@@ -922,8 +990,7 @@ fetch(url, {
 - gpt-4o-mini モデルを使用
 - ストリーミングレスポンス対応
 - エラーハンドリングも実装
-
-環境変数 OPENAI_API_KEY は設定済み`}
+- .env.local に OPENAI_API_KEY の設定も追加して`}
           </CodeBlock>
         </div>
 
@@ -940,8 +1007,7 @@ fetch(url, {
 - /dashboard はログイン必須にする
 - ヘッダーにユーザーボタンを表示
 - 未ログイン時は /sign-in にリダイレクト
-
-環境変数は .env.local に設定済み`}
+- .env.local に必要な環境変数も設定して`}
           </CodeBlock>
         </div>
 
