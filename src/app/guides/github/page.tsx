@@ -1,5 +1,5 @@
 import { GuideLayout } from '@/components/layout/GuideLayout';
-import { Terminal, Upload, Download, FolderPlus, Users, BookOpen, Clock, Lightbulb, CheckCircle, AlertTriangle, MessageCircle, Github, GitPullRequest, ExternalLink } from 'lucide-react';
+import { Terminal, Upload, Download, FolderPlus, Users, BookOpen, Clock, Lightbulb, CheckCircle, AlertTriangle, MessageCircle, Github, GitPullRequest, ExternalLink, GitBranch } from 'lucide-react';
 import { FaApple, FaWindows } from 'react-icons/fa';
 
 const sections = [
@@ -9,6 +9,7 @@ const sections = [
   { id: 'git-push', title: 'git push' },
   { id: 'git-pull', title: 'git pull' },
   { id: 'git-clone', title: 'git clone' },
+  { id: 'branch', title: 'ブランチとは' },
   { id: 'pull-request', title: 'プルリクエスト' },
   { id: 'claude-code-github', title: 'Claude Code で GitHub' },
   { id: 'ask-claude', title: '困ったら聞こう' },
@@ -364,14 +365,112 @@ git clone https://github.com/facebook/react.git`}
         </div>
       </Section>
 
+      <Section id="branch" title="ブランチとは" icon={<GitBranch className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-4 text-lg">
+          ブランチは<strong>「作業場所の枝分かれ」</strong>です。
+          本流（main）を壊さずに、安全に新機能を開発できます。
+        </p>
+
+        <TermBox term="ブランチ（Branch）">
+          「枝」という意味。本流（main ブランチ）とは別の場所で作業して、完成したら合流させます。
+        </TermBox>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-5 mb-6">
+          <p className="font-medium mb-3 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> なぜブランチを使うの?</p>
+          <ul className="space-y-2 text-muted-foreground">
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span><strong>本番を壊さない</strong> - 作りかけのコードが本番に混ざらない</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span><strong>並行作業できる</strong> - 複数の機能を同時に開発できる</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span><strong>失敗しても大丈夫</strong> - うまくいかなければブランチを捨てればOK</span>
+            </li>
+          </ul>
+        </div>
+
+        <h3 className="text-lg font-semibold mb-3">ブランチのイメージ</h3>
+        <div className="bg-muted/30 rounded-lg p-4 mb-6 font-mono text-sm">
+          <pre className="text-muted-foreground">
+{`main ブランチ（本流）
+  ●────●────●────●────●────● ← 安定版
+         \\              /
+          ●────●────●─┘  ← feature/login（作業ブランチ）
+          　新機能を開発
+`}
+          </pre>
+        </div>
+
+        <h3 className="text-lg font-semibold mb-3">基本のコマンド</h3>
+        <div className="space-y-4 mb-6">
+          <div>
+            <p className="text-sm font-medium mb-2">新しいブランチを作って移動</p>
+            <CodeBlock>
+{`git checkout -b feature/login-button`}
+            </CodeBlock>
+            <p className="text-xs text-muted-foreground mt-1">
+              <code className="px-1 py-0.5 bg-muted rounded">-b</code> は「新しいブランチを作る」オプション
+            </p>
+          </div>
+          <div>
+            <p className="text-sm font-medium mb-2">ブランチを切り替える</p>
+            <CodeBlock>
+{`git checkout main          # main に戻る
+git checkout feature/login  # 作業ブランチに移動`}
+            </CodeBlock>
+          </div>
+          <div>
+            <p className="text-sm font-medium mb-2">今いるブランチを確認</p>
+            <CodeBlock>
+{`git branch`}
+            </CodeBlock>
+            <p className="text-xs text-muted-foreground mt-1">
+              <code className="px-1 py-0.5 bg-muted rounded">*</code> がついているのが今いるブランチ
+            </p>
+          </div>
+        </div>
+
+        <h3 className="text-lg font-semibold mb-3">ブランチの命名ルール</h3>
+        <div className="space-y-2 mb-6 text-sm">
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <code className="text-primary">feature/機能名</code>
+            <span className="text-muted-foreground ml-2">→ 新機能の開発（例: feature/login-button）</span>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <code className="text-primary">fix/修正内容</code>
+            <span className="text-muted-foreground ml-2">→ バグ修正（例: fix/header-layout）</span>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <code className="text-primary">docs/ドキュメント</code>
+            <span className="text-muted-foreground ml-2">→ ドキュメント修正（例: docs/readme-update）</span>
+          </div>
+        </div>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+          <p className="font-medium mb-2 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> Claude Code にお願いする場合</p>
+          <div className="space-y-2 text-sm">
+            <div className="p-3 bg-muted/30 rounded-lg">
+              <code className="text-primary">「ログイン機能用のブランチを作って」</code>
+            </div>
+            <div className="p-3 bg-muted/30 rounded-lg">
+              <code className="text-primary">「main ブランチに戻って」</code>
+            </div>
+          </div>
+        </div>
+      </Section>
+
       <Section id="pull-request" title="プルリクエスト" icon={<GitPullRequest className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
-          プルリクエスト（Pull Request、略して PR）は、<strong>「自分の変更をレビューしてもらう」</strong>仕組みです。
+          プルリクエスト（Pull Request、略して PR）は、<strong>「自分のブランチの変更を main に取り込んでもらう」</strong>お願いです。
           チーム開発では必須の機能です。
         </p>
 
         <TermBox term="プルリクエスト（Pull Request）">
-          「私の変更を見てください、問題なければ取り込んでください」というお願い。
+          「私のブランチの変更を見てください、問題なければ main に取り込んでください」というお願い。
           略して PR（ピーアール）と呼ばれます。
         </TermBox>
 
@@ -380,15 +479,15 @@ git clone https://github.com/facebook/react.git`}
           <ul className="space-y-2 text-muted-foreground">
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">•</span>
-              <span>いきなり本番に反映せず、他の人にチェックしてもらえる</span>
+              <span><strong>レビューできる</strong> - 他の人にコードをチェックしてもらえる</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">•</span>
-              <span>バグや問題を事前に発見できる</span>
+              <span><strong>バグ防止</strong> - main に入れる前に問題を発見できる</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">•</span>
-              <span>「誰が何をしたか」の記録が残る</span>
+              <span><strong>履歴が残る</strong> - 「誰が何をしたか」が記録される</span>
             </li>
           </ul>
         </div>
@@ -422,13 +521,11 @@ git commit -m "ログインボタンを追加"`}
           </div>
           <div className="p-3 bg-muted/30 rounded-lg">
             <p className="text-sm"><strong>5.</strong> レビューを受けて、承認されたらマージ</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              マージ = ブランチの変更を main に取り込むこと
+            </p>
           </div>
         </div>
-
-        <TermBox term="ブランチ（Branch）">
-          「枝分かれ」のこと。本流（main）とは別の作業場所を作って、そこで変更を行います。
-          完成したら本流にマージ（合流）します。
-        </TermBox>
 
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
           <p className="text-sm">
