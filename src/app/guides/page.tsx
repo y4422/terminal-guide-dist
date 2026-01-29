@@ -1,6 +1,6 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { FeatureCard } from '@/components/landing/FeatureCard';
-import { ChevronRight, Home, GitBranch, Rocket, Zap, Code2, FileText, Database, Key, Plug } from 'lucide-react';
+import { ChevronRight, Home, GitBranch, Rocket, Zap, Code2, FileText, Database, Key, Plug, Github } from 'lucide-react';
 import Link from 'next/link';
 
 const guides = [
@@ -15,8 +15,16 @@ const guides = [
   {
     icon: <GitBranch className="h-7 w-7 text-primary" />,
     title: 'Git の使い方',
-    description: 'バージョン管理の基本から、Claude Code を使った効率的な Git 操作まで解説します。',
+    description: 'ファイルの変更履歴を記録する「セーブポイント」機能。add と commit の基本を学びます。',
     href: '/guides/git',
+    badge: '初心者向け',
+    badgeColor: 'success' as const,
+  },
+  {
+    icon: <Github className="h-7 w-7 text-primary" />,
+    title: 'GitHub の使い方',
+    description: 'コードをクラウドに保存・共有。バックアップやチーム開発に必須のサービスです。',
+    href: '/guides/github',
     badge: '初心者向け',
     badgeColor: 'success' as const,
   },
