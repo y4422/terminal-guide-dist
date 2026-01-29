@@ -339,11 +339,26 @@ git init`}
           隠しフォルダが作られます。ここに履歴が保存されていきます。
         </p>
 
-        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
           <p className="text-sm">
             <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>ヒント:</strong></span> GitHub からダウンロード（clone）した場合は、
             すでに Git が設定されているので <code className="px-1 py-0.5 bg-muted rounded">git init</code> は不要です。
           </p>
+        </div>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+          <p className="font-medium mb-2 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> Claude Code にお願いする場合</p>
+          <p className="text-sm text-muted-foreground mb-3">
+            新しいプロジェクトを始めるとき、こう伝えるだけでOK:
+          </p>
+          <div className="space-y-2">
+            <div className="p-3 bg-muted/30 rounded-lg">
+              <code className="text-sm text-primary">「このフォルダで Git を使えるようにして」</code>
+            </div>
+            <div className="p-3 bg-muted/30 rounded-lg">
+              <code className="text-sm text-primary">「Git の初期化をして」</code>
+            </div>
+          </div>
         </div>
       </Section>
 
