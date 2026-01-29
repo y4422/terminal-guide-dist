@@ -1,8 +1,9 @@
 import { GuideLayout } from '@/components/layout/GuideLayout';
-import { Terminal, GitBranch, Upload, Download, FolderPlus, Save, History, Users, Package, BookOpen, Clock, Lightbulb, CheckCircle, AlertTriangle, Wrench, AlertCircle, MessageCircle } from 'lucide-react';
+import { Terminal, GitBranch, Upload, Download, FolderPlus, Save, History, Users, Package, BookOpen, Clock, Lightbulb, CheckCircle, AlertTriangle, Wrench, AlertCircle, MessageCircle, Github, GitPullRequest, ExternalLink } from 'lucide-react';
 import { FaApple, FaWindows } from 'react-icons/fa';
 
 const sections = [
+  // Git の基本（ローカルで完結）
   { id: 'what-is-git', title: 'Git とは' },
   { id: 'install', title: 'インストール方法' },
   { id: 'why-git', title: 'なぜ Git を使うの?' },
@@ -10,9 +11,17 @@ const sections = [
   { id: 'git-init', title: 'git init' },
   { id: 'git-add', title: 'git add' },
   { id: 'git-commit', title: 'git commit' },
+  { id: 'claude-code-git', title: 'Claude Code で Git' },
+  // GitHub で広がる世界
+  { id: 'what-is-github', title: 'GitHub で広がる世界' },
+  { id: 'github-setup', title: 'アカウント作成と認証' },
+  { id: 'github-repo', title: 'リポジトリを作成' },
   { id: 'git-push', title: 'git push' },
   { id: 'git-pull', title: 'git pull' },
-  { id: 'claude-code', title: 'Claude Code での活用' },
+  { id: 'git-clone', title: 'git clone' },
+  { id: 'pull-request', title: 'プルリクエスト' },
+  { id: 'claude-code-github', title: 'Claude Code で GitHub' },
+  // 共通
   { id: 'ask-claude', title: '困ったら聞こう' },
 ];
 
@@ -83,6 +92,8 @@ export default function GitGuidePage() {
         { label: 'Git の使い方' },
       ]}
     >
+      {/* ========== Git の基本 ========== */}
+
       <Section id="what-is-git" title="Git とは" icon={<GitBranch className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4 text-lg">
           Git（ギット）は、<strong>ファイルの変更履歴を記録するツール</strong>です。
@@ -216,7 +227,7 @@ export default function GitGuidePage() {
         </div>
 
         {/* Initial setup */}
-        <div className="border rounded-lg p-4">
+        <div className="border rounded-lg p-4 mb-4">
           <p className="font-medium mb-2 flex items-center gap-2"><Wrench className="h-4 w-4" /> 初期設定（名前とメールアドレス）</p>
           <p className="text-sm text-muted-foreground mb-3">
             Git を使う前に、あなたの名前とメールアドレスを設定します。
@@ -228,6 +239,21 @@ git config --global user.email "your@email.com"`}
           </CodeBlock>
           <p className="text-xs text-muted-foreground flex items-center gap-1">
             <Lightbulb className="h-3 w-3" /> GitHub アカウントを持っている場合は、同じメールアドレスを使うのがおすすめです
+          </p>
+        </div>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+          <p className="font-medium mb-2 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> Claude Code にお願いする場合</p>
+          <p className="text-sm text-muted-foreground mb-3">
+            コマンドを覚えなくても、こう伝えるだけでOK:
+          </p>
+          <div className="space-y-2">
+            <div className="p-3 bg-muted/30 rounded-lg">
+              <code className="text-sm text-primary">「Git の初期設定をして。名前は山田太郎、メールは taro@example.com」</code>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground mt-3">
+            Claude Code が適切なコマンドを実行してくれます。
           </p>
         </div>
       </Section>
@@ -272,7 +298,7 @@ git config --global user.email "your@email.com"`}
 
       <Section id="basic-flow" title="基本の流れ" icon={<Save className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
-          Git の基本的な使い方は、たった3ステップです。
+          Git の基本的な使い方は、たった<strong>2ステップ</strong>です。
         </p>
 
         <div className="relative">
@@ -295,22 +321,13 @@ git config --global user.email "your@email.com"`}
                 メモ付きで履歴に保存
               </p>
             </div>
-            <div className="hidden md:flex items-center text-2xl text-muted-foreground">→</div>
-            <div className="flex-1 bg-muted/30 rounded-lg p-4 text-center">
-              <div className="w-10 h-10 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center mx-auto mb-2">3</div>
-              <p className="font-bold mb-1">共有する</p>
-              <code className="text-xs bg-terminal-bg text-terminal-text px-2 py-1 rounded">git push</code>
-              <p className="text-xs text-muted-foreground mt-2">
-                GitHub にアップロード
-              </p>
-            </div>
           </div>
         </div>
 
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
           <p className="text-sm">
-            <strong>ポイント:</strong> 1人で作業するなら ①② だけでOK。
-            チームで共有したり、バックアップを取りたいときに ③ を使います。
+            <strong>これだけで Git の基本は完成!</strong> この2ステップで「セーブポイント」機能が使えます。
+            GitHub を使ってバックアップや共有をしたい場合は、この後の「GitHub で広がる世界」で説明します。
           </p>
         </div>
       </Section>
@@ -409,16 +426,220 @@ git commit -m "ログインボタンを追加"`}
         </div>
       </Section>
 
+      <Section id="claude-code-git" title="Claude Code で Git を使う" icon={<Users className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-4">
+          <strong>朗報です!</strong> Claude Code を使えば、Git コマンドを覚えなくても大丈夫。
+          日本語で話しかけるだけで、Git の操作ができます。
+        </p>
+
+        <h3 className="text-lg font-semibold mb-3">こう言えば OK</h3>
+        <div className="space-y-3 mb-6">
+          {[
+            { prompt: '変更をセーブして', result: '→ add + commit を実行' },
+            { prompt: '何を変更したか見せて', result: '→ 変更内容を表示' },
+            { prompt: 'さっきの変更を取り消して', result: '→ 直前のコミットを取り消し' },
+            { prompt: '昨日の状態に戻して', result: '→ 履歴から復元' },
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-4 p-4 bg-muted/30 rounded-lg">
+              <code className="px-3 py-1 bg-primary/10 text-primary rounded-lg text-sm font-medium">
+                {item.prompt}
+              </code>
+              <span className="text-muted-foreground text-sm">{item.result}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+          <p className="text-sm">
+            <strong>要するに:</strong> Git のコマンドを覚える必要はありません。
+            やりたいことを日本語で伝えれば、Claude Code がやってくれます!
+          </p>
+        </div>
+      </Section>
+
+      {/* ========== GitHub で広がる世界 ========== */}
+
+      <Section id="what-is-github" title="GitHub で広がる世界" icon={<Github className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-4 text-lg">
+          ここまでの Git だけでも十分便利ですが、<strong>GitHub</strong> を組み合わせると、
+          さらにできることが広がります。
+        </p>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-5 mb-6">
+          <p className="font-medium mb-3 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> GitHub でできること</p>
+          <ul className="space-y-2 text-muted-foreground">
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span><strong>バックアップ</strong> - パソコンが壊れてもコードは安全</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span><strong>どこからでもアクセス</strong> - 別のPCでも同じコードで作業</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span><strong>チーム開発</strong> - 他の人とコードを共有して共同作業</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span><strong>ポートフォリオ</strong> - 自分の作品を世界に公開</span>
+            </li>
+          </ul>
+        </div>
+
+        <TermBox term="GitHub（ギットハブ）">
+          Git で管理したコードをインターネット上に保存・共有できるサービス。
+          「Git のクラウド版」と思ってください。無料で使えます。
+        </TermBox>
+
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+          <p className="text-sm">
+            <strong>Git と GitHub の違い:</strong> Git = セーブ機能（ローカル）、GitHub = クラウド保存（インターネット）。
+            Git だけでも使えますが、GitHub があると安心で便利です。
+          </p>
+        </div>
+      </Section>
+
+      <Section id="github-setup" title="アカウント作成と認証" icon={<Github className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-4">
+          GitHub を使うには、アカウント作成と認証設定が必要です。
+          一度設定すれば、あとは自動でログインできます。
+        </p>
+
+        <h3 className="text-lg font-semibold mb-3">Step 1: GitHub アカウントを作成</h3>
+        <div className="space-y-3 mb-6">
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm">
+              <strong>1.</strong>{' '}
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline inline-flex items-center gap-1">
+                github.com <ExternalLink className="h-3 w-3" />
+              </a>
+              {' '}にアクセス
+            </p>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>2.</strong> 「Sign up」をクリック</p>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>3.</strong> メールアドレス、パスワード、ユーザー名を入力</p>
+            <p className="text-xs text-muted-foreground mt-1">ユーザー名は公開されるので、本名や恥ずかしい名前は避けましょう</p>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>4.</strong> メールで届く確認コードを入力して完了</p>
+          </div>
+        </div>
+
+        <h3 className="text-lg font-semibold mb-3">Step 2: GitHub CLI で認証（推奨）</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          GitHub CLI（gh コマンド）を使うと、ターミナルから簡単に GitHub を操作できます。
+          Claude Code も内部でこれを使っています。
+        </p>
+
+        <div className="mb-4">
+          <p className="text-sm font-medium mb-2 flex items-center gap-2">
+            <FaApple className="h-4 w-4" /> Mac の場合
+          </p>
+          <CodeBlock title="Homebrew でインストール">
+{`brew install gh`}
+          </CodeBlock>
+        </div>
+
+        <div className="mb-4">
+          <p className="text-sm font-medium mb-2 flex items-center gap-2">
+            <FaWindows className="h-4 w-4" /> Windows の場合
+          </p>
+          <CodeBlock title="winget でインストール">
+{`winget install GitHub.cli`}
+          </CodeBlock>
+        </div>
+
+        <div className="mb-4">
+          <p className="text-sm font-medium mb-2">認証を実行</p>
+          <CodeBlock title="GitHub にログイン">
+{`gh auth login`}
+          </CodeBlock>
+          <div className="text-sm text-muted-foreground space-y-1 mt-2">
+            <p>対話式で質問されるので、以下のように選択:</p>
+            <ul className="list-disc list-inside pl-2 space-y-1">
+              <li>GitHub.com を選択</li>
+              <li>HTTPS を選択</li>
+              <li>「Login with a web browser」を選択</li>
+              <li>表示されるコードをコピーして、開いたブラウザに入力</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+          <p className="text-sm">
+            <span className="flex items-center gap-1"><CheckCircle className="h-4 w-4 text-green-500" /><strong>これで準備完了!</strong></span>
+            {' '}以降は <code className="px-1 py-0.5 bg-muted rounded">git push</code> や <code className="px-1 py-0.5 bg-muted rounded">gh</code> コマンドが使えるようになります。
+          </p>
+        </div>
+      </Section>
+
+      <Section id="github-repo" title="リポジトリを作成" icon={<FolderPlus className="h-6 w-6 text-primary" />}>
+        <WhenToUse>
+          新しいプロジェクトを GitHub で管理したいとき、または既存のプロジェクトを GitHub にアップロードしたいときに使います。
+        </WhenToUse>
+
+        <h3 className="text-lg font-semibold mb-3">方法 1: GitHub のサイトで作成</h3>
+        <div className="space-y-3 mb-6">
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>1.</strong> GitHub にログインして、右上の「+」→「New repository」をクリック</p>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>2.</strong> Repository name にプロジェクト名を入力（例: my-first-app）</p>
+            <p className="text-xs text-muted-foreground mt-1">英数字とハイフンのみ使用可能</p>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>3.</strong> Public（公開）または Private（非公開）を選択</p>
+            <p className="text-xs text-muted-foreground mt-1">練習用なら Private でOK。ポートフォリオにするなら Public</p>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>4.</strong> 「Create repository」をクリックして完了</p>
+          </div>
+        </div>
+
+        <h3 className="text-lg font-semibold mb-3">方法 2: コマンドで作成（GitHub CLI）</h3>
+        <CodeBlock title="リポジトリを作成">
+{`# 現在のフォルダを GitHub リポジトリとして作成
+gh repo create my-app --private --source=. --push`}
+        </CodeBlock>
+        <p className="text-sm text-muted-foreground mb-6">
+          <code className="px-1 py-0.5 bg-muted rounded">--private</code> を <code className="px-1 py-0.5 bg-muted rounded">--public</code> に変えると公開リポジトリになります。
+        </p>
+
+        <h3 className="text-lg font-semibold mb-3">既存のプロジェクトを GitHub にアップロード</h3>
+        <p className="text-sm text-muted-foreground mb-3">
+          すでにローカルで作成したプロジェクトを GitHub に上げる場合:
+        </p>
+        <CodeBlock title="既存プロジェクトをアップロード">
+{`# 1. GitHub でリポジトリを作成した後...
+
+# 2. リモートを追加（GitHub のURLを設定）
+git remote add origin https://github.com/あなたのユーザー名/リポジトリ名.git
+
+# 3. アップロード
+git push -u origin main`}
+        </CodeBlock>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+          <p className="text-sm">
+            <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>Claude Code なら簡単:</strong></span>
+            {' '}「このプロジェクトを GitHub にアップして」と言うだけで、リポジトリ作成からプッシュまで全部やってくれます。
+          </p>
+        </div>
+      </Section>
+
       <Section id="git-push" title="git push - GitHub にアップロード" icon={<Upload className="h-6 w-6 text-primary" />}>
         <WhenToUse>
-          手元の変更を GitHub（インターネット上）にアップロードしたいときに使います。
+          手元でコミットした変更を GitHub にアップロードしたいときに使います。
           バックアップや、チームとの共有に使います。
         </WhenToUse>
 
-        <TermBox term="リモート / ローカル">
-          <strong>ローカル</strong> = あなたのパソコン内。
-          <strong>リモート</strong> = インターネット上（GitHub など）。
-          push は「ローカル → リモート」にアップロードすることです。
+        <TermBox term="プッシュ（Push）">
+          ローカル（自分のPC）の変更を、リモート（GitHub）にアップロードすること。
+          「自分の変更を GitHub に送る」操作です。
         </TermBox>
 
         <CodeBlock title="コマンド">
@@ -426,11 +647,18 @@ git commit -m "ログインボタンを追加"`}
 git push`}
         </CodeBlock>
 
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
+          <p className="text-sm">
+            <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>ポイント:</strong></span>
+            {' '}push する前に必ず commit しておく必要があります。commit していない変更は push されません。
+          </p>
+        </div>
+
         <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
           <p className="text-sm">
-            <span className="flex items-center gap-1"><AlertTriangle className="h-4 w-4" /><strong>注意:</strong></span> 初めて push するときは、先に GitHub でリポジトリを作成し、
-            接続設定が必要です。Claude Code に「GitHub にプッシュしたい」と伝えれば、
-            設定方法を教えてもらえます。
+            <span className="flex items-center gap-1"><AlertTriangle className="h-4 w-4" /><strong>初回のみ:</strong></span>
+            {' '}初めて push するときは <code className="px-1 py-0.5 bg-muted rounded">git push -u origin main</code> のように、
+            リモートとブランチを指定する必要があります。2回目以降は <code className="px-1 py-0.5 bg-muted rounded">git push</code> だけでOK。
           </p>
         </div>
       </Section>
@@ -441,10 +669,9 @@ git push`}
           チームで作業しているとき、他の人の変更を取得するのに使います。
         </WhenToUse>
 
-        <TermBox term="プル / マージ">
-          <strong>プル（Pull）</strong> = リモートから変更をダウンロードすること。
-          <strong>マージ（Merge）</strong> = 複数の変更を1つに合体させること。
-          git pull は「ダウンロード + 合体」を一度にやってくれます。
+        <TermBox term="プル（Pull）">
+          リモート（GitHub）の変更を、ローカル（自分のPC）にダウンロードすること。
+          「GitHub から最新を取ってくる」操作です。
         </TermBox>
 
         <CodeBlock title="コマンド">
@@ -461,20 +688,137 @@ git pull`}
         </div>
       </Section>
 
-      <Section id="claude-code" title="Claude Code での Git 活用" icon={<Users className="h-6 w-6 text-primary" />}>
+      <Section id="git-clone" title="git clone - リポジトリをダウンロード" icon={<Download className="h-6 w-6 text-primary" />}>
+        <WhenToUse>
+          GitHub にあるプロジェクトを自分のパソコンにダウンロードしたいときに使います。
+          他の人のコードを見たいときや、チームのプロジェクトを始めるときに使います。
+        </WhenToUse>
+
+        <TermBox term="クローン（Clone）">
+          リポジトリを丸ごとコピーすること。ファイルだけでなく、Git の履歴も全部ダウンロードされます。
+        </TermBox>
+
+        <CodeBlock title="コマンド">
+{`# GitHub からダウンロード
+git clone https://github.com/ユーザー名/リポジトリ名.git
+
+# 例: React の公式リポジトリをダウンロード
+git clone https://github.com/facebook/react.git`}
+        </CodeBlock>
+
+        <p className="text-sm text-muted-foreground mb-4">
+          実行すると、カレントディレクトリにリポジトリ名のフォルダが作成されます。
+        </p>
+
+        <h3 className="text-lg font-semibold mb-3">URL の取得方法</h3>
+        <div className="space-y-3 mb-6">
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>1.</strong> GitHub でリポジトリのページを開く</p>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>2.</strong> 緑色の「Code」ボタンをクリック</p>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>3.</strong> 「HTTPS」タブの URL をコピー</p>
+          </div>
+        </div>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+          <p className="text-sm">
+            <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>Claude Code での使い方:</strong></span>
+            {' '}「https://github.com/... をクローンして」と URL を伝えるだけでダウンロードしてくれます。
+          </p>
+        </div>
+      </Section>
+
+      <Section id="pull-request" title="プルリクエスト" icon={<GitPullRequest className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
-          <strong>朗報です!</strong> Claude Code を使えば、Git コマンドを覚えなくても大丈夫。
-          日本語で話しかけるだけで、Git の操作ができます。
+          プルリクエスト（Pull Request、略して PR）は、<strong>「自分の変更をレビューしてもらう」</strong>仕組みです。
+          チーム開発では必須の機能です。
+        </p>
+
+        <TermBox term="プルリクエスト（Pull Request）">
+          「私の変更を見てください、問題なければ取り込んでください」というお願い。
+          略して PR（ピーアール）と呼ばれます。
+        </TermBox>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-5 mb-6">
+          <p className="font-medium mb-3 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> なぜプルリクエストを使うの?</p>
+          <ul className="space-y-2 text-muted-foreground">
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span>いきなり本番に反映せず、他の人にチェックしてもらえる</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span>バグや問題を事前に発見できる</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span>「誰が何をしたか」の記録が残る</span>
+            </li>
+          </ul>
+        </div>
+
+        <h3 className="text-lg font-semibold mb-3">プルリクエストの流れ</h3>
+        <div className="space-y-3 mb-6">
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>1.</strong> 作業用のブランチを作る</p>
+            <CodeBlock>
+{`git checkout -b feature/login-button`}
+            </CodeBlock>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>2.</strong> コードを変更して、コミットする</p>
+            <CodeBlock>
+{`git add .
+git commit -m "ログインボタンを追加"`}
+            </CodeBlock>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>3.</strong> GitHub にプッシュする</p>
+            <CodeBlock>
+{`git push -u origin feature/login-button`}
+            </CodeBlock>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>4.</strong> GitHub でプルリクエストを作成</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              GitHub を開くと「Compare & pull request」ボタンが表示されるのでクリック
+            </p>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>5.</strong> レビューを受けて、承認されたらマージ</p>
+          </div>
+        </div>
+
+        <TermBox term="ブランチ（Branch）">
+          「枝分かれ」のこと。本流（main）とは別の作業場所を作って、そこで変更を行います。
+          完成したら本流にマージ（合流）します。
+        </TermBox>
+
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+          <p className="text-sm">
+            <strong>個人開発でも使おう:</strong> 1人で開発していても、プルリクエストを使うと「何をしたか」の記録が残って便利です。
+            将来チーム開発するときの練習にもなります。
+          </p>
+        </div>
+      </Section>
+
+      <Section id="claude-code-github" title="Claude Code で GitHub を使う" icon={<Users className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-4">
+          GitHub の操作も、Claude Code なら日本語で話しかけるだけ。
+          面倒なコマンドを覚える必要はありません。
         </p>
 
         <h3 className="text-lg font-semibold mb-3">こう言えば OK</h3>
-        <div className="space-y-3">
+        <div className="space-y-3 mb-6">
           {[
-            { prompt: '変更をセーブして', result: '→ add + commit を実行' },
             { prompt: 'GitHub にアップして', result: '→ push を実行' },
             { prompt: '最新版にして', result: '→ pull を実行' },
-            { prompt: '何を変更したか見せて', result: '→ 変更内容を表示' },
-            { prompt: '昨日の状態に戻して', result: '→ 履歴から復元' },
+            { prompt: 'このプロジェクトを GitHub にアップして', result: '→ リポジトリ作成 + push' },
+            { prompt: 'プルリクエストを作って', result: '→ ブランチ作成からPR作成まで' },
+            { prompt: 'https://github.com/... をクローンして', result: '→ clone を実行' },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-4 p-4 bg-muted/30 rounded-lg">
               <code className="px-3 py-1 bg-primary/10 text-primary rounded-lg text-sm font-medium">
@@ -485,17 +829,19 @@ git pull`}
           ))}
         </div>
 
-        <div className="mt-6 bg-primary/5 border border-primary/20 rounded-lg p-4">
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
           <p className="text-sm">
-            <strong>要するに:</strong> Git のコマンドを覚える必要はありません。
-            やりたいことを日本語で伝えれば、Claude Code がやってくれます!
+            <strong>要するに:</strong> GitHub の操作も Claude Code にお任せ!
+            やりたいことを伝えれば、必要なコマンドを全部実行してくれます。
           </p>
         </div>
       </Section>
 
-      <Section id="ask-claude" title="Git で困ったら Claude Code に聞こう" icon={<Terminal className="h-6 w-6 text-primary" />}>
+      {/* ========== 共通 ========== */}
+
+      <Section id="ask-claude" title="Git / GitHub で困ったら聞こう" icon={<MessageCircle className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
-          Git でエラーが出たり、やり方がわからないときは、そのまま Claude Code に質問してください。
+          Git や GitHub でエラーが出たり、やり方がわからないときは、そのまま Claude Code に質問してください。
         </p>
 
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
@@ -505,10 +851,10 @@ git pull`}
               '「git push したらエラーが出た。これ何?」+ エラーメッセージを貼り付け',
               '「さっきの変更を取り消したい」',
               '「他の人の変更と自分の変更がぶつかった」',
-              '「Git って何のためにあるの?」',
+              '「Git と GitHub の違いって何?」',
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2 p-2 bg-background rounded">
-                <MessageCircle className="h-4 w-4 text-primary" />
+                <Terminal className="h-4 w-4 text-primary" />
                 <span className="text-muted-foreground">{item}</span>
               </div>
             ))}

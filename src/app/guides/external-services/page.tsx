@@ -6,7 +6,7 @@ const sections = [
   { id: 'api-key-basics', title: 'API キーの基本' },
   { id: 'common-services', title: 'よくある外部サービス' },
   { id: 'openai-example', title: '実装例: OpenAI API' },
-  { id: 'stripe-example', title: '実装例: Stripe 決済' },
+  { id: 'clerk-example', title: '実装例: Clerk 認証' },
   { id: 'nextjs-api-routes', title: 'Next.js API Routes' },
   { id: 'auth-patterns', title: '認証の種類' },
   { id: 'rate-limiting', title: 'レート制限と課金' },
@@ -291,14 +291,36 @@ export default function ExternalServicesGuidePage() {
         </p>
 
         <h3 className="text-lg font-semibold mb-3">Step 1: API キーの取得</h3>
-        <div className="space-y-2 mb-6">
-          <p className="text-sm text-muted-foreground">
-            <a href="https://platform.openai.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline inline-flex items-center gap-1">
-              OpenAI Platform
-              <ExternalLink className="h-3 w-3" />
-            </a>
-            でアカウント作成後、API Keys ページでキーを作成します。
-          </p>
+        <div className="space-y-3 mb-6">
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm">
+              <strong>1.</strong>{' '}
+              <a href="https://platform.openai.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline inline-flex items-center gap-1">
+                platform.openai.com
+                <ExternalLink className="h-3 w-3" />
+              </a>
+              {' '}でアカウント作成
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              ※ ChatGPT（chatgpt.com）とは別サービスです。ChatGPT Plus 課金とは別に API 料金がかかります。
+            </p>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>2.</strong> API Keys ページでキーを作成 → すぐにコピー</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              ※ 初回は組織（Organization）の作成が求められます
+            </p>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>3.</strong> Billing でクレジットカード登録・チャージ（$5〜10 程度で十分）</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              ※ 支払い設定なしでは API を使用できません
+            </p>
+          </div>
+          <WarningBox>
+            API キーはダイアログを閉じると<strong>二度と表示されません</strong>。
+            作成したらすぐにコピーして安全な場所に保存してください。
+          </WarningBox>
         </div>
 
         <h3 className="text-lg font-semibold mb-3">Step 2: 環境変数の設定</h3>
@@ -398,108 +420,167 @@ export default function ChatPage() {
         </TipBox>
       </Section>
 
-      <Section id="stripe-example" title="実装例: Stripe 決済" icon={<CreditCard className="h-6 w-6 text-primary" />}>
+      <Section id="clerk-example" title="実装例: Clerk 認証" icon={<Shield className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
-          Stripe を使ったクレジットカード決済の基本的な実装例です。
+          Clerk を使ったユーザー認証の基本的な実装例です。
+          ログイン、サインアップ、ユーザー管理が簡単に実装できます。
         </p>
 
-        <h3 className="text-lg font-semibold mb-3">Step 1: API キーの取得</h3>
-        <p className="text-sm text-muted-foreground mb-4">
-          <a href="https://dashboard.stripe.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline inline-flex items-center gap-1">
-            Stripe Dashboard
-            <ExternalLink className="h-3 w-3" />
-          </a>
-          でアカウント作成後、「開発者」→「APIキー」で取得します。
-        </p>
+        <h3 className="text-lg font-semibold mb-3">Step 1: Clerk アカウントの作成と API キー取得</h3>
+        <div className="space-y-3 mb-4">
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm">
+              <strong>1.</strong>{' '}
+              <a href="https://clerk.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline inline-flex items-center gap-1">
+                clerk.com
+                <ExternalLink className="h-3 w-3" />
+              </a>
+              {' '}でアカウント作成し、アプリを作成
+            </p>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg">
+            <p className="text-sm"><strong>2.</strong> API Keys ページの「Quick Copy」から以下をコピー</p>
+            <ul className="text-xs text-muted-foreground mt-1 space-y-0.5">
+              <li>• Publishable key（<code className="px-1 py-0.5 bg-muted rounded">pk_test_...</code>）</li>
+              <li>• Secret key（<code className="px-1 py-0.5 bg-muted rounded">sk_test_...</code>）</li>
+            </ul>
+          </div>
+          <TipBox>
+            <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>ヒント:</strong></span>
+            テスト用キー（<code className="px-1 py-0.5 bg-muted rounded">_test_</code>）は開発環境用、
+            本番用キー（<code className="px-1 py-0.5 bg-muted rounded">_live_</code>）は本番デプロイ時に使用します。
+          </TipBox>
+        </div>
 
         <h3 className="text-lg font-semibold mb-3">Step 2: 環境変数の設定</h3>
         <CodeBlock title=".env.local">
-{`# 秘密キー（サーバーのみ）
-STRIPE_SECRET_KEY="sk_test_..."
+{`# Clerk API キー
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
 
-# 公開キー（ブラウザで使用可）
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_..."`}
+# 認証ページのURL
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up`}
         </CodeBlock>
-
-        <WarningBox>
-          必ず <code className="px-1 py-0.5 bg-muted rounded">sk_test_</code> で始まる<strong>テストキー</strong>を使ってください。
-          本番キー（<code className="px-1 py-0.5 bg-muted rounded">sk_live_</code>）は実際に課金されます。
-        </WarningBox>
 
         <h3 className="text-lg font-semibold mb-3">Step 3: SDK のインストール</h3>
         <CodeBlock title="ターミナル">
-{`npm install stripe @stripe/stripe-js`}
+{`npm install @clerk/nextjs`}
         </CodeBlock>
 
-        <h3 className="text-lg font-semibold mb-3">Step 4: Checkout Session の作成</h3>
-        <CodeBlock title="app/api/checkout/route.ts">
-{`import Stripe from 'stripe';
-import { NextResponse } from 'next/server';
+        <h3 className="text-lg font-semibold mb-3">Step 4: ClerkProvider でアプリをラップ</h3>
+        <CodeBlock title="app/layout.tsx">
+{`import { ClerkProvider } from '@clerk/nextjs'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-11-20.acacia',
-});
-
-export async function POST(request: Request) {
-  try {
-    const { priceId } = await request.json();
-
-    // Checkout Session を作成
-    const session = await stripe.checkout.sessions.create({
-      mode: 'payment',  // 一回払い（サブスクは 'subscription'）
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price: priceId,  // Stripe ダッシュボードで作った価格ID
-          quantity: 1,
-        },
-      ],
-      success_url: \`\${process.env.NEXT_PUBLIC_BASE_URL}/success\`,
-      cancel_url: \`\${process.env.NEXT_PUBLIC_BASE_URL}/cancel\`,
-    });
-
-    return NextResponse.json({ url: session.url });
-  } catch (error) {
-    console.error('Stripe error:', error);
-    return NextResponse.json(
-      { error: '決済の準備に失敗しました' },
-      { status: 500 }
-    );
-  }
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <ClerkProvider>
+      <html lang="ja">
+        <body>{children}</body>
+      </html>
+    </ClerkProvider>
+  )
 }`}
         </CodeBlock>
 
-        <h3 className="text-lg font-semibold mb-3">Step 5: 購入ボタン</h3>
-        <CodeBlock title="components/BuyButton.tsx">
+        <h3 className="text-lg font-semibold mb-3">Step 5: Middleware の設定</h3>
+        <CodeBlock title="middleware.ts（プロジェクトルートに配置）">
+{`import { clerkMiddleware } from '@clerk/nextjs/server'
+
+export default clerkMiddleware()
+
+export const config = {
+  matcher: [
+    // 静的ファイル以外すべてに適用
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // API routes
+    '/(api|trpc)(.*)',
+  ],
+}`}
+        </CodeBlock>
+
+        <h3 className="text-lg font-semibold mb-3">Step 6: サインイン / サインアップページ</h3>
+        <CodeBlock title="app/sign-in/[[...sign-in]]/page.tsx">
+{`import { SignIn } from '@clerk/nextjs'
+
+export default function SignInPage() {
+  return (
+    <div className="flex justify-center items-center min-h-screen">
+      <SignIn />
+    </div>
+  )
+}`}
+        </CodeBlock>
+
+        <CodeBlock title="app/sign-up/[[...sign-up]]/page.tsx">
+{`import { SignUp } from '@clerk/nextjs'
+
+export default function SignUpPage() {
+  return (
+    <div className="flex justify-center items-center min-h-screen">
+      <SignUp />
+    </div>
+  )
+}`}
+        </CodeBlock>
+
+        <h3 className="text-lg font-semibold mb-3">Step 7: ユーザー情報の取得</h3>
+        <CodeBlock title="クライアントコンポーネント">
 {`'use client';
+import {
+  useUser,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
 
-export function BuyButton({ priceId }: { priceId: string }) {
-  const handleClick = async () => {
-    const response = await fetch('/api/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ priceId }),
-    });
-    const { url } = await response.json();
-
-    // Stripe の決済ページにリダイレクト
-    window.location.href = url;
-  };
+export function Header() {
+  const { user, isLoaded } = useUser()
 
   return (
-    <button onClick={handleClick}>
-      購入する
-    </button>
-  );
+    <header>
+      <SignedIn>
+        {/* ログイン時のみ表示 */}
+        <p>ようこそ、{user?.firstName}さん</p>
+        <UserButton />
+      </SignedIn>
+      <SignedOut>
+        {/* 未ログイン時のみ表示 */}
+        <a href="/sign-in">ログイン</a>
+      </SignedOut>
+    </header>
+  )
 }`}
         </CodeBlock>
 
-        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mt-4">
-          <p className="text-sm">
-            <strong>テストカード番号:</strong>{' '}
-            <code className="px-1 py-0.5 bg-muted rounded">4242 4242 4242 4242</code>（有効期限・CVC は適当でOK）
-          </p>
-        </div>
+        <CodeBlock title="サーバーコンポーネント / API Route">
+{`import { currentUser } from '@clerk/nextjs/server'
+
+export default async function DashboardPage() {
+  const user = await currentUser()
+
+  if (!user) {
+    return <div>ログインしてください</div>
+  }
+
+  return (
+    <div>
+      <h1>ダッシュボード</h1>
+      <p>Email: {user.emailAddresses[0]?.emailAddress}</p>
+    </div>
+  )
+}`}
+        </CodeBlock>
+
+        <TipBox>
+          <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>ヒント:</strong></span>
+          特定のページを保護したい場合は、middleware でルートを指定するか、
+          <code className="px-1 py-0.5 bg-muted rounded">auth()</code> を使ってサーバー側で認証チェックできます。
+        </TipBox>
       </Section>
 
       <Section id="nextjs-api-routes" title="Next.js API Routes" icon={<Code className="h-6 w-6 text-primary" />}>
@@ -753,53 +834,148 @@ fetch(url, {
           外部サービス連携を Claude Code で効率的に進める方法を紹介します。
         </p>
 
-        <h3 className="text-lg font-semibold mb-3">依頼の例</h3>
+        <h3 className="text-lg font-semibold mb-3">Claude に伝えるべき情報</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          外部サービス連携を依頼するときは、以下の情報を含めると精度が上がります。
+        </p>
         <div className="bg-muted/30 rounded-lg p-4 mb-6">
-          <p className="font-medium mb-2">基本的な連携</p>
-          <div className="space-y-2">
-            {[
-              'OpenAI API を使って、ユーザーの質問に答えるチャット機能を作って',
-              'Stripe で1回払いの決済機能を作って。商品は1つだけでOK',
-              'Resend でお問い合わせフォームからメール送信する機能を作って',
-            ].map((item, i) => (
-              <div key={i} className="p-2 bg-background rounded text-sm">
-                <code className="text-primary">{item}</code>
-              </div>
-            ))}
-          </div>
+          <ul className="text-sm text-muted-foreground space-y-2">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
+              <span><strong>使いたいサービス名</strong>（OpenAI、Clerk、Stripe など）</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
+              <span><strong>実現したい機能</strong>（チャット、ログイン、決済など）</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
+              <span><strong>プロジェクト構成</strong>（Next.js App Router、Pages Router など）</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
+              <span><strong>環境変数の状態</strong>（すでに設定済みか、これから設定するか）</span>
+            </li>
+          </ul>
+        </div>
+
+        <h3 className="text-lg font-semibold mb-3">具体的な指示例</h3>
+
+        <div className="bg-muted/30 rounded-lg p-4 mb-4">
+          <p className="font-medium mb-2 flex items-center gap-2">
+            <Zap className="h-4 w-4 text-green-500" />
+            OpenAI 連携の指示例
+          </p>
+          <CodeBlock>
+{`OpenAI API を使ってチャット機能を作って。
+
+要件：
+- Next.js App Router を使用
+- API Route 経由で OpenAI を呼び出す
+- gpt-4o-mini モデルを使用
+- ストリーミングレスポンス対応
+- エラーハンドリングも実装
+
+環境変数 OPENAI_API_KEY は設定済み`}
+          </CodeBlock>
         </div>
 
         <div className="bg-muted/30 rounded-lg p-4 mb-6">
-          <p className="font-medium mb-2">トラブル対応</p>
-          <div className="space-y-2">
-            {[
-              'OpenAI API で 429 エラーが出る。リトライ処理を追加して',
-              'Stripe Webhook が動かない。デバッグして',
-              'CORS エラーが出る。API Route 経由に変更して',
-            ].map((item, i) => (
-              <div key={i} className="p-2 bg-background rounded text-sm">
-                <code className="text-primary">{item}</code>
-              </div>
-            ))}
+          <p className="font-medium mb-2 flex items-center gap-2">
+            <Shield className="h-4 w-4 text-purple-500" />
+            Clerk 連携の指示例
+          </p>
+          <CodeBlock>
+{`Clerk を使ってログイン機能を作って。
+
+要件：
+- Next.js App Router を使用
+- /dashboard はログイン必須にする
+- ヘッダーにユーザーボタンを表示
+- 未ログイン時は /sign-in にリダイレクト
+
+環境変数は .env.local に設定済み`}
+          </CodeBlock>
+        </div>
+
+        <h3 className="text-lg font-semibold mb-3">トラブル時の指示例</h3>
+        <div className="bg-muted/30 rounded-lg p-4 mb-6">
+          <p className="text-sm text-muted-foreground mb-3">
+            エラーが出たときは、<strong>現在の状況</strong>と<strong>何を確認済みか</strong>を伝えましょう。
+          </p>
+          <CodeBlock>
+{`Clerk で SignIn コンポーネントが表示されない。
+
+現在の構成：
+- middleware.ts は設定済み
+- ClerkProvider でラップ済み
+- 環境変数は .env.local に設定済み
+
+エラーメッセージ：
+（ここにエラーを貼り付け）
+
+デバッグして原因を教えて`}
+          </CodeBlock>
+        </div>
+
+        <h3 className="text-lg font-semibold mb-3">段階的な開発の進め方</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          外部サービス連携は、一度に全部作ろうとせず段階的に進めるのがコツです。
+        </p>
+        <div className="space-y-2 mb-6">
+          <div className="p-3 bg-muted/30 rounded-lg flex items-center gap-3">
+            <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">1</span>
+            <span className="text-sm">まず基本機能を作る（シンプルに依頼）</span>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg flex items-center gap-3">
+            <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">2</span>
+            <span className="text-sm">動作確認（ブラウザで実際に試す）</span>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg flex items-center gap-3">
+            <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">3</span>
+            <span className="text-sm">機能追加を依頼（ストリーミング、エラー処理など）</span>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg flex items-center gap-3">
+            <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">4</span>
+            <span className="text-sm">動作確認</span>
+          </div>
+          <div className="p-3 bg-muted/30 rounded-lg flex items-center gap-3">
+            <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shrink-0">5</span>
+            <span className="text-sm">UI 改善を依頼</span>
           </div>
         </div>
 
         <h3 className="text-lg font-semibold mb-3">CLAUDE.md に書いておくと便利</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          プロジェクトで使う外部サービスの情報をまとめておくと、Claude への説明が不要になります。
+        </p>
         <CodeBlock title="CLAUDE.md">
 {`# 外部サービス
-- OpenAI API: チャット機能に使用
-- Stripe: 決済処理
-- Resend: メール送信
 
-# 環境変数
-- .env.local に API キーを設定
-- 必要な変数は .env.example を参照
+## 使用サービス
+- OpenAI API (gpt-4o-mini): AI チャット機能
+- Clerk: ユーザー認証
 
-# 注意
-- API キーは絶対にコードに直接書かない
-- 外部 API は API Route 経由で呼び出す
-- テスト時は必ずテスト用キーを使う`}
+## 環境変数（.env.local に設定）
+- OPENAI_API_KEY: OpenAI の API キー
+- NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: Clerk 公開キー
+- CLERK_SECRET_KEY: Clerk 秘密キー
+
+## API 連携のルール
+- 外部 API は必ず API Route (app/api/*) 経由で呼び出す
+- API キーはコードに直接書かない
+- テスト時はテスト用キーを使用
+
+## 認証が必要なページ
+- /dashboard/*
+- /settings/*`}
         </CodeBlock>
+
+        <TipBox>
+          <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>ヒント:</strong></span>
+          CLAUDE.md に外部サービスの情報を書いておくと、
+          「チャット機能を改善して」だけで文脈を理解してくれます。
+        </TipBox>
 
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mt-6">
           <p className="font-medium mb-2 flex items-center gap-2">

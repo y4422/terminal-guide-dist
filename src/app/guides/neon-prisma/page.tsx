@@ -201,18 +201,25 @@ export default function NeonPrismaGuidePage() {
 
         <div className="space-y-3 mb-6">
           <div className="p-3 bg-muted/30 rounded-lg">
-            <p className="text-sm"><strong>1.</strong> <a href="https://neon.tech" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">https://neon.tech</a> でアカウント作成（GitHub / Google で登録可）</p>
+            <p className="text-sm">
+              <strong>1.</strong>{' '}
+              <a href="https://neon.tech" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">neon.tech</a>
+              {' '}でアカウント作成（GitHub / Google で登録可）
+            </p>
           </div>
           <div className="p-3 bg-muted/30 rounded-lg">
-            <p className="text-sm"><strong>2.</strong> 「Create Project」でプロジェクト作成（リージョンは Singapore が近い）</p>
+            <p className="text-sm"><strong>2.</strong> 「Create Project」でプロジェクト作成</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              ※ Region は Asia Pacific (Singapore) が日本から近い
+            </p>
           </div>
           <div className="p-3 bg-muted/30 rounded-lg">
-            <p className="text-sm"><strong>3.</strong> 表示される接続文字列（Connection String）をコピー</p>
+            <p className="text-sm"><strong>3.</strong> ダッシュボードの「Connect」から接続文字列をコピー</p>
           </div>
         </div>
 
         <CodeBlock title="接続文字列の例">
-{`postgresql://username:password@ep-xxx-123456.ap-southeast-1.aws.neon.tech/neondb?sslmode=require`}
+{`postgresql://username:password@ep-xxx.ap-southeast-1.aws.neon.tech/neondb?sslmode=require`}
         </CodeBlock>
 
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mt-4">
