@@ -2,6 +2,7 @@ import { GuideLayout } from '@/components/layout/GuideLayout';
 import { Plug, Lightbulb, AlertTriangle, BookOpen, Key, Server, CheckCircle, Code, CreditCard, Shield, Zap, RefreshCw, HelpCircle, ExternalLink } from 'lucide-react';
 
 const sections = [
+  { id: 'why-external-services', title: 'なぜ外部サービス?' },
   { id: 'what-is-api', title: 'API とは' },
   { id: 'api-key-basics', title: 'API キーの基本' },
   { id: 'common-services', title: 'よくある外部サービス' },
@@ -89,6 +90,51 @@ export default function ExternalServicesGuidePage() {
         { label: '外部サービスと連携しよう' },
       ]}
     >
+      <Section id="why-external-services" title="なぜ外部サービスを使うのか" icon={<Lightbulb className="h-6 w-6 text-primary" />}>
+        <p className="text-muted-foreground mb-4 text-lg">
+          アプリを作るとき、<strong>すべての機能を自分で作るのは大変</strong>です。
+          外部サービスを活用すれば、複雑な機能も簡単に実装できます。
+        </p>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-5 mb-6">
+          <p className="font-medium mb-3">外部サービスを使うメリット</p>
+          <ul className="space-y-2 text-muted-foreground">
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span><strong>開発時間を大幅に短縮</strong> - AI、決済、認証などの複雑な機能を数行のコードで利用可能</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span><strong>専門家のノウハウを活用</strong> - セキュリティや法律面も考慮された実装を利用できる</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span><strong>保守・運用の手間を削減</strong> - サーバー管理やアップデートはサービス側が担当</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-primary mt-1">•</span>
+              <span><strong>スケーラビリティ</strong> - 利用量が増えても自動で対応してくれる</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+          <p className="font-medium mb-2">具体的にできること</p>
+          <ul className="text-sm text-muted-foreground space-y-1">
+            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> AI に文章を生成してもらう（OpenAI、Claude）</li>
+            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> 決済処理を行う（Stripe）</li>
+            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> メールを送信する（Resend、SendGrid）</li>
+            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> 天気情報を取得する（OpenWeather）</li>
+            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> SNS に投稿する（Twitter/X、Discord）</li>
+          </ul>
+        </div>
+
+        <TipBox>
+          <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>ポイント:</strong></span>
+          外部サービスとの連携には「API」という仕組みを使います。次のセクションで詳しく説明します。
+        </TipBox>
+      </Section>
+
       <Section id="what-is-api" title="API とは" icon={<Plug className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4 text-lg">
           API は、<strong>アプリ同士が会話するための窓口</strong>です。
@@ -120,17 +166,6 @@ export default function ExternalServicesGuidePage() {
           アプリケーション同士がデータをやり取りするための決まったルール。
           「このURLにこのデータを送ると、こういう結果が返ってくる」という約束事です。
         </TermBox>
-
-        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
-          <p className="font-medium mb-2">API でできること</p>
-          <ul className="text-sm text-muted-foreground space-y-1">
-            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> AI に文章を生成してもらう（OpenAI、Claude）</li>
-            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> 決済処理を行う（Stripe）</li>
-            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> メールを送信する（Resend、SendGrid）</li>
-            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> 天気情報を取得する（OpenWeather）</li>
-            <li className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-green-500 shrink-0" /> SNS に投稿する（Twitter/X、Discord）</li>
-          </ul>
-        </div>
       </Section>
 
       <Section id="api-key-basics" title="API キーの基本" icon={<Key className="h-6 w-6 text-primary" />}>
@@ -266,6 +301,10 @@ export default function ExternalServicesGuidePage() {
             <div className="grid sm:grid-cols-2 gap-2 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <span className="text-primary">•</span>
+                <span><strong>SendGrid</strong> - メール送信</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-primary">•</span>
                 <span><strong>Resend</strong> - メール送信</span>
               </div>
               <div className="flex items-center gap-2">
@@ -274,7 +313,15 @@ export default function ExternalServicesGuidePage() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-primary">•</span>
-                <span><strong>Vercel Blob</strong> - ファイルストレージ</span>
+                <span><strong>Amazon S3</strong> - ファイルストレージ</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-primary">•</span>
+                <span><strong>Cloudflare R2</strong> - ストレージ（S3互換）</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-primary">•</span>
+                <span><strong>Vercel Blob</strong> - ストレージ</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-primary">•</span>
