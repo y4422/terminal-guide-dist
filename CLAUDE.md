@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Language
+
+ユーザーへの回答は日本語を基本言語とする。
+
 ## Project Overview
 
 ClaudeCode Interactive Tutorial - A browser-based interactive tutorial application that teaches beginners how to use ClaudeCode through a simulated terminal UI. Users learn terminal operations and ClaudeCode basics in approximately 10 minutes without requiring actual terminal experience.
@@ -128,4 +132,5 @@ Track these key events for KPI monitoring:
 - Bundle size: < 500KB (gzip)
 
 ## Reference
-Full specification with UI mockups, data models, and implementation details: `spec.md`
+- Full specification with UI mockups, data models, and implementation details: `spec.md`
+- Lecture notes for workshop guidance: `docs/lecture-notes.md`
