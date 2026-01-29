@@ -330,6 +330,16 @@ export default function ExternalServicesGuidePage() {
             </div>
           </div>
         </div>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mt-6">
+          <p className="font-medium mb-2">このガイドの使い方</p>
+          <p className="text-sm text-muted-foreground">
+            どのサービスを使うか迷ったら、まず
+            <a href="/guides/requirements-driven" className="text-primary hover:underline mx-1 font-medium">要件定義書</a>
+            で必要な機能を整理しましょう。
+            このガイドは、要件が決まった後の実装リファレンスとして活用できます。
+          </p>
+        </div>
       </Section>
 
       <Section id="openai-example" title="実装例: OpenAI API" icon={<Zap className="h-6 w-6 text-primary" />}>
