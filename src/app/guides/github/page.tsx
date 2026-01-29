@@ -399,14 +399,13 @@ git clone https://github.com/facebook/react.git`}
         </div>
 
         <h3 className="text-lg font-semibold mb-3">ブランチのイメージ</h3>
-        <div className="bg-muted/30 rounded-lg p-4 mb-6 font-mono text-sm">
-          <pre className="text-muted-foreground">
+        <div className="bg-muted/30 rounded-lg p-4 mb-6 overflow-x-auto">
+          <pre className="text-muted-foreground text-xs sm:text-sm font-mono whitespace-pre">
 {`main ブランチ（本流）
-  ●────●────●────●────●────● ← 安定版
-         \\              /
-          ●────●────●─┘  ← feature/login（作業ブランチ）
-          　新機能を開発
-`}
+●───●───●───●───────●───● ← 安定版
+        \\           /
+         ●───●───●─┘ ← feature/login（作業ブランチ）
+          新機能を開発`}
           </pre>
         </div>
 
@@ -470,14 +469,29 @@ git checkout feature/login  # 作業ブランチに移動`}
 
       <Section id="pull-request" title="プルリクエスト" icon={<GitPullRequest className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
-          プルリクエスト（Pull Request、略して PR）は、<strong>「自分のブランチの変更を main に取り込んでもらう」</strong>お願いです。
+          プルリクエスト（Pull Request、略して PR）は、<strong>「自分のブランチの変更を別のブランチに取り込んでもらう」</strong>お願いです。
           チーム開発では必須の機能です。
         </p>
 
         <TermBox term="プルリクエスト（Pull Request）">
-          「私のブランチの変更を見てください、問題なければ main に取り込んでください」というお願い。
+          「私のブランチの変更を見てください、問題なければ取り込んでください」というお願い。
           略して PR（ピーアール）と呼ばれます。
         </TermBox>
+
+        <h3 className="text-lg font-semibold mb-3">プルリクエストのイメージ</h3>
+        <div className="bg-muted/30 rounded-lg p-4 mb-6 overflow-x-auto">
+          <pre className="text-muted-foreground text-xs sm:text-sm font-mono whitespace-pre">
+{`feature/login ブランチ
+●───●───●  「この変更を取り込んで!」
+         \\
+          \\  ← プルリクエスト（PR）
+           \\
+            ▼
+●───●───●───● main ブランチ
+            ↑
+         マージ（取り込み）`}
+          </pre>
+        </div>
 
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-5 mb-6">
           <p className="font-medium mb-3 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> なぜプルリクエストを使うの?</p>
@@ -488,7 +502,7 @@ git checkout feature/login  # 作業ブランチに移動`}
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">•</span>
-              <span><strong>バグ防止</strong> - main に入れる前に問題を発見できる</span>
+              <span><strong>バグ防止</strong> - 取り込む前に問題を発見できる</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-1">•</span>

@@ -118,6 +118,12 @@ export default function EnvVariablesGuidePage() {
           環境（開発・本番など）ごとに異なる値を使えます。
         </TermBox>
 
+        <TermBox term="API キー（API Key）">
+          外部サービス（OpenAI、Stripe など）を使うための「パスワード」のようなもの。
+          サービスごとに発行され、誰がアクセスしているかを識別するために使われます。
+          漏洩すると不正利用される可能性があるため、環境変数で安全に管理します。
+        </TermBox>
+
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
           <p className="font-medium mb-2">環境変数を使うメリット</p>
           <ul className="text-sm text-muted-foreground space-y-1">
