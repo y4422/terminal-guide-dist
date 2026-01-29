@@ -144,7 +144,7 @@ export default function GitHubGuidePage() {
           </div>
           <div className="p-3 bg-muted/30 rounded-lg">
             <p className="text-sm"><strong>3.</strong> メールアドレス、パスワード、ユーザー名を入力</p>
-            <p className="text-xs text-muted-foreground mt-1">ユーザー名は公開されるので、本名や恥ずかしい名前は避けましょう</p>
+            <p className="text-xs text-muted-foreground mt-1">ユーザー名は公開されます。本名でも OK ですが、後から変更しにくいので慎重に決めましょう</p>
           </div>
           <div className="p-3 bg-muted/30 rounded-lg">
             <p className="text-sm"><strong>4.</strong> メールで届く確認コードを入力して完了</p>
