@@ -212,6 +212,11 @@ export default function GitHubGuidePage() {
       </Section>
 
       <Section id="github-repo" title="リポジトリを作成" icon={<FolderPlus className="h-6 w-6 text-primary" />}>
+        <TermBox term="リポジトリ（Repository）">
+          プロジェクトの保管場所のこと。コードやファイル、変更履歴がまとめて保存されます。
+          「リポ」や「レポ」と略されることもあります。GitHub 上の「フォルダ」だと思ってください。
+        </TermBox>
+
         <WhenToUse>
           新しいプロジェクトを GitHub で管理したいとき、または既存のプロジェクトを GitHub にアップロードしたいときに使います。
         </WhenToUse>
