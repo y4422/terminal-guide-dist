@@ -1,6 +1,7 @@
 import { GuideLayout } from '@/components/layout/GuideLayout';
-import { Terminal, GitBranch, Upload, Download, FolderPlus, Save, History, Users, Package, BookOpen, Clock, Lightbulb, CheckCircle, AlertTriangle, Wrench, AlertCircle, MessageCircle } from 'lucide-react';
+import { Terminal, GitBranch, FolderPlus, Save, History, Users, Package, BookOpen, Clock, Lightbulb, CheckCircle, Wrench, AlertCircle, MessageCircle } from 'lucide-react';
 import { FaApple, FaWindows } from 'react-icons/fa';
+import Link from 'next/link';
 
 const sections = [
   { id: 'what-is-git', title: 'Git とは' },
@@ -10,9 +11,7 @@ const sections = [
   { id: 'git-init', title: 'git init' },
   { id: 'git-add', title: 'git add' },
   { id: 'git-commit', title: 'git commit' },
-  { id: 'git-push', title: 'git push' },
-  { id: 'git-pull', title: 'git pull' },
-  { id: 'claude-code', title: 'Claude Code での活用' },
+  { id: 'claude-code-git', title: 'Claude Code で Git' },
   { id: 'ask-claude', title: '困ったら聞こう' },
 ];
 
@@ -216,7 +215,7 @@ export default function GitGuidePage() {
         </div>
 
         {/* Initial setup */}
-        <div className="border rounded-lg p-4">
+        <div className="border rounded-lg p-4 mb-4">
           <p className="font-medium mb-2 flex items-center gap-2"><Wrench className="h-4 w-4" /> 初期設定（名前とメールアドレス）</p>
           <p className="text-sm text-muted-foreground mb-3">
             Git を使う前に、あなたの名前とメールアドレスを設定します。
@@ -228,6 +227,21 @@ git config --global user.email "your@email.com"`}
           </CodeBlock>
           <p className="text-xs text-muted-foreground flex items-center gap-1">
             <Lightbulb className="h-3 w-3" /> GitHub アカウントを持っている場合は、同じメールアドレスを使うのがおすすめです
+          </p>
+        </div>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+          <p className="font-medium mb-2 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> Claude Code にお願いする場合</p>
+          <p className="text-sm text-muted-foreground mb-3">
+            コマンドを覚えなくても、こう伝えるだけでOK:
+          </p>
+          <div className="space-y-2">
+            <div className="p-3 bg-muted/30 rounded-lg">
+              <code className="text-sm text-primary">「Git の初期設定をして。名前は山田太郎、メールは taro@example.com」</code>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground mt-3">
+            Claude Code が適切なコマンドを実行してくれます。
           </p>
         </div>
       </Section>
@@ -272,7 +286,7 @@ git config --global user.email "your@email.com"`}
 
       <Section id="basic-flow" title="基本の流れ" icon={<Save className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
-          Git の基本的な使い方は、たった3ステップです。
+          Git の基本的な使い方は、たった<strong>2ステップ</strong>です。
         </p>
 
         <div className="relative">
@@ -295,22 +309,13 @@ git config --global user.email "your@email.com"`}
                 メモ付きで履歴に保存
               </p>
             </div>
-            <div className="hidden md:flex items-center text-2xl text-muted-foreground">→</div>
-            <div className="flex-1 bg-muted/30 rounded-lg p-4 text-center">
-              <div className="w-10 h-10 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center mx-auto mb-2">3</div>
-              <p className="font-bold mb-1">共有する</p>
-              <code className="text-xs bg-terminal-bg text-terminal-text px-2 py-1 rounded">git push</code>
-              <p className="text-xs text-muted-foreground mt-2">
-                GitHub にアップロード
-              </p>
-            </div>
           </div>
         </div>
 
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
           <p className="text-sm">
-            <strong>ポイント:</strong> 1人で作業するなら ①② だけでOK。
-            チームで共有したり、バックアップを取りたいときに ③ を使います。
+            <strong>これだけで Git の基本は完成!</strong> この2ステップで「セーブポイント」機能が使えます。
+            バックアップやチームでの共有をしたい場合は、<Link href="/guides/github" className="text-primary hover:underline">GitHub の使い方</Link>をご覧ください。
           </p>
         </div>
       </Section>
@@ -334,11 +339,26 @@ git init`}
           隠しフォルダが作られます。ここに履歴が保存されていきます。
         </p>
 
-        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-4">
           <p className="text-sm">
             <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>ヒント:</strong></span> GitHub からダウンロード（clone）した場合は、
             すでに Git が設定されているので <code className="px-1 py-0.5 bg-muted rounded">git init</code> は不要です。
           </p>
+        </div>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+          <p className="font-medium mb-2 flex items-center gap-2"><Lightbulb className="h-4 w-4 text-primary" /> Claude Code にお願いする場合</p>
+          <p className="text-sm text-muted-foreground mb-3">
+            新しいプロジェクトを始めるとき、こう伝えるだけでOK:
+          </p>
+          <div className="space-y-2">
+            <div className="p-3 bg-muted/30 rounded-lg">
+              <code className="text-sm text-primary">「このフォルダで Git を使えるようにして」</code>
+            </div>
+            <div className="p-3 bg-muted/30 rounded-lg">
+              <code className="text-sm text-primary">「Git の初期化をして」</code>
+            </div>
+          </div>
         </div>
       </Section>
 
@@ -409,71 +429,18 @@ git commit -m "ログインボタンを追加"`}
         </div>
       </Section>
 
-      <Section id="git-push" title="git push - GitHub にアップロード" icon={<Upload className="h-6 w-6 text-primary" />}>
-        <WhenToUse>
-          手元の変更を GitHub（インターネット上）にアップロードしたいときに使います。
-          バックアップや、チームとの共有に使います。
-        </WhenToUse>
-
-        <TermBox term="リモート / ローカル">
-          <strong>ローカル</strong> = あなたのパソコン内。
-          <strong>リモート</strong> = インターネット上（GitHub など）。
-          push は「ローカル → リモート」にアップロードすることです。
-        </TermBox>
-
-        <CodeBlock title="コマンド">
-{`# GitHub にアップロード
-git push`}
-        </CodeBlock>
-
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-          <p className="text-sm">
-            <span className="flex items-center gap-1"><AlertTriangle className="h-4 w-4" /><strong>注意:</strong></span> 初めて push するときは、先に GitHub でリポジトリを作成し、
-            接続設定が必要です。Claude Code に「GitHub にプッシュしたい」と伝えれば、
-            設定方法を教えてもらえます。
-          </p>
-        </div>
-      </Section>
-
-      <Section id="git-pull" title="git pull - 最新版をダウンロード" icon={<Download className="h-6 w-6 text-primary" />}>
-        <WhenToUse>
-          GitHub にある最新の変更を、手元のパソコンに取り込みたいときに使います。
-          チームで作業しているとき、他の人の変更を取得するのに使います。
-        </WhenToUse>
-
-        <TermBox term="プル / マージ">
-          <strong>プル（Pull）</strong> = リモートから変更をダウンロードすること。
-          <strong>マージ（Merge）</strong> = 複数の変更を1つに合体させること。
-          git pull は「ダウンロード + 合体」を一度にやってくれます。
-        </TermBox>
-
-        <CodeBlock title="コマンド">
-{`# 最新版を取得
-git pull`}
-        </CodeBlock>
-
-        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
-          <p className="text-sm">
-            <span className="flex items-center gap-1"><Lightbulb className="h-4 w-4" /><strong>習慣にしよう:</strong></span> チームで作業するときは、
-            作業を始める前に <code className="px-1 py-0.5 bg-muted rounded">git pull</code> して
-            最新の状態にしておくと、トラブルを防げます。
-          </p>
-        </div>
-      </Section>
-
-      <Section id="claude-code" title="Claude Code での Git 活用" icon={<Users className="h-6 w-6 text-primary" />}>
+      <Section id="claude-code-git" title="Claude Code で Git を使う" icon={<Users className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
           <strong>朗報です!</strong> Claude Code を使えば、Git コマンドを覚えなくても大丈夫。
           日本語で話しかけるだけで、Git の操作ができます。
         </p>
 
         <h3 className="text-lg font-semibold mb-3">こう言えば OK</h3>
-        <div className="space-y-3">
+        <div className="space-y-3 mb-6">
           {[
             { prompt: '変更をセーブして', result: '→ add + commit を実行' },
-            { prompt: 'GitHub にアップして', result: '→ push を実行' },
-            { prompt: '最新版にして', result: '→ pull を実行' },
             { prompt: '何を変更したか見せて', result: '→ 変更内容を表示' },
+            { prompt: 'さっきの変更を取り消して', result: '→ 直前のコミットを取り消し' },
             { prompt: '昨日の状態に戻して', result: '→ 履歴から復元' },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-4 p-4 bg-muted/30 rounded-lg">
@@ -485,7 +452,7 @@ git pull`}
           ))}
         </div>
 
-        <div className="mt-6 bg-primary/5 border border-primary/20 rounded-lg p-4">
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
           <p className="text-sm">
             <strong>要するに:</strong> Git のコマンドを覚える必要はありません。
             やりたいことを日本語で伝えれば、Claude Code がやってくれます!
@@ -493,7 +460,7 @@ git pull`}
         </div>
       </Section>
 
-      <Section id="ask-claude" title="Git で困ったら Claude Code に聞こう" icon={<Terminal className="h-6 w-6 text-primary" />}>
+      <Section id="ask-claude" title="Git で困ったら聞こう" icon={<MessageCircle className="h-6 w-6 text-primary" />}>
         <p className="text-muted-foreground mb-4">
           Git でエラーが出たり、やり方がわからないときは、そのまま Claude Code に質問してください。
         </p>
@@ -502,23 +469,30 @@ git pull`}
           <p className="font-medium mb-3">こんな風に聞けます:</p>
           <div className="space-y-2 text-sm">
             {[
-              '「git push したらエラーが出た。これ何?」+ エラーメッセージを貼り付け',
               '「さっきの変更を取り消したい」',
-              '「他の人の変更と自分の変更がぶつかった」',
+              '「コミットメッセージを変えたい」',
               '「Git って何のためにあるの?」',
+              '「ステージングって何?」',
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2 p-2 bg-background rounded">
-                <MessageCircle className="h-4 w-4 text-primary" />
+                <Terminal className="h-4 w-4 text-primary" />
                 <span className="text-muted-foreground">{item}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4">
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mb-6">
           <p className="text-sm">
             <strong>大事なこと:</strong> 「こんな初歩的なこと聞いていいのかな...」と思わなくて大丈夫。
             Claude Code は何度でも丁寧に教えてくれます。わからないことは、どんどん聞きましょう!
+          </p>
+        </div>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+          <p className="text-sm">
+            <strong>次のステップ:</strong> Git の基本がわかったら、<Link href="/guides/github" className="text-primary hover:underline">GitHub の使い方</Link>を学んで、
+            コードのバックアップやチームでの共有をしてみましょう!
           </p>
         </div>
       </Section>

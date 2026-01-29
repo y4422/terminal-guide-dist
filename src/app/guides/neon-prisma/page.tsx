@@ -201,18 +201,25 @@ export default function NeonPrismaGuidePage() {
 
         <div className="space-y-3 mb-6">
           <div className="p-3 bg-muted/30 rounded-lg">
-            <p className="text-sm"><strong>1.</strong> <a href="https://neon.tech" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">https://neon.tech</a> でアカウント作成（GitHub / Google で登録可）</p>
+            <p className="text-sm">
+              <strong>1.</strong>{' '}
+              <a href="https://neon.tech" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">neon.tech</a>
+              {' '}でアカウント作成（GitHub / Google で登録可）
+            </p>
           </div>
           <div className="p-3 bg-muted/30 rounded-lg">
-            <p className="text-sm"><strong>2.</strong> 「Create Project」でプロジェクト作成（リージョンは Singapore が近い）</p>
+            <p className="text-sm"><strong>2.</strong> 「Create Project」でプロジェクト作成</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              ※ Region は Asia Pacific (Singapore) が日本から近い
+            </p>
           </div>
           <div className="p-3 bg-muted/30 rounded-lg">
-            <p className="text-sm"><strong>3.</strong> 表示される接続文字列（Connection String）をコピー</p>
+            <p className="text-sm"><strong>3.</strong> ダッシュボードの「Connect」から接続文字列をコピー</p>
           </div>
         </div>
 
         <CodeBlock title="接続文字列の例">
-{`postgresql://username:password@ep-xxx-123456.ap-southeast-1.aws.neon.tech/neondb?sslmode=require`}
+{`postgresql://username:password@ep-xxx.ap-southeast-1.aws.neon.tech/neondb?sslmode=require`}
         </CodeBlock>
 
         <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mt-4">
@@ -324,6 +331,24 @@ export default function NeonPrismaGuidePage() {
 - マイグレーション: npx prisma migrate dev
 - GUI: npx prisma studio`}
           </CodeBlock>
+        </div>
+
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mt-6">
+          <p className="font-medium mb-2">本格的なアプリを作るなら</p>
+          <p className="text-sm text-muted-foreground mb-2">
+            上記の Step 1〜5 は学習やプロトタイプ作成に最適ですが、
+            本格的なアプリ開発では<strong>要件定義書</strong>から始めると効率的です。
+          </p>
+          <ul className="text-sm text-muted-foreground space-y-1 mb-3">
+            <li>• どんなデータ構造が必要か事前に設計できる</li>
+            <li>• Claude が一貫性のあるスキーマを作成しやすい</li>
+            <li>• API 設計も含めて計画的に進められる</li>
+          </ul>
+          <p className="text-sm">
+            <a href="/guides/requirements-driven" className="text-primary hover:underline font-medium">
+              → 要件定義書から始める開発ガイド
+            </a>
+          </p>
         </div>
       </Section>
 
@@ -596,6 +621,27 @@ await prisma.post.deleteMany({
             <strong>注意:</strong> 投稿を持つユーザーを削除しようとするとエラーになります。
             先に投稿を削除するか、スキーマで「ユーザー削除時に投稿も削除」する設定（<code className="px-1 py-0.5 bg-muted rounded">onDelete: Cascade</code>）が必要です。
           </p>
+        </div>
+
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mt-6">
+          <p className="font-medium mb-2 flex items-center gap-2">
+            <BookOpen className="h-4 w-4" />
+            関連ガイド
+          </p>
+          <ul className="text-sm text-muted-foreground space-y-1">
+            <li className="flex items-center gap-2">
+              <span className="text-primary">•</span>
+              <a href="/guides/requirements-driven" className="hover:underline">
+                <strong>要件定義書から始める開発</strong> - 本格的なアプリ開発のワークフロー
+              </a>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-primary">•</span>
+              <a href="/guides/external-services" className="hover:underline">
+                <strong>外部サービス連携</strong> - API キーや認証の基礎知識
+              </a>
+            </li>
+          </ul>
         </div>
       </Section>
     </GuideLayout>

@@ -1,6 +1,6 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { FeatureCard } from '@/components/landing/FeatureCard';
-import { ChevronRight, Home, GitBranch, Rocket, Zap, Code2, FileText, Database } from 'lucide-react';
+import { ChevronRight, Home, GitBranch, Rocket, Zap, Code2, FileText, Database, Key, Plug, Github } from 'lucide-react';
 import Link from 'next/link';
 
 const guides = [
@@ -15,8 +15,16 @@ const guides = [
   {
     icon: <GitBranch className="h-7 w-7 text-primary" />,
     title: 'Git の使い方',
-    description: 'バージョン管理の基本から、Claude Code を使った効率的な Git 操作まで解説します。',
+    description: 'ファイルの変更履歴を記録する「セーブポイント」機能。add と commit の基本を学びます。',
     href: '/guides/git',
+    badge: '初心者向け',
+    badgeColor: 'success' as const,
+  },
+  {
+    icon: <Github className="h-7 w-7 text-primary" />,
+    title: 'GitHub の使い方',
+    description: 'コードをクラウドに保存・共有。バックアップやチーム開発に必須のサービスです。',
+    href: '/guides/github',
     badge: '初心者向け',
     badgeColor: 'success' as const,
   },
@@ -33,14 +41,30 @@ const guides = [
     title: 'Claude Code スキル',
     description: 'スキル機能の活用方法と CLAUDE.md の書き方を学んで、開発効率をアップしましょう。',
     href: '/guides/claude-code-skills',
-    badge: '実践',
-    badgeColor: 'accent' as const,
+    badge: '初心者向け',
+    badgeColor: 'success' as const,
+  },
+  {
+    icon: <Key className="h-7 w-7 text-primary" />,
+    title: '環境変数を理解しよう',
+    description: 'API キーやパスワードを安全に管理する方法。.env ファイルの使い方を学びます。',
+    href: '/guides/env-variables',
+    badge: '初心者向け',
+    badgeColor: 'success' as const,
   },
   {
     icon: <FileText className="h-7 w-7 text-primary" />,
     title: '要件定義書から始める開発',
     description: '要件定義書をベースに Claude Code でアプリを構築する実践的なワークフローを学びます。',
     href: '/guides/requirements-driven',
+    badge: '実践',
+    badgeColor: 'accent' as const,
+  },
+  {
+    icon: <Plug className="h-7 w-7 text-primary" />,
+    title: '外部サービスと連携しよう',
+    description: 'API を使って他のサービスと連携する方法。認証から実装まで解説します。',
+    href: '/guides/external-services',
     badge: '実践',
     badgeColor: 'accent' as const,
   },
