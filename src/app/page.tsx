@@ -1,7 +1,7 @@
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { Hero } from '@/components/landing/Hero';
 import { FeatureCard } from '@/components/landing/FeatureCard';
-import { Gamepad2, GitBranch, Rocket, Zap, Code2, MessageCircle, Wrench, Globe, Package, Lightbulb, HelpCircle, BookOpen, FileText, Database, Key, Plug } from 'lucide-react';
+import { Gamepad2, GitBranch, Rocket, Zap, Code2, MessageCircle, Wrench, Globe, Package, Lightbulb, HelpCircle, BookOpen, FileText, Database, Key, Plug, Github } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -49,8 +49,16 @@ export default function Home() {
               <FeatureCard
                 icon={<GitBranch className="h-7 w-7 text-primary" />}
                 title="Git の使い方"
-                description="バージョン管理の基本から、Claude Code を使った効率的な Git 操作まで解説します。"
+                description="ファイルの変更履歴を記録する「セーブポイント」機能。add と commit の基本を学びます。"
                 href="/guides/git"
+                badge="初心者向け"
+                badgeColor="success"
+              />
+              <FeatureCard
+                icon={<Github className="h-7 w-7 text-primary" />}
+                title="GitHub の使い方"
+                description="コードをクラウドに保存・共有。バックアップやチーム開発に必須のサービスです。"
+                href="/guides/github"
                 badge="初心者向け"
                 badgeColor="success"
               />
