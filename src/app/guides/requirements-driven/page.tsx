@@ -101,6 +101,13 @@ export default function RequirementsDrivenGuidePage() {
       </Section>
 
       <Section id="prepare-requirements" title="要件定義書の準備" icon={<FileText className="h-6 w-6 text-primary" />}>
+        <div className="bg-muted/50 rounded-lg p-4 mb-6 border-l-4 border-primary">
+          <p className="font-medium">やること</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            プロジェクトフォルダに <code className="px-1 py-0.5 bg-muted rounded">requirements.md</code> を作成し、作りたいものを書き出す
+          </p>
+        </div>
+
         <p className="text-muted-foreground mb-4">
           Claude が理解しやすい形式で要件定義書を作成しましょう。
           Markdown 形式が推奨されます。
@@ -184,6 +191,13 @@ export default function RequirementsDrivenGuidePage() {
       </Section>
 
       <Section id="project-setup" title="プロジェクトのセットアップ" icon={<FolderOpen className="h-6 w-6 text-primary" />}>
+        <div className="bg-muted/50 rounded-lg p-4 mb-6 border-l-4 border-primary">
+          <p className="font-medium">やること</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            プロジェクトフォルダを作成し、<code className="px-1 py-0.5 bg-muted rounded">requirements.md</code> と <code className="px-1 py-0.5 bg-muted rounded">CLAUDE.md</code> を配置する
+          </p>
+        </div>
+
         <p className="text-muted-foreground mb-4">
           プロジェクトの種類に応じて、セットアップ方法を選びましょう。
         </p>
@@ -296,6 +310,13 @@ npx create-next-app@latest my-task-app`}
       </Section>
 
       <Section id="load-requirements" title="要件を Claude に読み込ませる" icon={<AtSign className="h-6 w-6 text-primary" />}>
+        <div className="bg-muted/50 rounded-lg p-4 mb-6 border-l-4 border-primary">
+          <p className="font-medium">やること</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            <code className="px-1 py-0.5 bg-muted rounded">@requirements.md</code> で要件を読み込ませ、Claude が内容を理解しているか確認する
+          </p>
+        </div>
+
         <p className="text-muted-foreground mb-4">
           <code className="px-1 py-0.5 bg-muted rounded">@</code> メンションを使って、
           要件定義書を Claude に読み込ませます。
@@ -348,6 +369,13 @@ npx create-next-app@latest my-task-app`}
       </Section>
 
       <Section id="task-breakdown" title="タスク分解" icon={<ListTodo className="h-6 w-6 text-primary" />}>
+        <div className="bg-muted/50 rounded-lg p-4 mb-6 border-l-4 border-primary">
+          <p className="font-medium">やること</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            <code className="px-1 py-0.5 bg-muted rounded">/plan</code> で Plan モードに切り替え → 要件を読み込ませて計画を立てる → 計画を承認して実装開始
+          </p>
+        </div>
+
         <p className="text-muted-foreground mb-4">
           大きな要件を小さなタスクに分解します。
           Plan モードを使うと、Claude が体系的に計画を立ててくれます。
@@ -415,9 +443,37 @@ npx create-next-app@latest my-task-app`}
             </div>
           ))}
         </div>
+
+        <h3 className="text-lg font-semibold mb-3 mt-8">計画が決まったら</h3>
+        <p className="text-muted-foreground mb-3">
+          Plan モードで計画を確認し、問題なければ「この計画で進めて」と伝えます。
+          Claude が実装を開始する準備ができます。
+        </p>
+        <CodeBlock title="計画の承認と実装開始">
+{`# 計画を承認（Plan モードを終了して実装開始）
+この計画で進めて
+
+# Claude が Plan モードを終了し、最初のタスクから実装を始めます
+# または、最初のタスクを明示的に指定することもできます
+Phase 1 の Step 1 から始めて`}
+        </CodeBlock>
+
+        <div className="bg-accent/10 border border-accent/20 rounded-lg p-4 mt-4">
+          <p className="text-sm">
+            <strong>ポイント:</strong> Plan モードでは Claude はコードを書きません。
+            計画を承認すると通常モードに戻り、実装が始まります。
+          </p>
+        </div>
       </Section>
 
       <Section id="iterative-development" title="段階的な実装" icon={<Code className="h-6 w-6 text-primary" />}>
+        <div className="bg-muted/50 rounded-lg p-4 mb-6 border-l-4 border-primary">
+          <p className="font-medium">やること</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            計画の Step 1 から順に Claude に依頼 → 動作確認 → 問題なければコミット → 次の Step へ
+          </p>
+        </div>
+
         <p className="text-muted-foreground mb-4">
           計画に沿って、1 タスクずつ Claude に依頼していきます。
           いきなり全部作るのではなく、動くものを少しずつ作るのがコツです。
